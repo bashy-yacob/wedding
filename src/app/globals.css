@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   ערכות עיצוב — CSS variables לפי data-theme.
+   המפתחות מסונכרנים עם src/lib/themes.ts ועם ה-whitelist ב-SQL.
+   ללא תמונות — gradients וטיפוגרפיה בלבד (צניעות).
+   ========================================================================== */
+
+:root {
+  --font-ui: var(--font-heebo), system-ui, sans-serif;
+  --font-display: var(--font-frank), serif;
+
+  /* ברירת מחדל = classic */
+  --bg: #faf8f3;
+  --bg-gradient: linear-gradient(160deg, #faf8f3 0%, #f1ece1 100%);
+  --surface: #ffffff;
+  --text: #1e2a44;
+  --muted: #6b7280;
+  --accent: #b08d57;
+  --accent-soft: color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+[data-theme="classic"] {
+  --bg: #faf8f3;
+  --bg-gradient: linear-gradient(160deg, #faf8f3 0%, #f1ece1 100%);
+  --surface: #ffffff;
+  --text: #1e2a44;
+  --muted: #6b7280;
+  --accent: #b08d57;
+}
+
+[data-theme="gold"] {
+  --bg: #fdfaf3;
+  --bg-gradient: linear-gradient(160deg, #fdfaf3 0%, #f6ebd2 100%);
+  --surface: #fffdf8;
+  --text: #3b2f1a;
+  --muted: #8a7a6a;
+  --accent: #c9a227;
+}
+
+[data-theme="olive"] {
+  --bg: #f4f6f0;
+  --bg-gradient: linear-gradient(160deg, #f4f6f0 0%, #e3e9d8 100%);
+  --surface: #fbfcf8;
+  --text: #33402a;
+  --muted: #6f7a63;
+  --accent: #7a8b4f;
+}
+
+[data-theme="blush"] {
+  --bg: #fdf5f5;
+  --bg-gradient: linear-gradient(160deg, #fdf5f5 0%, #f6e2e4 100%);
+  --surface: #fffafa;
+  --text: #4a2c34;
+  --muted: #9a7077;
+  --accent: #c98a9a;
+}
+
+[data-theme="royal"] {
+  --bg: #f9f4f4;
+  --bg-gradient: linear-gradient(160deg, #f9f4f4 0%, #efe0e0 100%);
+  --surface: #fffafa;
+  --text: #5a1f2b;
+  --muted: #8a5560;
+  --accent: #8c2f39;
+}
+
+[data-theme="midnight"] {
+  --bg: #161826;
+  --bg-gradient: linear-gradient(160deg, #1b1e30 0%, #11131f 100%);
+  --surface: #222539;
+  --text: #f1ece1;
+  --muted: #9aa0bd;
+  --accent: #d4b66a;
+}
+
+[data-theme] {
+  --accent-soft: color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-ui);
+  background: var(--bg-gradient);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* כותרות וספרות גדולות — פונט תצוגה עברי */
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* כרטיס משטח אחיד */
+.surface-card {
+  background: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--text) 8%, transparent);
+  box-shadow: 0 10px 40px -24px color-mix(in srgb, var(--text) 55%, transparent);
+}
+
+.accent-text {
+  color: var(--accent);
+}
+
+/* אנימציית מזל טוב עדינה — ללא תמונות */
+@keyframes gentle-pop {
+  0% {
+    transform: scale(0.96);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-gentle-pop {
+  animation: gentle-pop 0.7s ease-out both;
+}
