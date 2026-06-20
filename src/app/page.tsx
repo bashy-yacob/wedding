@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { DonationCTA } from "@/components/DonationCTA";
 
 export default function HomePage() {
   return (
@@ -50,6 +51,8 @@ export default function HomePage() {
           <li>קיר ברכות פתוח</li>
           <li>שיתוף בוואטסאפ</li>
         </ul>
+
+        <DonationCTA />
       </div>
     </main>
   );
