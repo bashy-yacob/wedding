@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { createServerClient } from "@/lib/supabase/server";
 import { toHebrewDateString, toGregorianString } from "@/lib/hebcal";
@@ -150,6 +151,19 @@ export default async function CountdownPage({
         {countdown.allow_blessings && (
           <BlessingsWall slug={slug} blessings={blessings} />
         )}
+
+        {/* צרו ספירה משלכם */}
+        <div className="mt-12 text-center">
+          <p className="mb-3 text-sm text-[var(--muted)]">
+            רוצים ספירה כזו לחתונה שלכם?
+          </p>
+          <Link
+            href="/create"
+            className="inline-block rounded-full bg-[var(--accent)] px-8 py-3 text-sm font-semibold text-white shadow-lg transition hover:opacity-90"
+          >
+            צרו ספירה משלכם
+          </Link>
+        </div>
 
         {/* תרומה */}
         <DonationCTA />
