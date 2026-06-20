@@ -46,6 +46,40 @@ export default function HomePage() {
           <p className="text-sm text-[var(--muted)]">22 במרץ 2026</p>
         </div>
 
+        {/* איך זה עובד */}
+        <section className="mt-16 w-full">
+          <h2 className="font-display mb-6 text-2xl font-bold">איך זה עובד?</h2>
+          <ol className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+            {[
+              {
+                n: "1",
+                t: "ממלאים פרטים",
+                d: "שמות בני הזוג ותאריך החתונה — בתאריך עברי או לועזי.",
+              },
+              {
+                n: "2",
+                t: "מקבלים קישור",
+                d: "נוצר קישור ייחודי לספירה — בלי הרשמה, בחינם.",
+              },
+              {
+                n: "3",
+                t: "משתפים וסופרים",
+                d: "שולחים בוואטסאפ, והאורחים סופרים יחד אתכם.",
+              },
+            ].map((s) => (
+              <li key={s.n} className="surface-card rounded-2xl p-5 text-center">
+                <span className="font-display accent-text inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent-soft)] text-xl font-extrabold">
+                  {s.n}
+                </span>
+                <p className="font-display mt-3 text-lg font-semibold">{s.t}</p>
+                <p className="mt-1 text-sm leading-relaxed text-[var(--muted)]">
+                  {s.d}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </section>
+
         <ul className="mt-12 grid grid-cols-1 gap-3 text-sm text-[var(--muted)] sm:grid-cols-3">
           <li>תאריך עברי כראשי</li>
           <li>קיר ברכות פתוח</li>
