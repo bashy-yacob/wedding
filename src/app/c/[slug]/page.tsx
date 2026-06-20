@@ -12,13 +12,18 @@ import { DonationCTA } from "@/components/DonationCTA";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 async function getCountdown(slug: string): Promise<Countdown | null> {
-  const supabase = createServerClient();
-  const { data } = await supabase
-    .from("countdowns")
-    .select("*")
-    .eq("slug", slug)
-    .single();
-  return (data as Countdown) ?? null;
+  try {
+    const supabase = createServerClient();
+    const { data } = await supabase
+      .from("countdowns")
+      .select("*")
+      .eq("slug", slug)
+      .single();
+    return (data as Countdown) ?? null;
+  } catch {
+    // תקלת חיבור → מתייחסים כ"לא נמצא" במקום לקרוס ל-error.tsx
+    return null;
+  }
 }
 
 async function getBlessings(countdownId: string): Promise<Blessing[]> {

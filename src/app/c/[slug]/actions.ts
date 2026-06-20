@@ -37,31 +37,36 @@ export async function postBlessing(
     return { error: parsed.error.issues[0]?.message ?? "נתונים לא תקינים" };
   }
 
-  const supabase = createServerClient();
+  try {
+    const supabase = createServerClient();
 
-  // מאתרים את הספירה לפי slug כדי לקבל את ה-id (וגם לוודא שהיא קיימת)
-  const { data: countdown } = await supabase
-    .from("countdowns")
-    .select("id, allow_blessings")
-    .eq("slug", slug)
-    .single();
+    // מאתרים את הספירה לפי slug כדי לקבל את ה-id (וגם לוודא שהיא קיימת)
+    const { data: countdown } = await supabase
+      .from("countdowns")
+      .select("id, allow_blessings")
+      .eq("slug", slug)
+      .single();
 
-  if (!countdown || !countdown.allow_blessings) {
-    return { error: "קיר הברכות אינו פעיל עבור ספירה זו." };
-  }
-
-  const { error } = await supabase.from("blessings").insert({
-    countdown_id: countdown.id,
-    author_name: parsed.data.author_name,
-    message: parsed.data.message,
-  });
-
-  if (error) {
-    // הודעת ה-trigger כשחורגים מקצב המותר
-    if (error.message?.includes("rate_limited")) {
-      return { error: "נשלחו יותר מדי ברכות כעת. נסו שוב בעוד רגע." };
+    if (!countdown || !countdown.allow_blessings) {
+      return { error: "קיר הברכות אינו פעיל עבור ספירה זו." };
     }
-    return { error: "אירעה שגיאה בשליחת האיחול. נסו שוב." };
+
+    const { error } = await supabase.from("blessings").insert({
+      countdown_id: countdown.id,
+      author_name: parsed.data.author_name,
+      message: parsed.data.message,
+    });
+
+    if (error) {
+      // הודעת ה-trigger כשחורגים מקצב המותר
+      if (error.message?.includes("rate_limited")) {
+        return { error: "נשלחו יותר מדי ברכות כעת. נסו שוב בעוד רגע." };
+      }
+      return { error: `אירעה שגיאה בשליחת האיחול: ${error.message}` };
+    }
+  } catch (e) {
+    const message = e instanceof Error ? e.message : String(e);
+    return { error: `תקלת חיבור למסד הנתונים: ${message}` };
   }
 
   revalidatePath(`/c/${slug}`);

@@ -30,7 +30,6 @@ export async function createCountdown(
   }
 
   const data = parsed.data;
-  const supabase = createServerClient();
 
   const row = {
     display_names: data.display_names,
@@ -42,19 +41,36 @@ export async function createCountdown(
     allow_blessings: data.allow_blessings,
   };
 
+  // החיבור והכתיבה עטופים ב-try/catch כדי שכל כשל יחזור כהודעה גלויה
+  // בטופס, ולא יקרוס לעמוד "משהו השתבש". ה-redirect חייב להישאר מחוץ ל-try.
   let slug = "";
-  for (let attempt = 0; attempt < MAX_SLUG_ATTEMPTS; attempt++) {
-    slug = generateSlug();
-    const { error } = await supabase
-      .from("countdowns")
-      .insert({ ...row, slug });
+  try {
+    const supabase = createServerClient();
 
-    if (!error) break;
+    let inserted = false;
+    for (let attempt = 0; attempt < MAX_SLUG_ATTEMPTS; attempt++) {
+      slug = generateSlug();
+      const { error } = await supabase
+        .from("countdowns")
+        .insert({ ...row, slug });
 
-    // 23505 = unique_violation → התנגשות slug, ננסה שוב
-    if (error.code === "23505" && attempt < MAX_SLUG_ATTEMPTS - 1) continue;
+      if (!error) {
+        inserted = true;
+        break;
+      }
 
-    return { error: "אירעה שגיאה ביצירת הספירה. נסו שוב." };
+      // 23505 = unique_violation → התנגשות slug, ננסה שוב
+      if (error.code === "23505" && attempt < MAX_SLUG_ATTEMPTS - 1) continue;
+
+      return { error: `שגיאה ביצירה: ${error.message}` };
+    }
+
+    if (!inserted) {
+      return { error: "לא ניתן היה ליצור קישור ייחודי. נסו שוב." };
+    }
+  } catch (e) {
+    const message = e instanceof Error ? e.message : String(e);
+    return { error: `תקלת חיבור למסד הנתונים: ${message}` };
   }
 
   redirect(`/c/${slug}?created=1`);

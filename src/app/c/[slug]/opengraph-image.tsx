@@ -37,13 +37,14 @@ async function loadHebrewFont(text: string): Promise<ArrayBuffer | null> {
 export default async function OgImage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
+  const { slug } = await params;
   const supabase = createServerClient();
   const { data } = await supabase
     .from("countdowns")
     .select("*")
-    .eq("slug", params.slug)
+    .eq("slug", slug)
     .single();
   const countdown = data as Countdown | null;
 
