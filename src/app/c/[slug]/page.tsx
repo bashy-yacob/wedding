@@ -4,13 +4,14 @@ import type { Metadata } from "next";
 import { createServerClient } from "@/lib/supabase/server";
 import { toHebrewDateString, toGregorianString } from "@/lib/hebcal";
 import { getCountdownState } from "@/lib/time";
+import { getBaseUrl } from "@/lib/url";
 import type { Countdown, Blessing } from "@/types/db";
 import { CountdownClient } from "./CountdownClient";
 import { BlessingsWall } from "./BlessingsWall";
 import { ShareWhatsAppButton } from "@/components/ShareWhatsAppButton";
 import { DonationCTA } from "@/components/DonationCTA";
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+import { FloatingBackground } from "@/components/FloatingBackground";
+import { Divider, Rings } from "@/components/Ornaments";
 
 async function getCountdown(slug: string): Promise<Countdown | null> {
   try {
@@ -49,6 +50,7 @@ export async function generateMetadata({
   const hebrew = toHebrewDateString(countdown.wedding_date);
   const title = `${countdown.display_names} — עד החתונה`;
   const description = `${hebrew} · הצטרפו לספירה לאחור`;
+  const baseUrl = await getBaseUrl();
 
   return {
     title,
@@ -56,7 +58,7 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      url: `${siteUrl}/c/${slug}`,
+      url: `${baseUrl}/c/${slug}`,
       type: "website",
       locale: "he_IL",
     },
@@ -83,7 +85,6 @@ export default async function CountdownPage({
 
   const hebrewDate = toHebrewDateString(countdown.wedding_date);
   const gregorianDate = toGregorianString(countdown.wedding_date);
-  const url = `${siteUrl}/c/${slug}`;
 
   // למצב מזל טוב — נסתיר את הברכה הכפולה (CountdownClient כבר מציג אותה)
   const state = getCountdownState({
@@ -92,10 +93,12 @@ export default async function CountdownPage({
   });
 
   return (
-    <main data-theme={countdown.theme} className="min-h-screen">
+    <main data-theme={countdown.theme} className="bg-animated relative min-h-screen">
+      <FloatingBackground />
+
       <div className="mx-auto max-w-2xl px-6 py-12">
         {created && (
-          <div className="surface-card mb-8 rounded-2xl p-5 text-center">
+          <div className="surface-card reveal mb-8 rounded-2xl p-5 text-center">
             <p className="font-semibold">הספירה נוצרה! 🎉</p>
             <p className="mt-1 text-sm text-[var(--muted)]">
               זה הקישור הייחודי שלכם — שתפו אותו. שימו לב: לא ניתן לערוך את הספירה.
@@ -104,15 +107,19 @@ export default async function CountdownPage({
         )}
 
         {/* כותרת */}
-        <header className="mb-10 text-center">
+        <header className="reveal mb-8 text-center" style={{ animationDelay: "0.05s" }}>
+          <Rings className="mx-auto mb-4 h-10 w-16" />
           <p className="text-sm text-[var(--muted)]">הספירה לחתונה של</p>
-          <h1 className="font-display mt-1 text-4xl font-extrabold sm:text-5xl">
+          <h1 className="font-display accent-gradient-text mt-1 text-4xl font-extrabold sm:text-5xl">
             {countdown.display_names}
           </h1>
         </header>
 
         {/* מונה / מזל טוב */}
-        <div className="surface-card rounded-3xl px-6 py-12">
+        <div
+          className="surface-card reveal rounded-3xl px-6 py-12"
+          style={{ animationDelay: "0.15s" }}
+        >
           <CountdownClient
             weddingDate={countdown.wedding_date}
             weddingTime={countdown.wedding_time}
@@ -120,8 +127,10 @@ export default async function CountdownPage({
             blessing={countdown.blessing}
           />
 
+          <Divider className="my-8" />
+
           {/* תאריך עברי כראשי, לועזי קטן לצדו */}
-          <div className="mt-10 text-center">
+          <div className="text-center">
             <p className="font-display text-2xl font-bold sm:text-3xl">
               {hebrewDate}
             </p>
@@ -133,15 +142,18 @@ export default async function CountdownPage({
 
         {/* ברכת היוצר (בזמן ספירה בלבד) */}
         {countdown.blessing && state.status === "countdown" && (
-          <p className="font-display mt-8 text-center text-lg">
+          <p
+            className="font-display reveal mt-8 text-center text-lg"
+            style={{ animationDelay: "0.25s" }}
+          >
             {countdown.blessing}
           </p>
         )}
 
         {/* שיתוף */}
-        <div className="mt-10">
+        <div className="reveal mt-10" style={{ animationDelay: "0.3s" }}>
           <ShareWhatsAppButton
-            url={url}
+            slug={slug}
             displayNames={countdown.display_names}
             hebrewDate={hebrewDate}
           />

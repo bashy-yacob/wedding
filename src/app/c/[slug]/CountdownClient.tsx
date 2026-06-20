@@ -1,26 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { getCountdownState, type CountdownState } from "@/lib/time";
+import { CountdownDisplay } from "@/components/CountdownDisplay";
+import { useConfetti } from "@/lib/useConfetti";
 
 interface CountdownClientProps {
   weddingDate: string;
   weddingTime: string | null;
   displayNames: string;
   blessing: string | null;
-}
-
-function Unit({ value, label }: { value: number; label: string }) {
-  return (
-    <div className="flex flex-col items-center">
-      <span className="font-display accent-text text-5xl font-extrabold tabular-nums sm:text-7xl">
-        {value}
-      </span>
-      <span className="mt-1 text-sm text-[var(--muted)] sm:text-base">
-        {label}
-      </span>
-    </div>
-  );
 }
 
 export function CountdownClient({
@@ -42,10 +32,18 @@ export function CountdownClient({
     return () => clearInterval(id);
   }, [weddingDate, weddingTime]);
 
-  if (state.status !== "countdown") {
+  const celebrating = state.status !== "countdown";
+  useConfetti(celebrating);
+
+  if (celebrating) {
     return (
-      <div className="animate-gentle-pop text-center">
-        <p className="font-display accent-text text-5xl font-extrabold sm:text-7xl">
+      <motion.div
+        initial={{ scale: 0.92, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className="text-center"
+      >
+        <p className="accent-gradient-text font-display text-5xl font-extrabold sm:text-7xl">
           מזל טוב! 🎉
         </p>
         <p className="mt-4 text-xl text-[var(--muted)]">
@@ -53,20 +51,18 @@ export function CountdownClient({
             ? `${displayNames} מתחתנים היום`
             : `${displayNames} נישאו בשעה טובה`}
         </p>
-        {blessing && (
-          <p className="font-display mt-6 text-lg">{blessing}</p>
-        )}
-      </div>
+        {blessing && <p className="font-display mt-6 text-lg">{blessing}</p>}
+      </motion.div>
     );
   }
 
   const r = state.remaining!;
   return (
-    <div className="flex items-start justify-center gap-5 sm:gap-10">
-      <Unit value={r.days} label="ימים" />
-      <Unit value={r.hours} label="שעות" />
-      <Unit value={r.minutes} label="דקות" />
-      <Unit value={r.seconds} label="שניות" />
-    </div>
+    <CountdownDisplay
+      days={r.days}
+      hours={r.hours}
+      minutes={r.minutes}
+      seconds={r.seconds}
+    />
   );
 }

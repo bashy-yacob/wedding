@@ -3,7 +3,7 @@
 /* ==========================================================================
    ערכות עיצוב — CSS variables לפי data-theme.
    המפתחות מסונכרנים עם src/lib/themes.ts ועם ה-whitelist ב-SQL.
-   ללא תמונות — gradients וטיפוגרפיה בלבד (צניעות).
+   ללא תמונות — gradients, זכוכית וטיפוגרפיה בלבד (צניעות).
    ========================================================================== */
 
 :root {
@@ -12,66 +12,79 @@
 
   /* ברירת מחדל = classic */
   --bg: #faf8f3;
-  --bg-gradient: linear-gradient(160deg, #faf8f3 0%, #f1ece1 100%);
+  --bg-2: #efe7d6;
+  --bg-3: #f6eede;
   --surface: #ffffff;
   --text: #1e2a44;
   --muted: #6b7280;
   --accent: #b08d57;
-  --accent-soft: color-mix(in srgb, var(--accent) 14%, transparent);
+  --accent-2: #d8b878;
 }
 
 [data-theme="classic"] {
   --bg: #faf8f3;
-  --bg-gradient: linear-gradient(160deg, #faf8f3 0%, #f1ece1 100%);
+  --bg-2: #efe7d6;
+  --bg-3: #f3ece0;
   --surface: #ffffff;
   --text: #1e2a44;
   --muted: #6b7280;
   --accent: #b08d57;
+  --accent-2: #d8b878;
 }
 
 [data-theme="gold"] {
   --bg: #fdfaf3;
-  --bg-gradient: linear-gradient(160deg, #fdfaf3 0%, #f6ebd2 100%);
+  --bg-2: #f3e3bf;
+  --bg-3: #faf0d6;
   --surface: #fffdf8;
   --text: #3b2f1a;
   --muted: #8a7a6a;
   --accent: #c9a227;
+  --accent-2: #e7cb6b;
 }
 
 [data-theme="olive"] {
   --bg: #f4f6f0;
-  --bg-gradient: linear-gradient(160deg, #f4f6f0 0%, #e3e9d8 100%);
+  --bg-2: #d9e2c8;
+  --bg-3: #e8eede;
   --surface: #fbfcf8;
   --text: #33402a;
   --muted: #6f7a63;
   --accent: #7a8b4f;
+  --accent-2: #a7b97a;
 }
 
 [data-theme="blush"] {
   --bg: #fdf5f5;
-  --bg-gradient: linear-gradient(160deg, #fdf5f5 0%, #f6e2e4 100%);
+  --bg-2: #f4d9de;
+  --bg-3: #fae6e9;
   --surface: #fffafa;
   --text: #4a2c34;
   --muted: #9a7077;
   --accent: #c98a9a;
+  --accent-2: #e3b3bf;
 }
 
 [data-theme="royal"] {
   --bg: #f9f4f4;
-  --bg-gradient: linear-gradient(160deg, #f9f4f4 0%, #efe0e0 100%);
+  --bg-2: #e6cfd2;
+  --bg-3: #f1dfe1;
   --surface: #fffafa;
   --text: #5a1f2b;
   --muted: #8a5560;
   --accent: #8c2f39;
+  --accent-2: #c06b74;
 }
 
 [data-theme="midnight"] {
   --bg: #161826;
-  --bg-gradient: linear-gradient(160deg, #1b1e30 0%, #11131f 100%);
-  --surface: #222539;
+  --bg-2: #0e1019;
+  --bg-3: #20233a;
+  --surface: rgba(40, 44, 70, 0.7);
   --text: #f1ece1;
   --muted: #9aa0bd;
   --accent: #d4b66a;
+  --accent-2: #f0d995;
 }
 
 [data-theme] {
@@ -84,9 +97,21 @@ html {
 
 body {
   font-family: var(--font-ui);
-  background: var(--bg-gradient);
   color: var(--text);
+  background: var(--bg);
   min-height: 100vh;
+}
+
+/* רקע גרדיאנט מונפש איטי — מתחדש לפי משתני ה-theme */
+.bg-animated {
+  position: relative;
+  background:
+    radial-gradient(circle at 20% 20%, var(--bg-3) 0%, transparent 45%),
+    radial-gradient(circle at 80% 0%, var(--accent-soft) 0%, transparent 40%),
+    radial-gradient(circle at 50% 100%, var(--bg-2) 0%, transparent 55%),
+    linear-gradient(160deg, var(--bg) 0%, var(--bg-2) 100%);
+  background-size: 160% 160%, 140% 140%, 160% 160%, 100% 100%;
+  animation: gradient-shift 22s ease-in-out infinite;
 }
 
 /* כותרות וספרות גדולות — פונט תצוגה עברי */
@@ -94,25 +119,99 @@ body {
   font-family: var(--font-display);
 }
 
-/* כרטיס משטח אחיד */
+/* כרטיס זכוכית */
 .surface-card {
-  background: var(--surface);
-  border: 1px solid color-mix(in srgb, var(--text) 8%, transparent);
-  box-shadow: 0 10px 40px -24px color-mix(in srgb, var(--text) 55%, transparent);
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+  box-shadow: 0 20px 60px -30px color-mix(in srgb, var(--text) 60%, transparent);
 }
 
 .accent-text {
   color: var(--accent);
 }
 
-/* אנימציית מזל טוב עדינה — ללא תמונות */
+.accent-gradient-text {
+  background: linear-gradient(120deg, var(--accent) 0%, var(--accent-2) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* כרטיס יחידת ספירה (זכוכית עם ברק) */
+.countdown-unit {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  box-shadow: 0 14px 40px -24px color-mix(in srgb, var(--text) 70%, transparent);
+}
+
+.countdown-unit::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    color-mix(in srgb, var(--accent-2) 35%, transparent) 50%,
+    transparent 70%
+  );
+  transform: translateX(-120%);
+  animation: shimmer 6s ease-in-out infinite;
+}
+
+/* ========================== Keyframes ========================== */
+
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 0%, 100% 0%, 50% 100%, 0 0;
+  }
+  50% {
+    background-position: 30% 40%, 60% 30%, 40% 60%, 0 0;
+  }
+}
+
+@keyframes shimmer {
+  0%,
+  60%,
+  100% {
+    transform: translateX(-120%);
+  }
+  80% {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes float-up {
+  0% {
+    transform: translateY(20vh) scale(0.6);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.5;
+  }
+  90% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(-110vh) scale(1);
+    opacity: 0;
+  }
+}
+
 @keyframes gentle-pop {
   0% {
-    transform: scale(0.96);
+    transform: scale(0.94);
     opacity: 0;
   }
   60% {
-    transform: scale(1.02);
+    transform: scale(1.03);
   }
   100% {
     transform: scale(1);
@@ -120,6 +219,51 @@ body {
   }
 }
 
+@keyframes fade-in-up {
+  from {
+    transform: translateY(22px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--accent-soft);
+  }
+  50% {
+    box-shadow: 0 0 28px 6px var(--accent-soft);
+  }
+}
+
+/* חשיפה מדורגת בכניסה */
+.reveal {
+  opacity: 0;
+  animation: fade-in-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
 .animate-gentle-pop {
   animation: gentle-pop 0.7s ease-out both;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2.6s ease-in-out infinite;
+}
+
+/* כיבוד העדפת תנועה מופחתת */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .bg-animated {
+    animation: none;
+  }
 }
