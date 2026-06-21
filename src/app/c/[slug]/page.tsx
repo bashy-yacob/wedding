@@ -51,24 +51,27 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const countdown = await getCountdown(slug);
-  if (!countdown) return { title: "ספירה לא נמצאה — עד החתונה" };
+  // דפי הספירה האישיים פרטיים — חוסמים אינדוקס בגוגל בכל מקרה.
+  const noindex = { robots: { index: false, follow: false } } as const;
+  if (!countdown) return { title: "ספירה לא נמצאה", ...noindex };
 
   const hebrew = toHebrewDateString(countdown.wedding_date);
-  const title = `${countdown.display_names} — עד החתונה`;
+  const title = countdown.display_names;
   const description = `${hebrew} · הצטרפו לספירה לאחור`;
   const baseUrl = await getBaseUrl();
 
   return {
     title,
     description,
+    ...noindex,
     openGraph: {
-      title,
+      title: `${title} — עד החתונה`,
       description,
       url: `${baseUrl}/c/${slug}`,
       type: "website",
       locale: "he_IL",
     },
-    twitter: { card: "summary_large_image", title, description },
+    twitter: { card: "summary_large_image", title: `${title} — עד החתונה`, description },
   };
 }
 

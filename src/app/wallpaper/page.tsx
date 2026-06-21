@@ -13,9 +13,10 @@ import {
 import { WallpaperLinkBox } from "./WallpaperLinkBox";
 
 export const metadata: Metadata = {
-  title: "הספירה על שולחן העבודה — עד החתונה",
+  title: "הספירה על שולחן העבודה",
   description:
     "מדריך פשוט להפוך את הספירה לאחור לרקע חי על שולחן העבודה של Windows — בלי דפדפן, מתעדכן בזמן אמת.",
+  alternates: { canonical: "/wallpaper" },
   openGraph: {
     title: "הספירה על שולחן העבודה של Windows",
     description:
