@@ -120,8 +120,8 @@ export default async function CountdownPage({
         title="הפכו את הספירה לרקע חי על שולחן העבודה"
       >
         <Monitor className="h-4 w-4 shrink-0 text-[var(--accent)]" />
-        <span className="hidden sm:inline">רקע לשולחן העבודה</span>
-        <span className="sm:hidden">רקע למחשב</span>
+        <span className="hidden sm:inline">מדריך לרקע לשולחן עבודה</span>
+        <span className="sm:hidden">מדריך לרקע</span>
       </Link>
 
       {/* ----- מסך ראשון: כותרת + ספירה במלוא הגובה ----- */}
