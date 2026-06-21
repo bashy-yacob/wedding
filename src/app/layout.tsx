@@ -8,6 +8,7 @@ import {
   Secular_One,
   Bellefair,
 } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { getBaseUrl } from "@/lib/url";
 import "./globals.css";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -98,6 +99,7 @@ export default function RootLayout({
       <body>
         {children}
         <SiteFooter />
+        <Analytics />
       </body>
     </html>
   );
