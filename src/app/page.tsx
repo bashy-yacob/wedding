@@ -2,7 +2,18 @@ import Link from "next/link";
 import { HeroDemo } from "@/components/HeroDemo";
 import { FloatingBackground } from "@/components/FloatingBackground";
 import { DonationCTA } from "@/components/DonationCTA";
-import { Divider, Rings, Heart, Pencil, LinkIcon, Send } from "@/components/Ornaments";
+import {
+  Divider,
+  Rings,
+  Pencil,
+  LinkIcon,
+  Send,
+  Calendar,
+  Chat,
+  Sparkles,
+  Palette,
+  Gift,
+} from "@/components/Ornaments";
 
 const STEPS = [
   {
@@ -26,12 +37,12 @@ const STEPS = [
 ];
 
 const FEATURES = [
-  "תאריך עברי כראשי",
-  "קיר ברכות פתוח",
-  "שיתוף בוואטסאפ",
-  "מצב מזל טוב חגיגי",
-  "6 ערכות עיצוב",
-  "ללא הרשמה, בחינם",
+  { label: "תאריך עברי כראשי", Icon: Calendar },
+  { label: "קיר ברכות פתוח", Icon: Chat },
+  { label: "שיתוף בוואטסאפ", Icon: Send },
+  { label: "מצב מזל טוב חגיגי", Icon: Sparkles },
+  { label: "6 ערכות עיצוב", Icon: Palette },
+  { label: "ללא הרשמה, בחינם", Icon: Gift },
 ];
 
 export default function HomePage() {
@@ -106,11 +117,11 @@ export default function HomePage() {
         <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3">
           {FEATURES.map((f) => (
             <li
-              key={f}
+              key={f.label}
               className="surface-card flex items-center gap-2 rounded-2xl px-4 py-3 text-sm"
             >
-              <Heart className="h-4 w-4 shrink-0 text-[var(--accent)]" />
-              {f}
+              <f.Icon className="h-4 w-4 shrink-0 text-[var(--accent)]" />
+              {f.label}
             </li>
           ))}
         </ul>
