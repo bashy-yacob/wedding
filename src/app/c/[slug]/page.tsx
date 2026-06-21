@@ -165,6 +165,12 @@ export default async function CountdownPage({
           )}
         </div>
 
+        {/* עמעום עדין בתחתית — רומז שיש תוכן "מתחת לקיפול" */}
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[var(--bg)] to-transparent"
+          aria-hidden
+        />
+
         {/* חיווי גלילה בולט — מבהיר שיש המשך (קיר ברכות) למטה */}
         <a
           href="#more"
