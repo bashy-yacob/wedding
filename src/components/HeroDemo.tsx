@@ -26,7 +26,7 @@ export function HeroDemo() {
   }, []);
 
   return (
-    <div className="surface-card mx-auto w-full max-w-md rounded-3xl px-6 py-8 text-center">
+    <div className="surface-card mx-auto w-full max-w-lg rounded-3xl px-8 py-10 text-center">
       <p className="text-xs text-[var(--muted)]">הספירה לחתונה של</p>
       <p className="font-display accent-gradient-text mt-1 mb-6 text-2xl font-bold">
         חיים ושרה

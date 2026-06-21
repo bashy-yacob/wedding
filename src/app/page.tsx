@@ -51,7 +51,7 @@ export default function HomePage() {
       <FloatingBackground />
 
       {/* ------------------------------- Hero ------------------------------- */}
-      <section className="mx-auto flex max-w-5xl flex-col items-center px-6 pt-10 pb-10 text-center sm:pt-14">
+      <section className="mx-auto flex max-w-6xl flex-col items-center px-6 pt-10 pb-10 text-center sm:pt-14">
         <Rings className="reveal mb-4 h-12 w-20" />
 
         <span
@@ -92,11 +92,11 @@ export default function HomePage() {
       <Divider className="my-4" />
 
       {/* ---------------------------- איך זה עובד ---------------------------- */}
-      <section className="mx-auto max-w-5xl px-6 py-16">
-        <h2 className="font-display mb-10 text-center text-3xl font-bold">
+      <section className="mx-auto max-w-6xl px-6 py-16">
+        <h2 className="font-display mb-10 text-center text-3xl font-bold sm:text-4xl">
           איך זה עובד
         </h2>
-        <div className="grid gap-6 sm:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-3 lg:gap-8">
           {STEPS.map((s) => (
             <div key={s.n} className="surface-card rounded-3xl p-7 text-center">
               <div className="relative mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[var(--accent-soft)] text-[var(--accent)]">
@@ -113,8 +113,8 @@ export default function HomePage() {
       </section>
 
       {/* ----------------------------- יתרונות ----------------------------- */}
-      <section className="mx-auto max-w-3xl px-6 pb-20">
-        <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+      <section className="mx-auto max-w-5xl px-6 pb-20">
+        <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:gap-4">
           {FEATURES.map((f) => (
             <li
               key={f.label}
