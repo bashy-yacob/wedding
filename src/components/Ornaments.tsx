@@ -175,3 +175,51 @@ export function Gift({ className = "" }: { className?: string }) {
     </LineIcon>
   );
 }
+
+/** מסך מחשב — מוטיב הרקע החי לשולחן העבודה. */
+export function Monitor({ className = "" }: { className?: string }) {
+  return (
+    <LineIcon className={className}>
+      <rect x="3" y="4" width="18" height="13" rx="2" />
+      <path d="M9 21h6M12 17v4" />
+    </LineIcon>
+  );
+}
+
+/** הורדה — לכפתורי ההתקנה. */
+export function Download({ className = "" }: { className?: string }) {
+  return (
+    <LineIcon className={className}>
+      <path d="M12 3v12" />
+      <path d="m7 10 5 5 5-5" />
+      <path d="M5 21h14" />
+    </LineIcon>
+  );
+}
+
+/** פלוס — "הוספת רקע". */
+export function Plus({ className = "" }: { className?: string }) {
+  return (
+    <LineIcon className={className}>
+      <path d="M12 5v14M5 12h14" />
+    </LineIcon>
+  );
+}
+
+/** וי — "מוכן / הצלחה". */
+export function Check({ className = "" }: { className?: string }) {
+  return (
+    <LineIcon className={className}>
+      <path d="M20 6 9 17l-5-5" />
+    </LineIcon>
+  );
+}
+
+/** חץ עדין לסוף קישור (פונה שמאלה — מתאים ל-RTL). */
+export function ArrowLeft({ className = "" }: { className?: string }) {
+  return (
+    <LineIcon className={className}>
+      <path d="M19 12H5M12 19l-7-7 7-7" />
+    </LineIcon>
+  );
+}
