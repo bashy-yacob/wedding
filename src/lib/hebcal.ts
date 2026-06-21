@@ -1,4 +1,4 @@
-import { HDate, months } from "@hebcal/core";
+import { HDate, months, gematriya } from "@hebcal/core";
 
 // ============================================================================
 // hebcal.ts — המרה ותצוגה של תאריכים עבריים/לועזיים.
@@ -58,6 +58,29 @@ export interface HebrewMonthOption {
   label: string; // שם החודש בעברית
 }
 
+// שמות החודשים בעברית. hebcal מחזיר תעתיק לועזי (Tishrei), לכן ממפים ידנית.
+// אדר בשנה מעוברת מטופל בנפרד (אדר א׳ / אדר ב׳) בתוך hebrewMonthsForYear.
+const HEBREW_MONTH_NAMES: Record<number, string> = {
+  [months.NISAN]: "ניסן",
+  [months.IYYAR]: "אייר",
+  [months.SIVAN]: "סיוון",
+  [months.TAMUZ]: "תמוז",
+  [months.AV]: "אב",
+  [months.ELUL]: "אלול",
+  [months.TISHREI]: "תשרי",
+  [months.CHESHVAN]: "חשוון",
+  [months.KISLEV]: "כסלו",
+  [months.TEVET]: "טבת",
+  [months.SHVAT]: "שבט",
+  [months.ADAR_I]: "אדר",
+  [months.ADAR_II]: "אדר ב׳",
+};
+
+/** תווית יום עברי באותיות (1 → "א׳", 15 → "ט״ו", 30 → "ל׳"). */
+export function hebrewDayLabel(day: number): string {
+  return gematriya(day);
+}
+
 /**
  * רשימת חודשים עבריים לשנה נתונה, בסדר התצוגה (תשרי → אלול).
  * מטפל באדר א'/ב' בשנה מעוברת אוטומטית לפי מספר החודשים בשנה.
@@ -98,7 +121,9 @@ export function hebrewMonthsForYear(year: number): HebrewMonthOption[] {
 
   return order.map((m) => ({
     value: m,
-    label: HDate.getMonthName(m, year),
+    // בשנה מעוברת אדר הראשון מוצג כ"אדר א׳"; אחרת פשוט "אדר".
+    label:
+      isLeap && m === months.ADAR_I ? "אדר א׳" : HEBREW_MONTH_NAMES[m],
   }));
 }
 
