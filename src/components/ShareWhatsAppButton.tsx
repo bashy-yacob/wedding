@@ -6,6 +6,8 @@ interface ShareWhatsAppButtonProps {
   slug: string;
   displayNames: string;
   hebrewDate: string;
+  /** סוג האירוע לשורת ההזמנה (חתונה כברירת מחדל) */
+  eventType?: string;
   /** גרסה קטנה ומאופקת לפינה/צד, במקום כפתורים גדולים במרכז */
   compact?: boolean;
 }
@@ -14,6 +16,7 @@ export function ShareWhatsAppButton({
   slug,
   displayNames,
   hebrewDate,
+  eventType = "חתונה",
   compact = false,
 }: ShareWhatsAppButtonProps) {
   const [copied, setCopied] = useState(false);
@@ -24,7 +27,7 @@ export function ShareWhatsAppButton({
     setUrl(`${window.location.origin}/c/${slug}`);
   }, [slug]);
 
-  const text = `הצטרפו לספירה לאחור לחתונה של ${displayNames} 🤍\n${hebrewDate}\n${url}`;
+  const text = `הצטרפו לספירה לאחור ל${eventType} של ${displayNames} 🤍\n${hebrewDate}\n${url}`;
   const waHref = `https://wa.me/?text=${encodeURIComponent(text)}`;
 
   const copy = async () => {

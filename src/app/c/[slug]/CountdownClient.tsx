@@ -10,6 +10,7 @@ interface CountdownClientProps {
   weddingDate: string;
   weddingTime: string | null;
   displayNames: string;
+  eventType?: string;
   blessing: string | null;
 }
 
@@ -17,6 +18,7 @@ export function CountdownClient({
   weddingDate,
   weddingTime,
   displayNames,
+  eventType = "חתונה",
   blessing,
 }: CountdownClientProps) {
   // חישוב ראשוני זהה לשרת כדי למנוע הבהוב hydration
@@ -36,6 +38,17 @@ export function CountdownClient({
   useConfetti(celebrating);
 
   if (celebrating) {
+    // חתונה שומרת על הניסוח האישי; אירועים אחרים מקבלים ניסוח נייטרלי וחגיגי.
+    const isWedding = eventType === "חתונה";
+    const subtitle =
+      state.status === "mazaltov"
+        ? isWedding
+          ? `${displayNames} מתחתנים היום`
+          : `היום ה${eventType} של ${displayNames}!`
+        : isWedding
+          ? `${displayNames} נישאו בשעה טובה`
+          : `ה${eventType} של ${displayNames} בשעה טובה`;
+
     return (
       <motion.div
         initial={{ scale: 0.92, opacity: 0 }}
@@ -46,11 +59,7 @@ export function CountdownClient({
         <p className="accent-gradient-text font-display text-5xl font-extrabold sm:text-7xl">
           מזל טוב! 🎉
         </p>
-        <p className="mt-4 text-xl text-[var(--muted)]">
-          {state.status === "mazaltov"
-            ? `${displayNames} מתחתנים היום`
-            : `${displayNames} נישאו בשעה טובה`}
-        </p>
+        <p className="mt-4 text-xl text-[var(--muted)]">{subtitle}</p>
         {blessing && <p className="font-display mt-6 text-lg">{blessing}</p>}
       </motion.div>
     );

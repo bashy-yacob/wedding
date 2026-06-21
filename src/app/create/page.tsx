@@ -31,6 +31,7 @@ export default function CreatePage() {
   });
 
   // שדות נשלטים שמזינים את התצוגה המקדימה החיה
+  const [eventType, setEventType] = useState("חתונה");
   const [displayNames, setDisplayNames] = useState("");
   const [weddingTime, setWeddingTime] = useState("");
   const [blessing, setBlessing] = useState("");
@@ -59,6 +60,25 @@ export default function CreatePage() {
         <div className="grid gap-10 lg:grid-cols-[1fr_22rem]">
           {/* ----------------------------- הטופס ----------------------------- */}
           <form action={formAction} className="space-y-6">
+            <div>
+              <label htmlFor="event_type" className={labelClass}>
+                סוג האירוע
+              </label>
+              <input
+                id="event_type"
+                name="event_type"
+                maxLength={30}
+                value={eventType}
+                onChange={(e) => setEventType(e.target.value)}
+                placeholder="חתונה"
+                className={fieldClass}
+              />
+              <p className="mt-2 text-xs text-[var(--muted)]">
+                קובע את השורה הראשונה: &quot;הספירה ל{eventType || "חתונה"} של…&quot;.
+                למשל: בר מצווה, ברית, יום הולדת.
+              </p>
+            </div>
+
             <div>
               <label htmlFor="display_names" className={labelClass}>
                 שמות או כיתוב
@@ -217,6 +237,7 @@ export default function CreatePage() {
               תצוגה מקדימה
             </p>
             <CountdownPreview
+              eventType={eventType}
               displayNames={displayNames}
               weddingDate={weddingDate}
               weddingTime={weddingTime}

@@ -87,6 +87,8 @@ export default async function CountdownPage({
 
   const hebrewDate = toHebrewDateString(countdown.wedding_date);
   const gregorianDate = toGregorianString(countdown.wedding_date);
+  // סוג האירוע — נופל ל"חתונה" עבור ספירות ישנות שנוצרו לפני התוספת.
+  const eventType = countdown.event_type || "חתונה";
 
   // למצב מזל טוב — נסתיר את הברכה הכפולה (CountdownClient כבר מציג אותה)
   const state = getCountdownState({
@@ -113,7 +115,7 @@ export default async function CountdownPage({
           {/* כותרת + שיתוף מאופק בצד (בגובה השמות) */}
           <header className="reveal relative mb-8 text-center" style={{ animationDelay: "0.05s" }}>
             <Rings className="mx-auto mb-4 h-10 w-16" />
-            <p className="text-sm text-[var(--muted)]">הספירה לחתונה של</p>
+            <p className="text-sm text-[var(--muted)]">הספירה ל{eventType} של</p>
             <h1 className="font-display accent-gradient-text mt-1 text-4xl font-extrabold sm:text-5xl">
               {countdown.display_names}
             </h1>
@@ -124,6 +126,7 @@ export default async function CountdownPage({
                 compact
                 slug={slug}
                 displayNames={countdown.display_names}
+                eventType={eventType}
                 hebrewDate={hebrewDate}
               />
             </div>
@@ -138,6 +141,7 @@ export default async function CountdownPage({
               weddingDate={countdown.wedding_date}
               weddingTime={countdown.wedding_time}
               displayNames={countdown.display_names}
+              eventType={eventType}
               blessing={countdown.blessing}
             />
 

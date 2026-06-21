@@ -43,6 +43,13 @@ export const createCountdownSchema = z.object({
     .trim()
     .min(1, "יש להזין שמות או כיתוב")
     .max(80, "עד 80 תווים"),
+  // סוג האירוע (חתונה / בר מצווה / ברית ...). ריק → ברירת מחדל "חתונה".
+  event_type: z
+    .string()
+    .trim()
+    .max(30, "עד 30 תווים")
+    .optional()
+    .or(z.literal("")),
   wedding_date: dateOnly,
   wedding_time: z
     .string()

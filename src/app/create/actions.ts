@@ -17,6 +17,7 @@ export async function createCountdown(
 ): Promise<CreateState> {
   const parsed = createCountdownSchema.safeParse({
     display_names: formData.get("display_names"),
+    event_type: formData.get("event_type") ?? "",
     wedding_date: formData.get("wedding_date"),
     wedding_time: formData.get("wedding_time") ?? "",
     show_gregorian: formData.get("show_gregorian") === "on",
@@ -34,6 +35,7 @@ export async function createCountdown(
 
   const row = {
     display_names: data.display_names,
+    event_type: data.event_type ? data.event_type : "חתונה",
     wedding_date: data.wedding_date,
     wedding_time: data.wedding_time ? data.wedding_time : null,
     show_gregorian: data.show_gregorian,
