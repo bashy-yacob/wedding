@@ -110,23 +110,24 @@ export default async function CountdownPage({
             </div>
           )}
 
-          {/* כותרת */}
-          <header className="reveal mb-8 text-center" style={{ animationDelay: "0.05s" }}>
+          {/* כותרת + שיתוף מאופק בצד (בגובה השמות) */}
+          <header className="reveal relative mb-8 text-center" style={{ animationDelay: "0.05s" }}>
             <Rings className="mx-auto mb-4 h-10 w-16" />
             <p className="text-sm text-[var(--muted)]">הספירה לחתונה של</p>
             <h1 className="font-display accent-gradient-text mt-1 text-4xl font-extrabold sm:text-5xl">
               {countdown.display_names}
             </h1>
-          </header>
 
-          {/* שיתוף — 2 הקישורים למעלה */}
-          <div className="reveal mb-8" style={{ animationDelay: "0.1s" }}>
-            <ShareWhatsAppButton
-              slug={slug}
-              displayNames={countdown.display_names}
-              hebrewDate={hebrewDate}
-            />
-          </div>
+            {/* הקישורים בצד, בגובה השמות; במובייל יורדים למטה וממורכזים */}
+            <div className="mt-6 flex justify-center sm:absolute sm:top-1/2 sm:left-0 sm:mt-0 sm:-translate-y-1/2">
+              <ShareWhatsAppButton
+                compact
+                slug={slug}
+                displayNames={countdown.display_names}
+                hebrewDate={hebrewDate}
+              />
+            </div>
+          </header>
 
           {/* מונה / מזל טוב */}
           <div
