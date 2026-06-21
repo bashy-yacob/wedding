@@ -7,6 +7,7 @@ import { getCountdownState } from "@/lib/time";
 import { getBaseUrl } from "@/lib/url";
 import type { Countdown, Blessing } from "@/types/db";
 import { CountdownClient } from "./CountdownClient";
+import { ScrollHint } from "./ScrollHint";
 import { BlessingsWall } from "./BlessingsWall";
 import { ShareWhatsAppButton } from "@/components/ShareWhatsAppButton";
 import { DonationCTA } from "@/components/DonationCTA";
@@ -169,34 +170,8 @@ export default async function CountdownPage({
           )}
         </div>
 
-        {/* עמעום עדין בתחתית — רומז שיש תוכן "מתחת לקיפול" */}
-        <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[var(--bg)] to-transparent"
-          aria-hidden
-        />
-
-        {/* חיווי גלילה בולט — מבהיר שיש המשך (קיר ברכות) למטה */}
-        <a
-          href="#more"
-          aria-label={countdown.allow_blessings ? "גלול לקיר הברכות" : "גלול להמשך"}
-          className="group absolute bottom-6 left-1/2 flex -translate-x-1/2 animate-bounce flex-col items-center gap-2 text-[var(--accent)]"
-        >
-          <span className="surface-card rounded-full px-4 py-1.5 text-sm font-semibold shadow-md">
-            {countdown.allow_blessings ? "לקיר הברכות 🤍" : "להמשך"}
-          </span>
-          <svg
-            viewBox="0 0 24 24"
-            className="h-8 w-8 drop-shadow-sm"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden
-          >
-            <path d="M6 9l6 6 6-6" />
-          </svg>
-        </a>
+        {/* עמעום + חיווי גלילה — נעלמים כשמתחילים לגלול */}
+        <ScrollHint label={countdown.allow_blessings ? "לקיר הברכות 🤍" : "להמשך"} />
       </section>
 
       {/* ----- שאר התוכן: קיר ברכות, הזמנה, יצירה ----- */}
