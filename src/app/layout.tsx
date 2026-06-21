@@ -72,14 +72,47 @@ export async function generateMetadata(): Promise<Metadata> {
   const baseUrl = await getBaseUrl();
   return {
     metadataBase: new URL(baseUrl),
-    title: "עד החתונה — ספירה לאחור לחתונה",
+    title: {
+      default: "עד החתונה — ספירה לאחור לחתונה",
+      template: "%s — עד החתונה",
+    },
     description:
-      "צרו ספירה לאחור אישית לחתונה, עם תאריך עברי וקישור ייחודי לשיתוף בוואטסאפ.",
+      "צרו ספירה לאחור אישית לחתונה, עם תאריך עברי וקישור ייחודי לשיתוף בוואטסאפ. בלי הרשמה, בחינם.",
+    applicationName: "עד החתונה",
+    verification: {
+      google: "dfbUFrKHhvCENBsQlPvc66bouOqHHNVEFZgD44R_mAk",
+    },
+    keywords: [
+      "ספירה לאחור לחתונה",
+      "טיימר לחתונה",
+      "ספירה לחתונה",
+      "תאריך עברי לחתונה",
+      "כמה ימים נשארו לחתונה",
+      "ספירה לאחור בעברית",
+      "הזמנה לחתונה",
+      "ספירה לאירוע",
+    ],
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
     openGraph: {
+      siteName: "עד החתונה",
       title: "עד החתונה — ספירה לאחור לחתונה",
       description: "ספירה אישית לחתונה עם תאריך עברי וקישור לשיתוף.",
       type: "website",
       locale: "he_IL",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "עד החתונה — ספירה לאחור לחתונה",
+      description: "ספירה אישית לחתונה עם תאריך עברי וקישור לשיתוף.",
     },
   };
 }
