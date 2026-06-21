@@ -70,7 +70,7 @@ export function CountdownPreview({
 
             <Divider className="my-5" />
 
-            <p className="font-display text-lg font-bold">
+            <p className="wedding-date font-display text-lg font-bold">
               {toHebrewDateString(weddingDate)}
             </p>
             {showGregorian && (

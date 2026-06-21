@@ -131,7 +131,7 @@ export default async function CountdownPage({
 
           {/* תאריך עברי כראשי, לועזי קטן לצדו */}
           <div className="text-center">
-            <p className="font-display text-2xl font-bold sm:text-3xl">
+            <p className="wedding-date font-display text-2xl font-bold sm:text-3xl">
               {hebrewDate}
             </p>
             {countdown.show_gregorian && (
