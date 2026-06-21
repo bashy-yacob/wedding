@@ -18,6 +18,8 @@ export async function updateCountdown(
     show_gregorian: formData.get("show_gregorian") === "on",
     blessing: formData.get("blessing") ?? "",
     theme: formData.get("theme"),
+    accent_color: formData.get("accent_color") ?? "",
+    font_key: formData.get("font_key") ?? "",
     allow_blessings: formData.get("allow_blessings") === "on",
     invitation_path: formData.get("invitation_path") ?? "",
   });
@@ -42,6 +44,8 @@ export async function updateCountdown(
       p_show_gregorian: data.show_gregorian,
       p_blessing: data.blessing ? data.blessing : null,
       p_theme: data.theme,
+      p_accent_color: data.accent_color ? data.accent_color : null,
+      p_font_key: data.font_key ? data.font_key : null,
       p_allow_blessings: data.allow_blessings,
       p_invitation_path: data.invitation_path ? data.invitation_path : null,
     });

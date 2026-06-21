@@ -42,6 +42,11 @@ npm run dev                  # http://localhost:3000
    - `supabase/migrations/0004_invitations.sql` — העלאת הזמנת החתונה:
      עמודה + Storage bucket ציבורי (`invitations`) עם הגבלת סוג/גודל ומדיניות
      העלאה אנונימית.
+   - `supabase/migrations/0005_event_type.sql` — סוג האירוע (חתונה / בר מצווה ...).
+   - `supabase/migrations/0006_edit_token.sql` — עריכה מאובטחת אחרי יצירה
+     (קישור עריכה אישי + RPC לעדכון).
+   - `supabase/migrations/0007_custom_design.sql` — התאמה אישית מעל עיצוב הבסיס:
+     צבע דגש (`accent_color`) ופונט (`font_key`) אופציונליים.
 3. (אופציונלי, לפיתוח) הריצו `supabase/seed.sql` לנתוני דמו.
 4. העתיקו את ה‑URL וה‑anon key מ‑**Project Settings → API** אל `.env.local`.
 

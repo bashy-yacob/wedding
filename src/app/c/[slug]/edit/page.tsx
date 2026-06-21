@@ -59,6 +59,8 @@ export default async function EditPage({
           : "",
         blessing: countdown.blessing ?? "",
         theme: countdown.theme as ThemeKey,
+        accentColor: countdown.accent_color,
+        fontKey: countdown.font_key,
         showGregorian: countdown.show_gregorian,
         allowBlessings: countdown.allow_blessings,
         invitationPath: countdown.invitation_path,

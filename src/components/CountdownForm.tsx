@@ -3,10 +3,16 @@
 import { useActionState, useState } from "react";
 import Link from "next/link";
 import { ThemePicker } from "@/components/ThemePicker";
+import { CustomDesignPicker } from "@/components/CustomDesignPicker";
 import { HebrewDateInput, type HebrewDateValue } from "@/components/HebrewDateInput";
 import { CountdownPreview } from "@/components/CountdownPreview";
 import { InvitationUpload } from "@/components/InvitationUpload";
-import { DEFAULT_THEME, type ThemeKey } from "@/lib/themes";
+import {
+  DEFAULT_THEME,
+  customThemeVars,
+  type ThemeKey,
+  type FontKey,
+} from "@/lib/themes";
 import { gregorianFromHebrew, currentHebrewYear } from "@/lib/hebcal";
 import { months } from "@hebcal/core";
 
@@ -27,6 +33,8 @@ export interface CountdownFormInitial {
   weddingTime: string; // 'HH:MM'
   blessing: string;
   theme: ThemeKey;
+  accentColor: string | null;
+  fontKey: FontKey | null;
   showGregorian: boolean;
   allowBlessings: boolean;
   invitationPath: string | null;
@@ -64,6 +72,13 @@ export function CountdownForm({
   );
 
   const [theme, setTheme] = useState<ThemeKey>(initial?.theme ?? DEFAULT_THEME);
+  // התאמה אישית מעל עיצוב הבסיס (null = ערכי הבסיס)
+  const [accentColor, setAccentColor] = useState<string | null>(
+    initial?.accentColor ?? null,
+  );
+  const [fontKey, setFontKey] = useState<FontKey | null>(
+    initial?.fontKey ?? null,
+  );
   // בעריכה מציגים את התאריך הלועזי השמור (מקור האמת); אפשר לעבור ללוח עברי בכל עת.
   const [dateMode, setDateMode] = useState<"greg" | "hebrew">(
     initial ? "greg" : "hebrew",
@@ -97,8 +112,11 @@ export function CountdownForm({
       ? gregDate
       : gregorianFromHebrew(hebDate.day, hebDate.month, hebDate.year);
 
+  // דריסות משתני CSS להתאמה האישית (ריק = ערכי הבסיס)
+  const customStyle = customThemeVars({ accentColor, fontKey }) as React.CSSProperties;
+
   return (
-    <main data-theme={theme} className="bg-animated min-h-screen">
+    <main data-theme={theme} style={customStyle} className="bg-animated min-h-screen">
       <div className="mx-auto max-w-5xl px-6 py-12">
         <Link href="/" className="text-sm text-[var(--muted)] hover:text-[var(--accent)]">
           → חזרה
@@ -244,6 +262,25 @@ export function CountdownForm({
               <input type="hidden" name="theme" value={theme} />
             </div>
 
+            <details className="rounded-2xl border border-[var(--accent)]/20 bg-[var(--surface)]/40 p-4">
+              <summary className="cursor-pointer text-sm font-medium">
+                התאמה אישית (אופציונלי)
+                <span className="mr-2 text-xs font-normal text-[var(--muted)]">
+                  צבע דגש ופונט משלכם
+                </span>
+              </summary>
+              <div className="mt-4">
+                <CustomDesignPicker
+                  accentColor={accentColor}
+                  onAccentChange={setAccentColor}
+                  fontKey={fontKey}
+                  onFontChange={setFontKey}
+                />
+              </div>
+            </details>
+            <input type="hidden" name="accent_color" value={accentColor ?? ""} />
+            <input type="hidden" name="font_key" value={fontKey ?? ""} />
+
             <div className="space-y-3">
               <label className="flex items-center gap-3">
                 <input
@@ -301,6 +338,8 @@ export function CountdownForm({
               weddingTime={weddingTime}
               blessing={blessing}
               theme={theme}
+              accentColor={accentColor}
+              fontKey={fontKey}
               showGregorian={showGregorian}
               invitationPreview={invitationPreview}
             />
