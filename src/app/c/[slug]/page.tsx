@@ -119,6 +119,15 @@ export default async function CountdownPage({
             </h1>
           </header>
 
+          {/* שיתוף — 2 הקישורים למעלה */}
+          <div className="reveal mb-8" style={{ animationDelay: "0.1s" }}>
+            <ShareWhatsAppButton
+              slug={slug}
+              displayNames={countdown.display_names}
+              hebrewDate={hebrewDate}
+            />
+          </div>
+
           {/* מונה / מזל טוב */}
           <div
             className="surface-card reveal rounded-3xl px-6 py-12"
@@ -176,16 +185,12 @@ export default async function CountdownPage({
         </a>
       </section>
 
-      {/* ----- שאר התוכן: שיתוף, ברכות, יצירה ----- */}
-      <div id="more" className="mx-auto max-w-2xl px-6 pb-16">
-        {/* שיתוף */}
-        <div className="mt-4">
-          <ShareWhatsAppButton
-            slug={slug}
-            displayNames={countdown.display_names}
-            hebrewDate={hebrewDate}
-          />
-        </div>
+      {/* ----- שאר התוכן: קיר ברכות, הזמנה, יצירה ----- */}
+      <div id="more" className="mx-auto max-w-2xl px-6 pb-16 pt-4">
+        {/* קיר ברכות — מיד מתחת לספירה */}
+        {countdown.allow_blessings && (
+          <BlessingsWall slug={slug} blessings={blessings} />
+        )}
 
         {/* הזמנת החתונה */}
         {countdown.invitation_path && (
@@ -193,11 +198,6 @@ export default async function CountdownPage({
             url={invitationPublicUrl(countdown.invitation_path)}
             displayNames={countdown.display_names}
           />
-        )}
-
-        {/* קיר ברכות */}
-        {countdown.allow_blessings && (
-          <BlessingsWall slug={slug} blessings={blessings} />
         )}
 
         {/* צרו ספירה משלכם */}
