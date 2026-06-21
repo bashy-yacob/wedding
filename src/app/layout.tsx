@@ -79,6 +79,9 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       "צרו ספירה לאחור אישית לחתונה, עם תאריך עברי וקישור ייחודי לשיתוף בוואטסאפ. בלי הרשמה, בחינם.",
     applicationName: "עד החתונה",
+    verification: {
+      google: "dfbUFrKHhvCENBsQlPvc66bouOqHHNVEFZgD44R_mAk",
+    },
     keywords: [
       "ספירה לאחור לחתונה",
       "טיימר לחתונה",
