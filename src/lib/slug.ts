@@ -6,9 +6,19 @@ const SLUG_LENGTH = 8;
 
 const generate = customAlphabet(ALPHABET, SLUG_LENGTH);
 
+// מפתח העריכה הוא סוד (לא מזהה ציבורי), לכן ארוך בהרבה מ-slug: 24 תווים
+// מאלפבית בן 30 ≈ 118 ביט אנטרופיה — בלתי-ניתן לניחוש/brute-force מעשי.
+const EDIT_TOKEN_LENGTH = 24;
+const generateToken = customAlphabet(ALPHABET, EDIT_TOKEN_LENGTH);
+
 /** מייצר slug אקראי קצר וייחודי (38^8 אפשרויות — בטוח מהתנגשות בקנה המידה הזה). */
 export function generateSlug(): string {
   return generate();
+}
+
+/** מייצר מפתח עריכה סודי וארוך, המשמש כ"סיסמה" לעריכת ספירה קיימת. */
+export function generateEditToken(): string {
+  return generateToken();
 }
 
 /** בודק אם מחרוזת היא slug תקין שנוצר על ידינו. */

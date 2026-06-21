@@ -12,6 +12,9 @@ export interface Countdown {
   allow_blessings: boolean;
   invitation_path: string | null;
   created_at: string;
+  // הקריאה הציבורית (get_countdown) אינה מחזירה אותו; קיים רק בשליפה לעריכה
+  // (get_countdown_for_edit) שדורשת את הטוקן עצמו.
+  edit_token?: string;
 }
 
 export interface Blessing {
