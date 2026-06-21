@@ -22,6 +22,7 @@ export default async function OgImage({
   const countdown = (Array.isArray(data) ? data[0] : data) as Countdown | null;
 
   const names = countdown?.display_names ?? "עד החתונה";
+  const eventType = countdown?.event_type || "חתונה";
   const hebrewDate = countdown ? toHebrewDateString(countdown.wedding_date) : "";
   const gregDate = countdown ? toGregorianString(countdown.wedding_date) : "";
   const theme = getTheme(countdown?.theme);
@@ -38,7 +39,7 @@ export default async function OgImage({
         : "מזל טוב! 🎉";
   }
 
-  const allText = `${names}${hebrewDate}${gregDate}${headline}עדהחתונה0123456789`;
+  const allText = `${names}${hebrewDate}${gregDate}${headline}${eventType}עדהחתונה0123456789`;
   const font = await loadHebrewFont(allText);
 
   return new ImageResponse(
@@ -59,7 +60,7 @@ export default async function OgImage({
         }}
       >
         <div style={{ fontSize: 34, color: theme.muted, marginBottom: 12 }}>
-          הספירה לחתונה של
+          הספירה ל{eventType} של
         </div>
         <div style={{ fontSize: 88, fontWeight: 700, marginBottom: 28 }}>
           {names}

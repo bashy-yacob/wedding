@@ -88,6 +88,8 @@ export default async function CountdownPage({
 
   const hebrewDate = toHebrewDateString(countdown.wedding_date);
   const gregorianDate = toGregorianString(countdown.wedding_date);
+  // סוג האירוע — נופל ל"חתונה" עבור ספירות ישנות שנוצרו לפני התוספת.
+  const eventType = countdown.event_type || "חתונה";
 
   // למצב מזל טוב — נסתיר את הברכה הכפולה (CountdownClient כבר מציג אותה)
   const state = getCountdownState({
@@ -113,13 +115,24 @@ export default async function CountdownPage({
             </div>
           )}
 
-          {/* כותרת */}
-          <header className="reveal mb-8 text-center" style={{ animationDelay: "0.05s" }}>
+          {/* כותרת + שיתוף מאופק בצד (בגובה השמות) */}
+          <header className="reveal relative mb-8 text-center" style={{ animationDelay: "0.05s" }}>
             <Rings className="mx-auto mb-4 h-10 w-16" />
-            <p className="text-sm text-[var(--muted)]">הספירה לחתונה של</p>
+            <p className="text-sm text-[var(--muted)]">הספירה ל{eventType} של</p>
             <h1 className="font-display accent-gradient-text mt-1 text-4xl font-extrabold sm:text-5xl">
               {countdown.display_names}
             </h1>
+
+            {/* הקישורים בצד, בגובה השמות; במובייל יורדים למטה וממורכזים */}
+            <div className="mt-6 flex justify-center sm:absolute sm:top-1/2 sm:left-0 sm:mt-0 sm:-translate-y-1/2">
+              <ShareWhatsAppButton
+                compact
+                slug={slug}
+                displayNames={countdown.display_names}
+                eventType={eventType}
+                hebrewDate={hebrewDate}
+              />
+            </div>
           </header>
 
           {/* מונה / מזל טוב */}
@@ -131,6 +144,7 @@ export default async function CountdownPage({
               weddingDate={countdown.wedding_date}
               weddingTime={countdown.wedding_time}
               displayNames={countdown.display_names}
+              eventType={eventType}
               blessing={countdown.blessing}
             />
 
@@ -158,18 +172,27 @@ export default async function CountdownPage({
           )}
         </div>
 
-        {/* חיווי גלילה — רומז שיש עוד תוכן למטה */}
+        {/* עמעום עדין בתחתית — רומז שיש תוכן "מתחת לקיפול" */}
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[var(--bg)] to-transparent"
+          aria-hidden
+        />
+
+        {/* חיווי גלילה בולט — מבהיר שיש המשך (קיר ברכות) למטה */}
         <a
           href="#more"
-          aria-label="גלול לעוד"
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[var(--accent)] opacity-70 transition hover:opacity-100"
+          aria-label={countdown.allow_blessings ? "גלול לקיר הברכות" : "גלול להמשך"}
+          className="group absolute bottom-6 left-1/2 flex -translate-x-1/2 animate-bounce flex-col items-center gap-2 text-[var(--accent)]"
         >
+          <span className="surface-card rounded-full px-4 py-1.5 text-sm font-semibold shadow-md">
+            {countdown.allow_blessings ? "לקיר הברכות 🤍" : "להמשך"}
+          </span>
           <svg
             viewBox="0 0 24 24"
-            className="h-7 w-7 animate-bounce"
+            className="h-8 w-8 drop-shadow-sm"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth="2.5"
             strokeLinecap="round"
             strokeLinejoin="round"
             aria-hidden
@@ -179,16 +202,12 @@ export default async function CountdownPage({
         </a>
       </section>
 
-      {/* ----- שאר התוכן: שיתוף, ברכות, יצירה ----- */}
-      <div id="more" className="mx-auto max-w-2xl px-6 pb-16">
-        {/* שיתוף */}
-        <div className="mt-4">
-          <ShareWhatsAppButton
-            slug={slug}
-            displayNames={countdown.display_names}
-            hebrewDate={hebrewDate}
-          />
-        </div>
+      {/* ----- שאר התוכן: קיר ברכות, הזמנה, יצירה ----- */}
+      <div id="more" className="mx-auto max-w-2xl px-6 pb-16 pt-4">
+        {/* קיר ברכות — מיד מתחת לספירה */}
+        {countdown.allow_blessings && (
+          <BlessingsWall slug={slug} blessings={blessings} />
+        )}
 
         {/* הזמנת החתונה */}
         {countdown.invitation_path && (
@@ -196,11 +215,6 @@ export default async function CountdownPage({
             url={invitationPublicUrl(countdown.invitation_path)}
             displayNames={countdown.display_names}
           />
-        )}
-
-        {/* קיר ברכות */}
-        {countdown.allow_blessings && (
-          <BlessingsWall slug={slug} blessings={blessings} />
         )}
 
         {/* צרו ספירה משלכם */}

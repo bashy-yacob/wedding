@@ -21,6 +21,7 @@ type FormAction = (
 ) => Promise<CountdownFormState>;
 
 export interface CountdownFormInitial {
+  eventType: string;
   displayNames: string;
   weddingDate: string; // לועזי 'YYYY-MM-DD' (מקור האמת ב-DB)
   weddingTime: string; // 'HH:MM'
@@ -75,6 +76,7 @@ export function CountdownForm({
   });
 
   // שדות נשלטים שמזינים את התצוגה המקדימה החיה
+  const [eventType, setEventType] = useState(initial?.eventType ?? "חתונה");
   const [displayNames, setDisplayNames] = useState(initial?.displayNames ?? "");
   const [weddingTime, setWeddingTime] = useState(initial?.weddingTime ?? "");
   const [blessing, setBlessing] = useState(initial?.blessing ?? "");
@@ -112,6 +114,25 @@ export function CountdownForm({
             {editToken && (
               <input type="hidden" name="edit_token" value={editToken} />
             )}
+
+            <div>
+              <label htmlFor="event_type" className={labelClass}>
+                סוג האירוע
+              </label>
+              <input
+                id="event_type"
+                name="event_type"
+                maxLength={30}
+                value={eventType}
+                onChange={(e) => setEventType(e.target.value)}
+                placeholder="חתונה"
+                className={fieldClass}
+              />
+              <p className="mt-2 text-xs text-[var(--muted)]">
+                קובע את השורה הראשונה: &quot;הספירה ל{eventType || "חתונה"} של…&quot;.
+                למשל: בר מצווה, ברית, יום הולדת.
+              </p>
+            </div>
 
             <div>
               <label htmlFor="display_names" className={labelClass}>
@@ -274,6 +295,7 @@ export function CountdownForm({
               תצוגה מקדימה
             </p>
             <CountdownPreview
+              eventType={eventType}
               displayNames={displayNames}
               weddingDate={weddingDate}
               weddingTime={weddingTime}

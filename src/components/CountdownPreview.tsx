@@ -8,6 +8,7 @@ import { Divider } from "./Ornaments";
 import type { ThemeKey } from "@/lib/themes";
 
 interface CountdownPreviewProps {
+  eventType: string;
   displayNames: string;
   weddingDate: string; // 'YYYY-MM-DD' | ''
   weddingTime: string; // 'HH:MM' | ''
@@ -22,6 +23,7 @@ function isValidDate(value: string): boolean {
 }
 
 export function CountdownPreview({
+  eventType,
   displayNames,
   weddingDate,
   weddingTime,
@@ -49,7 +51,7 @@ export function CountdownPreview({
   return (
     <div data-theme={theme} className="bg-animated rounded-3xl p-1">
       <div className="surface-card rounded-[1.4rem] px-5 py-8 text-center">
-        <p className="text-xs text-[var(--muted)]">הספירה לחתונה של</p>
+        <p className="text-xs text-[var(--muted)]">הספירה ל{eventType || "חתונה"} של</p>
         <p className="font-display accent-gradient-text mt-1 mb-5 text-2xl font-extrabold">
           {displayNames || "השמות שלכם"}
         </p>

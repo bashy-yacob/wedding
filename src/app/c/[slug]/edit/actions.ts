@@ -12,6 +12,7 @@ export async function updateCountdown(
   const parsed = editCountdownSchema.safeParse({
     edit_token: formData.get("edit_token"),
     display_names: formData.get("display_names"),
+    event_type: formData.get("event_type") ?? "",
     wedding_date: formData.get("wedding_date"),
     wedding_time: formData.get("wedding_time") ?? "",
     show_gregorian: formData.get("show_gregorian") === "on",
@@ -34,6 +35,7 @@ export async function updateCountdown(
     const supabase = createServerClient();
     const { data: returnedSlug, error } = await supabase.rpc("update_countdown", {
       p_token: data.edit_token,
+      p_event_type: data.event_type ? data.event_type : "חתונה",
       p_display_names: data.display_names,
       p_wedding_date: data.wedding_date,
       p_wedding_time: data.wedding_time ? data.wedding_time : null,

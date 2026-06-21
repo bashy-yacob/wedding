@@ -51,6 +51,7 @@ returns table (
   id              uuid,
   slug            text,
   display_names   text,
+  event_type      text,
   wedding_date    date,
   wedding_time    time,
   show_gregorian  boolean,
@@ -65,8 +66,9 @@ stable
 security definer
 set search_path = public
 as $$
-  select id, slug, display_names, wedding_date, wedding_time, show_gregorian,
-         blessing, theme, allow_blessings, invitation_path, created_at
+  select id, slug, display_names, event_type, wedding_date, wedding_time,
+         show_gregorian, blessing, theme, allow_blessings, invitation_path,
+         created_at
   from public.countdowns
   where slug = p_slug
   limit 1;
@@ -93,6 +95,7 @@ $$;
 -- ----------------------------------------------------------------------------
 create or replace function public.update_countdown(
   p_token           text,
+  p_event_type      text,
   p_display_names   text,
   p_wedding_date    date,
   p_wedding_time    time,
@@ -111,6 +114,7 @@ declare
   v_slug text;
 begin
   update public.countdowns set
+    event_type      = p_event_type,
     display_names   = p_display_names,
     wedding_date    = p_wedding_date,
     wedding_time    = p_wedding_time,
@@ -132,5 +136,5 @@ $$;
 grant execute on function public.get_countdown(text)               to anon;
 grant execute on function public.get_countdown_for_edit(text)      to anon;
 grant execute on function public.update_countdown(
-  text, text, date, time, boolean, text, text, boolean, text
+  text, text, text, date, time, boolean, text, text, boolean, text
 )                                                                  to anon;

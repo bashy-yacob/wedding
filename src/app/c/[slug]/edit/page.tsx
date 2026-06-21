@@ -50,6 +50,7 @@ export default async function EditPage({
       submitLabel="שמרו שינויים"
       pendingLabel="שומר..."
       initial={{
+        eventType: countdown.event_type || "חתונה",
         displayNames: countdown.display_names,
         weddingDate: countdown.wedding_date,
         // ה-DB שומר 'HH:MM:SS' — לטופס נדרש 'HH:MM'.

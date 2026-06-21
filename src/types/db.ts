@@ -4,6 +4,7 @@ export interface Countdown {
   id: string;
   slug: string;
   display_names: string;
+  event_type: string; // סוג האירוע — "חתונה" כברירת מחדל
   wedding_date: string; // 'YYYY-MM-DD'
   wedding_time: string | null; // 'HH:MM:SS'
   show_gregorian: boolean;
