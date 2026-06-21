@@ -17,7 +17,7 @@ const ITEMS = [
 export function FloatingBackground() {
   return (
     <div
-      className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
+      className="floating-bg pointer-events-none fixed inset-0 -z-10 overflow-hidden"
       aria-hidden
     >
       {ITEMS.map((it, i) => (

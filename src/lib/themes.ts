@@ -1,8 +1,18 @@
 // רישום ערכות העיצוב. המפתחות חייבים להישאר מסונכרנים עם ה-whitelist
 // ב-supabase/migrations/0001_init.sql (constraint theme_whitelist).
 //
-// כל ערכה היא קבוצת CSS variables בלבד — gradients וטיפוגרפיה, ללא תמונות (צניעות).
-// הצבעים מוגדרים גם כאן (ל-OG image שרץ בצד השרת) וגם ב-globals.css (לדפדפן).
+// כל מפתח הוא *שפת עיצוב* שלמה ונפרדת — לא רק החלפת צבעים. הפריסה, הטיפוגרפיה,
+// הרקע, צורת הספרות והעיטורים שונים לחלוטין בין הערכות, וכולם מוגדרים ב-globals.css
+// תחת [data-theme="..."]. כאן נשמרים הצבעים העיקריים בלבד, לשימוש ה-OG image
+// (רץ בצד השרת) ובורר העיצוב. ללא תמונות (צניעות) — gradients, צורות וטיפוגרפיה.
+//
+// שש השפות:
+//   classic   — הזמנה ערוכה: נייר קרם, ספרות סריף עם קו זהב דק, ללא קופסאות.
+//   gold      — ארט דקו: רקע כהה, מסגרות זהב גאומטריות, ספרות מוזהבות.
+//   olive     — בוטני: ירוקי מרווה רכים, דיסקיות אורגניות, אווירת גן.
+//   blush     — רומנטי: ענני ורוד, קפסולות מעוגלות, לבבות.
+//   royal     — נועז/מודרני: ניגודיות גבוהה, ספרות סאנס ענקיות, בלוק צבע.
+//   midnight  — שמי לילה: שמי כוכבים, ספרות זוהרות, אווירה שמימית.
 
 export type ThemeKey =
   | "classic"
@@ -25,65 +35,72 @@ export interface Theme {
 }
 
 export const THEMES: Record<ThemeKey, Theme> = {
+  // הזמנה ערוכה — נייר קרם, דיו כהה, קו זהב דק.
   classic: {
     key: "classic",
     label: "קלאסי",
     bg: "#faf8f3",
-    bgGradient: "linear-gradient(160deg, #faf8f3 0%, #f1ece1 100%)",
+    bgGradient: "linear-gradient(160deg, #fdfcf8 0%, #f0ebe0 100%)",
     surface: "#ffffff",
-    text: "#1e2a44",
-    muted: "#6b7280",
+    text: "#26303f",
+    muted: "#8c8576",
     accent: "#b08d57",
   },
+  // ארט דקו — רקע אספרסו כהה עם זוהר זהב גאומטרי.
   gold: {
     key: "gold",
-    label: "זהב",
-    bg: "#fdfaf3",
-    bgGradient: "linear-gradient(160deg, #fdfaf3 0%, #f6ebd2 100%)",
-    surface: "#fffdf8",
-    text: "#3b2f1a",
-    muted: "#8a7a6a",
-    accent: "#c9a227",
+    label: "ארט דקו",
+    bg: "#14110b",
+    bgGradient:
+      "radial-gradient(circle at 50% 30%, #2a2114 0%, #14110b 70%)",
+    surface: "#1d1810",
+    text: "#f3e7c6",
+    muted: "#b7a079",
+    accent: "#d4af37",
   },
+  // בוטני — ירוקי מרווה רכים ואורגניים, אווירת גן.
   olive: {
     key: "olive",
-    label: "זית",
-    bg: "#f4f6f0",
-    bgGradient: "linear-gradient(160deg, #f4f6f0 0%, #e3e9d8 100%)",
-    surface: "#fbfcf8",
-    text: "#33402a",
-    muted: "#6f7a63",
-    accent: "#7a8b4f",
+    label: "בוטני",
+    bg: "#eef2e6",
+    bgGradient: "linear-gradient(160deg, #f3f6ec 0%, #dde7cc 100%)",
+    surface: "#fbfdf6",
+    text: "#2f3d27",
+    muted: "#6f7d5e",
+    accent: "#6b8e4e",
   },
+  // רומנטי — ענני ורוד חולמניים, קפסולות רכות.
   blush: {
     key: "blush",
-    label: "ורד עדין",
-    bg: "#fdf5f5",
-    bgGradient: "linear-gradient(160deg, #fdf5f5 0%, #f6e2e4 100%)",
-    surface: "#fffafa",
-    text: "#4a2c34",
-    muted: "#9a7077",
-    accent: "#c98a9a",
+    label: "רומנטי",
+    bg: "#fdf3f4",
+    bgGradient: "linear-gradient(160deg, #fff7f8 0%, #fbdfe6 100%)",
+    surface: "#fffafb",
+    text: "#5b3a44",
+    muted: "#b08a92",
+    accent: "#d98ba0",
   },
+  // נועז — קרם בניגוד לבורדו עז, ספרות סאנס ענקיות.
   royal: {
     key: "royal",
-    label: "מלכותי",
-    bg: "#f9f4f4",
-    bgGradient: "linear-gradient(160deg, #f9f4f4 0%, #efe0e0 100%)",
-    surface: "#fffafa",
-    text: "#5a1f2b",
-    muted: "#8a5560",
-    accent: "#8c2f39",
+    label: "נועז",
+    bg: "#f4ede4",
+    bgGradient: "linear-gradient(160deg, #f4ede4 0%, #f4ede4 58%, #c8475a 100%)",
+    surface: "#fffaf5",
+    text: "#3a0d16",
+    muted: "#9a6b72",
+    accent: "#9b1b30",
   },
+  // שמי לילה — שמי כוכבים כהים, ספרות זוהרות.
   midnight: {
     key: "midnight",
-    label: "חצות",
-    bg: "#161826",
-    bgGradient: "linear-gradient(160deg, #1b1e30 0%, #11131f 100%)",
-    surface: "#222539",
-    text: "#f1ece1",
-    muted: "#9aa0bd",
-    accent: "#d4b66a",
+    label: "שמי לילה",
+    bg: "#0d1024",
+    bgGradient: "radial-gradient(circle at 50% 0%, #1a1f44 0%, #0a0c1d 75%)",
+    surface: "rgba(26, 31, 64, 0.72)",
+    text: "#f4f1e8",
+    muted: "#9aa3c8",
+    accent: "#e8c878",
   },
 };
 

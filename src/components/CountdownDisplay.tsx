@@ -24,14 +24,14 @@ function Unit({
 }) {
   const text = pad ? String(value).padStart(2, "0") : String(value);
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div className="countdown-cell flex flex-col items-center gap-2">
       <div
         className={`countdown-unit flex items-center justify-center ${
           compact ? "h-14 w-14 sm:h-16 sm:w-16" : "h-20 w-20 sm:h-28 sm:w-28"
         }`}
       >
         <div
-          className={`relative overflow-hidden ${
+          className={`countdown-digit relative overflow-hidden ${
             compact ? "h-9" : "h-12 sm:h-16"
           }`}
         >
@@ -42,7 +42,7 @@ function Unit({
               animate={{ y: "0%", opacity: 1 }}
               exit={{ y: "100%", opacity: 0 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className={`accent-gradient-text font-display block text-center font-extrabold tabular-nums ${
+              className={`countdown-num accent-gradient-text font-display block text-center font-extrabold tabular-nums ${
                 compact ? "text-3xl" : "text-5xl sm:text-7xl"
               }`}
             >
@@ -52,7 +52,7 @@ function Unit({
         </div>
       </div>
       <span
-        className={`text-[var(--muted)] ${compact ? "text-xs" : "text-sm sm:text-base"}`}
+        className={`countdown-label text-[var(--muted)] ${compact ? "text-xs" : "text-sm sm:text-base"}`}
       >
         {label}
       </span>

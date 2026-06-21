@@ -1,9 +1,17 @@
 @import "tailwindcss";
 
 /* ==========================================================================
-   ערכות עיצוב — CSS variables לפי data-theme.
+   שש שפות עיצוב נפרדות לחלוטין — לא רק החלפת צבעים.
+   כל [data-theme] מגדיר רקע, כרטיס, צורת ספרות, טיפוגרפיה ועיטורים משלו.
    המפתחות מסונכרנים עם src/lib/themes.ts ועם ה-whitelist ב-SQL.
-   ללא תמונות — gradients, זכוכית וטיפוגרפיה בלבד (צניעות).
+   ללא תמונות — gradients, צורות, זוהר וטיפוגרפיה בלבד (צניעות).
+
+     classic  — הזמנה ערוכה: נייר קרם, ספרות דיו עם קו זהב דק, ללא קופסאות.
+     gold     — ארט דקו: רקע כהה, מסגרות זהב גאומטריות עם פינות, קרני זוהר.
+     olive    — בוטני: ירוקי מרווה, "עלים" אורגניים בצורה בלתי-סימטרית.
+     blush    — רומנטי: ענני ורוד, קפסולות מעוגלות, ספרות לבנות.
+     royal    — נועז: ניגודיות גבוהה, בלוקי צבע, ספרות סאנס ענקיות עם צל קשיח.
+     midnight — שמי לילה: שמי כוכבים נוצצים, ספרות זוהרות.
    ========================================================================== */
 
 :root {
@@ -15,8 +23,8 @@
   --bg-2: #efe7d6;
   --bg-3: #f6eede;
   --surface: #ffffff;
-  --text: #1e2a44;
-  --muted: #6b7280;
+  --text: #26303f;
+  --muted: #8c8576;
   --accent: #b08d57;
   --accent-2: #d8b878;
 }
@@ -24,67 +32,67 @@
 [data-theme="classic"] {
   --bg: #faf8f3;
   --bg-2: #efe7d6;
-  --bg-3: #f3ece0;
+  --bg-3: #f6eede;
   --surface: #ffffff;
-  --text: #1e2a44;
-  --muted: #6b7280;
+  --text: #26303f;
+  --muted: #8c8576;
   --accent: #b08d57;
   --accent-2: #d8b878;
 }
 
 [data-theme="gold"] {
-  --bg: #fdfaf3;
-  --bg-2: #f3e3bf;
-  --bg-3: #faf0d6;
-  --surface: #fffdf8;
-  --text: #3b2f1a;
-  --muted: #8a7a6a;
-  --accent: #c9a227;
-  --accent-2: #e7cb6b;
+  --bg: #14110b;
+  --bg-2: #0c0a06;
+  --bg-3: #2a2114;
+  --surface: #1d1810;
+  --text: #f3e7c6;
+  --muted: #b7a079;
+  --accent: #d4af37;
+  --accent-2: #f0d57e;
 }
 
 [data-theme="olive"] {
-  --bg: #f4f6f0;
-  --bg-2: #d9e2c8;
-  --bg-3: #e8eede;
-  --surface: #fbfcf8;
-  --text: #33402a;
-  --muted: #6f7a63;
-  --accent: #7a8b4f;
-  --accent-2: #a7b97a;
+  --bg: #eef2e6;
+  --bg-2: #d7e2c4;
+  --bg-3: #e6eed9;
+  --surface: #fbfdf6;
+  --text: #2f3d27;
+  --muted: #6f7d5e;
+  --accent: #6b8e4e;
+  --accent-2: #9cb673;
 }
 
 [data-theme="blush"] {
-  --bg: #fdf5f5;
-  --bg-2: #f4d9de;
-  --bg-3: #fae6e9;
-  --surface: #fffafa;
-  --text: #4a2c34;
-  --muted: #9a7077;
-  --accent: #c98a9a;
-  --accent-2: #e3b3bf;
+  --bg: #fdf3f4;
+  --bg-2: #f7d6de;
+  --bg-3: #fde8ec;
+  --surface: #fffafb;
+  --text: #5b3a44;
+  --muted: #b08a92;
+  --accent: #d98ba0;
+  --accent-2: #f0bccb;
 }
 
 [data-theme="royal"] {
-  --bg: #f9f4f4;
-  --bg-2: #e6cfd2;
-  --bg-3: #f1dfe1;
-  --surface: #fffafa;
-  --text: #5a1f2b;
-  --muted: #8a5560;
-  --accent: #8c2f39;
-  --accent-2: #c06b74;
+  --bg: #f4ede4;
+  --bg-2: #9b1b30;
+  --bg-3: #efe2d4;
+  --surface: #fffaf5;
+  --text: #3a0d16;
+  --muted: #9a6b72;
+  --accent: #9b1b30;
+  --accent-2: #c8475a;
 }
 
 [data-theme="midnight"] {
-  --bg: #161826;
-  --bg-2: #0e1019;
-  --bg-3: #20233a;
-  --surface: rgba(40, 44, 70, 0.7);
-  --text: #f1ece1;
-  --muted: #9aa0bd;
-  --accent: #d4b66a;
-  --accent-2: #f0d995;
+  --bg: #0d1024;
+  --bg-2: #060713;
+  --bg-3: #1a1f44;
+  --surface: rgba(26, 31, 64, 0.72);
+  --text: #f4f1e8;
+  --muted: #9aa3c8;
+  --accent: #e8c878;
+  --accent-2: #fbe6b0;
 }
 
 [data-theme] {
@@ -102,30 +110,12 @@ body {
   min-height: 100vh;
 }
 
-/* רקע גרדיאנט מונפש איטי — מתחדש לפי משתני ה-theme */
-.bg-animated {
-  position: relative;
-  background:
-    radial-gradient(circle at 20% 20%, var(--bg-3) 0%, transparent 45%),
-    radial-gradient(circle at 80% 0%, var(--accent-soft) 0%, transparent 40%),
-    radial-gradient(circle at 50% 100%, var(--bg-2) 0%, transparent 55%),
-    linear-gradient(160deg, var(--bg) 0%, var(--bg-2) 100%);
-  background-size: 160% 160%, 140% 140%, 160% 160%, 100% 100%;
-  animation: gradient-shift 22s ease-in-out infinite;
-}
+/* ==========================================================================
+   מחלקות בסיס (ברירת מחדל = classic). כל שפה דורסת אותן בהמשך.
+   ========================================================================== */
 
-/* כותרות וספרות גדולות — פונט תצוגה עברי */
 .font-display {
   font-family: var(--font-display);
-}
-
-/* כרטיס זכוכית */
-.surface-card {
-  background: color-mix(in srgb, var(--surface) 78%, transparent);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
-  box-shadow: 0 20px 60px -30px color-mix(in srgb, var(--text) 60%, transparent);
 }
 
 .accent-text {
@@ -139,30 +129,330 @@ body {
   color: transparent;
 }
 
-/* כרטיס יחידת ספירה (זכוכית עם ברק) */
-.countdown-unit {
+/* רקע — classic: נייר קרם רגוע וסטטי */
+.bg-animated {
   position: relative;
-  overflow: hidden;
-  border-radius: 1.25rem;
-  background: color-mix(in srgb, var(--surface) 70%, transparent);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
-  box-shadow: 0 14px 40px -24px color-mix(in srgb, var(--text) 70%, transparent);
+  background:
+    radial-gradient(circle at 50% -15%, var(--bg-3) 0%, transparent 60%),
+    linear-gradient(165deg, var(--bg) 0%, var(--bg-2) 120%);
 }
 
-.countdown-unit::after {
+/* כרטיס — classic: זכוכית עדינה עם מסגרת זהב דקה */
+.surface-card {
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid color-mix(in srgb, var(--accent) 26%, transparent);
+  border-radius: 1rem;
+  box-shadow: 0 18px 50px -34px color-mix(in srgb, var(--text) 60%, transparent);
+}
+
+/* יחידת ספירה — classic: ללא קופסה */
+.countdown-unit {
+  position: relative;
+  width: auto;
+  padding-inline: 0.4rem;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+
+/* ==========================================================================
+   classic — הזמנה ערוכה
+   ========================================================================== */
+
+[data-theme="classic"] .countdown-num {
+  background: none;
+  color: var(--text);
+  -webkit-text-fill-color: var(--text);
+  font-weight: 600;
+}
+
+[data-theme="classic"] .countdown-digit {
+  border-bottom: 2px solid color-mix(in srgb, var(--accent) 60%, transparent);
+}
+
+[data-theme="classic"] .countdown-label {
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   gold — ארט דקו
+   ========================================================================== */
+
+[data-theme="gold"] .bg-animated {
+  background:
+    radial-gradient(circle at 50% 30%, color-mix(in srgb, var(--accent) 20%, transparent) 0%, transparent 42%),
+    radial-gradient(circle at 50% 30%, var(--bg-3) 0%, var(--bg) 72%);
+}
+
+[data-theme="gold"] .bg-animated::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    115deg,
-    transparent 30%,
-    color-mix(in srgb, var(--accent-2) 35%, transparent) 50%,
-    transparent 70%
+  pointer-events: none;
+  background: repeating-conic-gradient(
+    from 0deg at 50% 28%,
+    color-mix(in srgb, var(--accent) 12%, transparent) 0deg 1.5deg,
+    transparent 1.5deg 14deg
   );
-  transform: translateX(-120%);
-  animation: shimmer 6s ease-in-out infinite;
+  opacity: 0.5;
+  -webkit-mask: radial-gradient(circle at 50% 28%, black 0%, transparent 58%);
+  mask: radial-gradient(circle at 50% 28%, black 0%, transparent 58%);
+}
+
+[data-theme="gold"] .surface-card {
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 2px solid color-mix(in srgb, var(--accent) 60%, transparent);
+  border-radius: 0.25rem;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--accent) 28%, transparent),
+    0 26px 60px -30px #000;
+}
+
+[data-theme="gold"] .countdown-unit {
+  padding: 0.25rem 0.85rem;
+  background: linear-gradient(165deg, #211a10 0%, #050402 100%);
+  border: 1px solid color-mix(in srgb, var(--accent) 70%, transparent);
+  box-shadow: inset 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+  overflow: hidden;
+}
+
+/* פינות דקו */
+[data-theme="gold"] .countdown-unit::before,
+[data-theme="gold"] .countdown-unit::after {
+  content: "";
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border: 2px solid var(--accent);
+}
+
+[data-theme="gold"] .countdown-unit::before {
+  top: 4px;
+  right: 4px;
+  border-bottom: none;
+  border-left: none;
+}
+
+[data-theme="gold"] .countdown-unit::after {
+  bottom: 4px;
+  left: 4px;
+  border-top: none;
+  border-right: none;
+}
+
+[data-theme="gold"] .countdown-label {
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   olive — בוטני (צורות אורגניות)
+   ========================================================================== */
+
+[data-theme="olive"] .bg-animated {
+  background:
+    radial-gradient(circle at 15% 12%, color-mix(in srgb, var(--accent) 16%, transparent) 0%, transparent 40%),
+    radial-gradient(circle at 88% 82%, var(--bg-2) 0%, transparent 48%),
+    linear-gradient(160deg, var(--bg) 0%, var(--bg-3) 100%);
+  background-size: 150% 150%, 160% 160%, 100% 100%;
+  animation: gradient-shift 28s ease-in-out infinite;
+}
+
+[data-theme="olive"] .surface-card {
+  background: color-mix(in srgb, var(--surface) 84%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border-radius: 2rem 2.6rem 2rem 2.6rem;
+  box-shadow: 0 22px 50px -32px color-mix(in srgb, var(--accent) 75%, transparent);
+}
+
+[data-theme="olive"] .countdown-unit {
+  padding: 0.3rem 0.95rem;
+  background: color-mix(in srgb, var(--accent) 14%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  border-radius: 42% 58% 56% 44% / 56% 44% 58% 42%;
+  box-shadow: 0 12px 26px -18px color-mix(in srgb, var(--accent) 85%, transparent);
+  overflow: hidden;
+}
+
+[data-theme="olive"] .countdown-num {
+  background: none;
+  color: var(--text);
+  -webkit-text-fill-color: var(--text);
+}
+
+/* ==========================================================================
+   blush — רומנטי (קפסולות)
+   ========================================================================== */
+
+[data-theme="blush"] .bg-animated {
+  background:
+    radial-gradient(circle at 25% 18%, var(--bg-3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 28%, color-mix(in srgb, var(--accent) 20%, transparent) 0%, transparent 45%),
+    radial-gradient(circle at 50% 105%, var(--bg-2) 0%, transparent 60%),
+    linear-gradient(160deg, var(--bg) 0%, #fff7f9 100%);
+  background-size: 150% 150%, 140% 140%, 170% 170%, 100% 100%;
+  animation: gradient-shift 24s ease-in-out infinite;
+}
+
+[data-theme="blush"] .surface-card {
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 26%, transparent);
+  border-radius: 2.25rem;
+  box-shadow: 0 26px 60px -30px color-mix(in srgb, var(--accent) 80%, transparent);
+}
+
+[data-theme="blush"] .countdown-unit {
+  padding: 0.3rem 1.05rem;
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--accent) 80%, white) 0%,
+    var(--accent) 100%
+  );
+  border: none;
+  border-radius: 999px;
+  box-shadow: 0 14px 30px -16px color-mix(in srgb, var(--accent) 90%, transparent);
+  overflow: hidden;
+}
+
+[data-theme="blush"] .countdown-num {
+  background: none;
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+}
+
+/* ==========================================================================
+   royal — נועז (בלוקי צבע + סאנס ענק)
+   ========================================================================== */
+
+[data-theme="royal"] .bg-animated {
+  background: linear-gradient(160deg, var(--bg) 0%, var(--bg-3) 100%);
+}
+
+/* פס בורדו עז בקצה — שוליים מודרניים */
+[data-theme="royal"] .bg-animated::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(118deg, var(--accent) 0 7%, transparent 7%);
+}
+
+[data-theme="royal"] .font-display {
+  font-family: var(--font-ui);
+  letter-spacing: -0.02em;
+}
+
+[data-theme="royal"] .surface-card {
+  background: var(--surface);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none;
+  border-radius: 0;
+  outline: 2px solid var(--text);
+  box-shadow: 8px 8px 0 0 color-mix(in srgb, var(--accent) 88%, transparent);
+}
+
+[data-theme="royal"] .countdown-unit {
+  padding: 0.1rem 0.85rem;
+  background: var(--accent);
+  border: none;
+  border-radius: 0;
+  box-shadow: 6px 6px 0 0 var(--text);
+  overflow: hidden;
+}
+
+[data-theme="royal"] .countdown-num {
+  background: none;
+  color: var(--surface);
+  -webkit-text-fill-color: var(--surface);
+  font-family: var(--font-ui);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+
+[data-theme="royal"] .countdown-label {
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+
+/* ==========================================================================
+   midnight — שמי לילה (כוכבים + ספרות זוהרות)
+   ========================================================================== */
+
+[data-theme="midnight"] .bg-animated {
+  background:
+    radial-gradient(circle at 50% -10%, var(--bg-3) 0%, transparent 55%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+}
+
+[data-theme="midnight"] .bg-animated::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1.5px 1.5px at 20% 30%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 70% 18%, #fff, transparent),
+    radial-gradient(1px 1px at 40% 70%, #fff, transparent),
+    radial-gradient(1px 1px at 85% 58%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 62% 86%, #fff, transparent),
+    radial-gradient(1px 1px at 30% 50%, color-mix(in srgb, var(--accent) 85%, white), transparent),
+    radial-gradient(1px 1px at 90% 34%, #fff, transparent),
+    radial-gradient(1px 1px at 12% 78%, #fff, transparent),
+    radial-gradient(1px 1px at 55% 40%, #fff, transparent);
+  opacity: 0.75;
+  animation: twinkle 4.5s ease-in-out infinite;
+}
+
+[data-theme="midnight"] .surface-card {
+  background: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  border-radius: 1.25rem;
+  box-shadow:
+    0 0 40px -8px color-mix(in srgb, var(--accent) 30%, transparent),
+    0 22px 60px -30px #000;
+}
+
+[data-theme="midnight"] .accent-gradient-text {
+  filter: drop-shadow(0 0 14px color-mix(in srgb, var(--accent) 45%, transparent));
+}
+
+[data-theme="midnight"] .countdown-unit {
+  padding: 0.25rem 0.85rem;
+  background: color-mix(in srgb, var(--surface) 55%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  border-radius: 1rem;
+  box-shadow:
+    0 0 24px -6px color-mix(in srgb, var(--accent) 55%, transparent),
+    inset 0 0 18px -10px color-mix(in srgb, var(--accent) 60%, transparent);
+  overflow: hidden;
+}
+
+[data-theme="midnight"] .countdown-num {
+  background: linear-gradient(180deg, #ffffff 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--accent) 70%, transparent));
+}
+
+/* ==========================================================================
+   רקע מרחף (לבבות/ניצוצות) — מוסתר בשפות עם מוטיב רקע משלהן
+   ========================================================================== */
+
+[data-theme="gold"] .floating-bg,
+[data-theme="royal"] .floating-bg,
+[data-theme="midnight"] .floating-bg {
+  display: none;
 }
 
 /* ========================== Keyframes ========================== */
@@ -177,14 +467,13 @@ body {
   }
 }
 
-@keyframes shimmer {
+@keyframes twinkle {
   0%,
-  60%,
   100% {
-    transform: translateX(-120%);
+    opacity: 0.4;
   }
-  80% {
-    transform: translateX(120%);
+  50% {
+    opacity: 0.9;
   }
 }
 
@@ -202,20 +491,6 @@ body {
   100% {
     transform: translateY(-110vh) scale(1);
     opacity: 0;
-  }
-}
-
-@keyframes gentle-pop {
-  0% {
-    transform: scale(0.94);
-    opacity: 0;
-  }
-  60% {
-    transform: scale(1.03);
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
   }
 }
 
@@ -244,10 +519,6 @@ body {
 .reveal {
   opacity: 0;
   animation: fade-in-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-.animate-gentle-pop {
-  animation: gentle-pop 0.7s ease-out both;
 }
 
 .animate-pulse-glow {
