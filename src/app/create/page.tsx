@@ -21,7 +21,7 @@ export default function CreatePage() {
   );
 
   const [theme, setTheme] = useState<ThemeKey>(DEFAULT_THEME);
-  const [dateMode, setDateMode] = useState<"greg" | "hebrew">("greg");
+  const [dateMode, setDateMode] = useState<"greg" | "hebrew">("hebrew");
   const [gregDate, setGregDate] = useState("");
   const [hebDate, setHebDate] = useState<HebrewDateValue>({
     day: 1,

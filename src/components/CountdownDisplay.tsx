@@ -32,7 +32,7 @@ function Unit({
       >
         <div
           className={`countdown-digit relative overflow-hidden ${
-            compact ? "h-9" : "h-12 sm:h-16"
+            compact ? "h-9 lg:h-11" : "h-12 sm:h-16"
           }`}
         >
           <AnimatePresence mode="popLayout" initial={false}>
@@ -43,7 +43,7 @@ function Unit({
               exit={{ y: "100%", opacity: 0 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
               className={`countdown-num accent-gradient-text font-display block text-center font-extrabold tabular-nums ${
-                compact ? "text-3xl" : "text-5xl sm:text-7xl"
+                compact ? "text-3xl lg:text-4xl" : "text-5xl sm:text-7xl"
               }`}
             >
               {text}

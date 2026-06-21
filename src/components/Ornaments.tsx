@@ -31,7 +31,7 @@ export function Rings({ className = "" }: { className?: string }) {
     >
       <circle cx="24" cy="22" r="13" stroke="currentColor" strokeWidth="2" opacity="0.9" />
       <circle cx="40" cy="22" r="13" stroke="currentColor" strokeWidth="2" opacity="0.7" />
-      <path d="M20 9l4-6 4 6z" fill="currentColor" opacity="0.9" />
+      <path d="M20 3h8l-4 6z" fill="currentColor" opacity="0.9" />
     </svg>
   );
 }

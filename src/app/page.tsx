@@ -51,25 +51,25 @@ export default function HomePage() {
       <FloatingBackground />
 
       {/* ------------------------------- Hero ------------------------------- */}
-      <section className="mx-auto flex max-w-5xl flex-col items-center px-6 pt-16 pb-12 text-center sm:pt-24">
-        <Rings className="reveal mb-6 h-12 w-20" />
+      <section className="mx-auto flex max-w-6xl flex-col items-center px-6 pt-10 pb-10 text-center sm:pt-14">
+        <Rings className="reveal mb-4 h-12 w-20 lg:h-16 lg:w-28" />
 
         <span
-          className="reveal accent-text mb-4 text-sm font-medium tracking-wide"
+          className="reveal accent-text mb-3 text-sm font-medium tracking-wide lg:text-base"
           style={{ animationDelay: "0.05s" }}
         >
           ספירה אישית לכל חתונה
         </span>
 
         <h1
-          className="font-display accent-gradient-text reveal mb-6 text-5xl font-extrabold leading-tight sm:text-7xl"
+          className="font-display accent-gradient-text reveal mb-4 text-5xl font-extrabold leading-tight sm:text-7xl lg:text-8xl"
           style={{ animationDelay: "0.1s" }}
         >
           עד החתונה
         </h1>
 
         <p
-          className="reveal mb-10 max-w-md text-lg leading-relaxed text-[var(--muted)]"
+          className="reveal mb-6 max-w-md text-lg leading-relaxed text-[var(--muted)] lg:max-w-xl lg:text-xl"
           style={{ animationDelay: "0.15s" }}
         >
           צרו ספירה לאחור חגיגית לחתונה — עם השמות, תאריך עברי כראשי, וקישור ייחודי
@@ -78,13 +78,13 @@ export default function HomePage() {
 
         <Link
           href="/create"
-          className="reveal animate-pulse-glow rounded-full bg-[var(--accent)] px-10 py-4 text-lg font-semibold text-white shadow-lg shadow-[var(--accent)]/30 transition hover:-translate-y-0.5 hover:shadow-xl"
+          className="reveal animate-pulse-glow rounded-full bg-[var(--accent)] px-10 py-4 text-lg font-semibold text-white shadow-lg shadow-[var(--accent)]/30 transition hover:-translate-y-0.5 hover:shadow-xl lg:px-12 lg:py-5 lg:text-xl"
           style={{ animationDelay: "0.2s" }}
         >
           צרו ספירה
         </Link>
 
-        <div className="reveal mt-16 w-full" style={{ animationDelay: "0.3s" }}>
+        <div className="reveal mt-10 w-full" style={{ animationDelay: "0.3s" }}>
           <HeroDemo />
         </div>
       </section>
@@ -92,11 +92,11 @@ export default function HomePage() {
       <Divider className="my-4" />
 
       {/* ---------------------------- איך זה עובד ---------------------------- */}
-      <section className="mx-auto max-w-5xl px-6 py-16">
-        <h2 className="font-display mb-10 text-center text-3xl font-bold">
+      <section className="mx-auto max-w-6xl px-6 py-16">
+        <h2 className="font-display mb-10 text-center text-3xl font-bold sm:text-4xl">
           איך זה עובד
         </h2>
-        <div className="grid gap-6 sm:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-3 lg:gap-8">
           {STEPS.map((s) => (
             <div key={s.n} className="surface-card rounded-3xl p-7 text-center">
               <div className="relative mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[var(--accent-soft)] text-[var(--accent)]">
@@ -113,8 +113,8 @@ export default function HomePage() {
       </section>
 
       {/* ----------------------------- יתרונות ----------------------------- */}
-      <section className="mx-auto max-w-3xl px-6 pb-20">
-        <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+      <section className="mx-auto max-w-5xl px-6 pb-20">
+        <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:gap-4">
           {FEATURES.map((f) => (
             <li
               key={f.label}
