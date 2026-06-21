@@ -71,6 +71,13 @@ export const createCountdownSchema = z.object({
 
 export type CreateCountdownInput = z.infer<typeof createCountdownSchema>;
 
+// עריכה = אותם שדות כמו ביצירה + מפתח העריכה הסודי שמאמת את הבעלות.
+export const editCountdownSchema = createCountdownSchema.extend({
+  edit_token: z.string().trim().min(1, "חסר מפתח עריכה"),
+});
+
+export type EditCountdownInput = z.infer<typeof editCountdownSchema>;
+
 export const blessingSchema = z.object({
   author_name: z
     .string()

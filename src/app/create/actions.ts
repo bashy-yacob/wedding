@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import { createServerClient } from "@/lib/supabase/server";
 import { createCountdownSchema } from "@/lib/validation";
-import { generateSlug } from "@/lib/slug";
+import { generateSlug, generateEditToken } from "@/lib/slug";
 
 export interface CreateState {
   error?: string;
@@ -45,6 +45,9 @@ export async function createCountdown(
     invitation_path: data.invitation_path ? data.invitation_path : null,
   };
 
+  // מפתח העריכה הסודי — מאפשר ליוצר לערוך מאוחר יותר דרך קישור פרטי.
+  const editToken = generateEditToken();
+
   // החיבור והכתיבה עטופים ב-try/catch כדי שכל כשל יחזור כהודעה גלויה
   // בטופס, ולא יקרוס לעמוד "משהו השתבש". ה-redirect חייב להישאר מחוץ ל-try.
   let slug = "";
@@ -56,7 +59,7 @@ export async function createCountdown(
       slug = generateSlug();
       const { error } = await supabase
         .from("countdowns")
-        .insert({ ...row, slug });
+        .insert({ ...row, slug, edit_token: editToken });
 
       if (!error) {
         inserted = true;
@@ -77,5 +80,6 @@ export async function createCountdown(
     return { error: `תקלת חיבור למסד הנתונים: ${message}` };
   }
 
-  redirect(`/c/${slug}?created=1`);
+  // מעבירים גם את מפתח העריכה כדי שמסך ההצלחה יציג את שני הקישורים (שיתוף + עריכה).
+  redirect(`/c/${slug}?created=1&token=${editToken}`);
 }

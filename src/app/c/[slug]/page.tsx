@@ -8,6 +8,7 @@ import { getBaseUrl } from "@/lib/url";
 import type { Countdown, Blessing } from "@/types/db";
 import { CountdownClient } from "./CountdownClient";
 import { ScrollHint } from "./ScrollHint";
+import { CreatedBanner } from "./CreatedBanner";
 import { BlessingsWall } from "./BlessingsWall";
 import { ShareWhatsAppButton } from "@/components/ShareWhatsAppButton";
 import { DonationCTA } from "@/components/DonationCTA";
@@ -74,10 +75,10 @@ export default async function CountdownPage({
   searchParams,
 }: {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ created?: string }>;
+  searchParams: Promise<{ created?: string; token?: string; updated?: string }>;
 }) {
   const { slug } = await params;
-  const { created } = await searchParams;
+  const { created, token, updated } = await searchParams;
 
   const countdown = await getCountdown(slug);
   if (!countdown) notFound();
@@ -104,11 +105,13 @@ export default async function CountdownPage({
       {/* ----- מסך ראשון: כותרת + ספירה במלוא הגובה ----- */}
       <section className="relative flex min-h-screen flex-col justify-center px-6 py-16">
         <div className="mx-auto w-full max-w-2xl">
-          {created && (
+          {created && token && <CreatedBanner slug={slug} editToken={token} />}
+
+          {updated && (
             <div className="surface-card reveal mb-8 rounded-2xl p-5 text-center">
-              <p className="font-semibold">הספירה נוצרה! 🎉</p>
+              <p className="font-semibold">השינויים נשמרו ✓</p>
               <p className="mt-1 text-sm text-[var(--muted)]">
-                זה הקישור הייחודי שלכם — שתפו אותו. שימו לב: לא ניתן לערוך את הספירה.
+                הספירה עודכנה. קישור השיתוף נשאר זהה.
               </p>
             </div>
           )}
