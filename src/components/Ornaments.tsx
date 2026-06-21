@@ -56,3 +56,57 @@ export function Heart({
     </svg>
   );
 }
+
+/** אייקוני-קו עדינים לשלבים — currentColor. */
+function LineIcon({
+  className = "",
+  children,
+}: {
+  className?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      {children}
+    </svg>
+  );
+}
+
+/** עיפרון — "ממלאים פרטים". */
+export function Pencil({ className = "" }: { className?: string }) {
+  return (
+    <LineIcon className={className}>
+      <path d="M12 20h9" />
+      <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
+    </LineIcon>
+  );
+}
+
+/** קישור — "מקבלים קישור". */
+export function LinkIcon({ className = "" }: { className?: string }) {
+  return (
+    <LineIcon className={className}>
+      <path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.5 1.5" />
+      <path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.5-1.5" />
+    </LineIcon>
+  );
+}
+
+/** מטוס נייר — "משתפים". */
+export function Send({ className = "" }: { className?: string }) {
+  return (
+    <LineIcon className={className}>
+      <path d="M22 2 11 13" />
+      <path d="M22 2 15 22l-4-9-9-4 20-7z" />
+    </LineIcon>
+  );
+}
