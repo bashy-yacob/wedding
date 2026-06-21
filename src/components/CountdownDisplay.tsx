@@ -69,6 +69,7 @@ export function CountdownDisplay({
 }: CountdownDisplayProps) {
   return (
     <div
+      dir="ltr"
       className={`flex items-start justify-center ${compact ? "gap-2" : "gap-3 sm:gap-5"}`}
     >
       <Unit value={days} label="ימים" pad={false} compact={compact} />

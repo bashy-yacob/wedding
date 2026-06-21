@@ -2,21 +2,24 @@ import Link from "next/link";
 import { HeroDemo } from "@/components/HeroDemo";
 import { FloatingBackground } from "@/components/FloatingBackground";
 import { DonationCTA } from "@/components/DonationCTA";
-import { Divider, Rings, Heart } from "@/components/Ornaments";
+import { Divider, Rings, Heart, Pencil, LinkIcon, Send } from "@/components/Ornaments";
 
 const STEPS = [
   {
     n: "1",
+    Icon: Pencil,
     title: "ממלאים פרטים",
     body: "שמות, תאריך החתונה (עברי או לועזי), ובוחרים ערכת עיצוב.",
   },
   {
     n: "2",
+    Icon: LinkIcon,
     title: "מקבלים קישור",
     body: "נוצר קישור ייחודי וקצר לספירה שלכם — בלי הרשמה.",
   },
   {
     n: "3",
+    Icon: Send,
     title: "משתפים בוואטסאפ",
     body: "כל מי שנכנס רואה את הספירה ויכול לשלוח איחול.",
   },
@@ -85,9 +88,12 @@ export default function HomePage() {
         <div className="grid gap-6 sm:grid-cols-3">
           {STEPS.map((s) => (
             <div key={s.n} className="surface-card rounded-3xl p-7 text-center">
-              <span className="accent-gradient-text font-display mb-3 block text-4xl font-extrabold">
-                {s.n}
-              </span>
+              <div className="relative mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[var(--accent-soft)] text-[var(--accent)]">
+                <s.Icon className="h-7 w-7" />
+                <span className="accent-gradient-text font-display surface-card absolute -top-1 -left-1 flex h-6 w-6 items-center justify-center rounded-full text-sm font-extrabold">
+                  {s.n}
+                </span>
+              </div>
               <h3 className="mb-2 text-lg font-bold">{s.title}</h3>
               <p className="text-sm text-[var(--muted)]">{s.body}</p>
             </div>
