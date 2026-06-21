@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import {
   currentHebrewYear,
   hebrewDaysInMonth,
+  hebrewDayLabel,
   hebrewMonthsForYear,
 } from "@/lib/hebcal";
 import { HDate } from "@hebcal/core";
@@ -54,7 +55,7 @@ export function HebrewDateInput({ value, onChange }: HebrewDateInputProps) {
       >
         {days.map((d) => (
           <option key={d} value={d}>
-            {d}
+            {hebrewDayLabel(d)}
           </option>
         ))}
       </select>
