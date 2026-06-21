@@ -135,6 +135,15 @@ export default function HomePage() {
           >
             צרו ספירה עכשיו
           </Link>
+
+          <p className="mt-5 text-sm text-[var(--muted)]">
+            <Link
+              href="/wallpaper"
+              className="font-medium accent-text underline-offset-4 hover:underline"
+            >
+              🖥️ אפשר גם להפוך אותה לרקע חי על שולחן העבודה →
+            </Link>
+          </p>
         </div>
 
         <DonationCTA />
