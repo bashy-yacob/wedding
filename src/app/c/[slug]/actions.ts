@@ -40,12 +40,12 @@ export async function postBlessing(
   try {
     const supabase = createServerClient();
 
-    // מאתרים את הספירה לפי slug כדי לקבל את ה-id (וגם לוודא שהיא קיימת)
-    const { data: countdown } = await supabase
-      .from("countdowns")
-      .select("id, allow_blessings")
-      .eq("slug", slug)
-      .single();
+    // מאתרים את הספירה לפי slug כדי לקבל את ה-id (וגם לוודא שהיא קיימת).
+    // דרך RPC מאובטח — אין קריאה ישירה לטבלה (ראו migration 0003).
+    const { data } = await supabase.rpc("get_countdown", { p_slug: slug });
+    const countdown = (Array.isArray(data) ? data[0] : data) as
+      | { id: string; allow_blessings: boolean }
+      | undefined;
 
     if (!countdown || !countdown.allow_blessings) {
       return { error: "קיר הברכות אינו פעיל עבור ספירה זו." };

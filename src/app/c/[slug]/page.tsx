@@ -16,25 +16,20 @@ import { Divider, Rings } from "@/components/Ornaments";
 async function getCountdown(slug: string): Promise<Countdown | null> {
   try {
     const supabase = createServerClient();
-    const { data } = await supabase
-      .from("countdowns")
-      .select("*")
-      .eq("slug", slug)
-      .single();
-    return (data as Countdown) ?? null;
+    // קריאה דרך RPC מאובטח (get_countdown) — מחזיר שורה לפי slug מדויק בלבד,
+    // ללא אפשרות לשלוף את כל הטבלה (ראו migration 0003).
+    const { data } = await supabase.rpc("get_countdown", { p_slug: slug });
+    const row = Array.isArray(data) ? data[0] : data;
+    return (row as Countdown) ?? null;
   } catch {
     // תקלת חיבור → מתייחסים כ"לא נמצא" במקום לקרוס ל-error.tsx
     return null;
   }
 }
 
-async function getBlessings(countdownId: string): Promise<Blessing[]> {
+async function getBlessings(slug: string): Promise<Blessing[]> {
   const supabase = createServerClient();
-  const { data } = await supabase
-    .from("blessings")
-    .select("*")
-    .eq("countdown_id", countdownId)
-    .order("created_at", { ascending: false });
+  const { data } = await supabase.rpc("get_blessings", { p_slug: slug });
   return (data as Blessing[]) ?? [];
 }
 
@@ -80,7 +75,7 @@ export default async function CountdownPage({
   if (!countdown) notFound();
 
   const blessings = countdown.allow_blessings
-    ? await getBlessings(countdown.id)
+    ? await getBlessings(slug)
     : [];
 
   const hebrewDate = toHebrewDateString(countdown.wedding_date);

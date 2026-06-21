@@ -36,6 +36,8 @@ npm run dev                  # http://localhost:3000
 2. ב‑**SQL Editor** הריצו לפי הסדר:
    - `supabase/migrations/0001_init.sql` — הטבלאות.
    - `supabase/migrations/0002_rls.sql` — מדיניות ההרשאות (RLS) + הגנת ספאם.
+   - `supabase/migrations/0003_secure_reads.sql` — קריאה מאובטחת לפי slug
+     בלבד (סוגר את אפשרות שליפת כל הטבלה דרך ה‑anon key).
 3. (אופציונלי, לפיתוח) הריצו `supabase/seed.sql` לנתוני דמו.
 4. העתיקו את ה‑URL וה‑anon key מ‑**Project Settings → API** אל `.env.local`.
 
@@ -45,15 +47,20 @@ npm run dev                  # http://localhost:3000
 
 ```sql
 set role anon;
-select * from countdowns where slug = 'demogold';                    -- ✅ עובד
+select * from countdowns;                                            -- ❌ ריק (אין SELECT policy)
+select * from get_countdown('demogold');                             -- ✅ שורה אחת לפי slug
 insert into countdowns (slug, display_names, wedding_date, theme)
   values ('test1234', 'בדיקה', current_date + 10, 'gold');           -- ✅ עובד
 update countdowns set blessing = 'x' where slug = 'demogold';        -- ❌ נכשל (אין policy)
 delete from countdowns where slug = 'demogold';                      -- ❌ נכשל
 insert into blessings (countdown_id, author_name, message)
-  select id, 'a', 'b' from countdowns where slug = 'demoquiet';      -- ❌ נכשל (allow_blessings=false)
+  select id, 'a', 'b' from get_countdown('demoquiet');              -- ❌ נכשל (allow_blessings=false)
 reset role;
 ```
+
+> הקריאה מהאפליקציה עוברת אך ורק דרך פונקציות ה‑RPC `get_countdown` /
+> `get_blessings` (SECURITY DEFINER), כך ש‑slug אקראי הוא תנאי לכל קריאה ואין
+> אפשרות לשלוף את כל הספירות.
 
 ## פריסה ל‑Vercel
 
