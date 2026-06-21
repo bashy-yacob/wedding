@@ -14,6 +14,7 @@ interface CountdownPreviewProps {
   blessing: string;
   theme: ThemeKey;
   showGregorian: boolean;
+  invitationPreview?: string | null;
 }
 
 function isValidDate(value: string): boolean {
@@ -27,6 +28,7 @@ export function CountdownPreview({
   blessing,
   theme,
   showGregorian,
+  invitationPreview,
 }: CountdownPreviewProps) {
   const valid = isValidDate(weddingDate);
 
@@ -89,6 +91,18 @@ export function CountdownPreview({
           <p className="font-display mt-5 text-sm text-[var(--text)]">
             {blessing}
           </p>
+        )}
+
+        {invitationPreview && (
+          <>
+            <Divider className="my-5" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={invitationPreview}
+              alt="תצוגה מקדימה של ההזמנה"
+              className="mx-auto max-h-48 w-auto rounded-lg object-contain"
+            />
+          </>
         )}
       </div>
     </div>

@@ -23,6 +23,7 @@ export async function createCountdown(
     blessing: formData.get("blessing") ?? "",
     theme: formData.get("theme"),
     allow_blessings: formData.get("allow_blessings") === "on",
+    invitation_path: formData.get("invitation_path") ?? "",
   });
 
   if (!parsed.success) {
@@ -39,6 +40,7 @@ export async function createCountdown(
     blessing: data.blessing ? data.blessing : null,
     theme: data.theme,
     allow_blessings: data.allow_blessings,
+    invitation_path: data.invitation_path ? data.invitation_path : null,
   };
 
   // החיבור והכתיבה עטופים ב-try/catch כדי שכל כשל יחזור כהודעה גלויה

@@ -12,6 +12,7 @@ import {
   Chat,
   Sparkles,
   Palette,
+  Photo,
   Gift,
 } from "@/components/Ornaments";
 
@@ -42,6 +43,7 @@ const FEATURES = [
   { label: "שיתוף בוואטסאפ", Icon: Send },
   { label: "מצב מזל טוב חגיגי", Icon: Sparkles },
   { label: "6 ערכות עיצוב", Icon: Palette },
+  { label: "העלאת הזמנה", Icon: Photo },
   { label: "ללא הרשמה, בחינם", Icon: Gift },
 ];
 

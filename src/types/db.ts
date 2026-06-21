@@ -10,6 +10,7 @@ export interface Countdown {
   blessing: string | null;
   theme: ThemeKey;
   allow_blessings: boolean;
+  invitation_path: string | null;
   created_at: string;
 }
 

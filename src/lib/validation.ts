@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { THEME_KEYS } from "./themes";
+import { INVITATION_PATH_RE } from "./storage";
 
 // ============================================================================
 // validation.ts — סכמות Zod משותפות (client + server).
@@ -52,6 +53,13 @@ export const createCountdownSchema = z.object({
   blessing: z.string().trim().max(280, "עד 280 תווים").optional().or(z.literal("")),
   theme: z.enum(THEME_KEYS as [string, ...string[]]),
   allow_blessings: z.boolean().default(true),
+  // נתיב תמונת ההזמנה ב-Storage. מאומת לדפוס שם-קובץ אקראי בלבד כדי למנוע
+  // הזרקת נתיב/כתובת זדוניים. ריק = אין הזמנה.
+  invitation_path: z
+    .string()
+    .regex(INVITATION_PATH_RE, "קובץ הזמנה לא תקין")
+    .optional()
+    .or(z.literal("")),
 });
 
 export type CreateCountdownInput = z.infer<typeof createCountdownSchema>;

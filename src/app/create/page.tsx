@@ -6,6 +6,7 @@ import { createCountdown, type CreateState } from "./actions";
 import { ThemePicker } from "@/components/ThemePicker";
 import { HebrewDateInput, type HebrewDateValue } from "@/components/HebrewDateInput";
 import { CountdownPreview } from "@/components/CountdownPreview";
+import { InvitationUpload } from "@/components/InvitationUpload";
 import { DEFAULT_THEME, type ThemeKey } from "@/lib/themes";
 import { gregorianFromHebrew, currentHebrewYear } from "@/lib/hebcal";
 import { months } from "@hebcal/core";
@@ -35,6 +36,8 @@ export default function CreatePage() {
   const [blessing, setBlessing] = useState("");
   const [showGregorian, setShowGregorian] = useState(true);
   const [allowBlessings, setAllowBlessings] = useState(true);
+  const [invitationPath, setInvitationPath] = useState<string | null>(null);
+  const [invitationPreview, setInvitationPreview] = useState<string | null>(null);
 
   // הערך הלועזי שיישמר ב-DB (גם כשמזינים בלוח עברי)
   const weddingDate =
@@ -145,6 +148,22 @@ export default function CreatePage() {
             </div>
 
             <div>
+              <label className={labelClass}>הזמנת החתונה (אופציונלי)</label>
+              <InvitationUpload
+                previewUrl={invitationPreview}
+                onChange={(path, preview) => {
+                  setInvitationPath(path);
+                  setInvitationPreview(preview);
+                }}
+              />
+              <input
+                type="hidden"
+                name="invitation_path"
+                value={invitationPath ?? ""}
+              />
+            </div>
+
+            <div>
               <label className={labelClass}>ערכת עיצוב</label>
               <ThemePicker value={theme} onChange={setTheme} />
               <input type="hidden" name="theme" value={theme} />
@@ -204,6 +223,7 @@ export default function CreatePage() {
               blessing={blessing}
               theme={theme}
               showGregorian={showGregorian}
+              invitationPreview={invitationPreview}
             />
           </div>
         </div>

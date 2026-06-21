@@ -11,6 +11,8 @@ import { BlessingsWall } from "./BlessingsWall";
 import { ShareWhatsAppButton } from "@/components/ShareWhatsAppButton";
 import { DonationCTA } from "@/components/DonationCTA";
 import { FloatingBackground } from "@/components/FloatingBackground";
+import { InvitationView } from "@/components/InvitationView";
+import { invitationPublicUrl } from "@/lib/storage";
 import { Divider, Rings } from "@/components/Ornaments";
 
 async function getCountdown(slug: string): Promise<Countdown | null> {
@@ -158,6 +160,14 @@ export default async function CountdownPage({
             hebrewDate={hebrewDate}
           />
         </div>
+
+        {/* הזמנת החתונה */}
+        {countdown.invitation_path && (
+          <InvitationView
+            url={invitationPublicUrl(countdown.invitation_path)}
+            displayNames={countdown.display_names}
+          />
+        )}
 
         {/* קיר ברכות */}
         {countdown.allow_blessings && (
