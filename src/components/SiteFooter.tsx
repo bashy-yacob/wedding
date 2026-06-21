@@ -10,16 +10,15 @@ const FEEDBACK_MAILTO =
 
 export function SiteFooter() {
   return (
-    <footer className="px-6 py-8 text-center text-sm text-[var(--muted)]">
+    <footer className="px-6 py-4 text-center text-xs text-[var(--muted)]">
       <a
         href={FEEDBACK_MAILTO}
-        className="mb-5 inline-block rounded-full border border-[var(--accent)] px-5 py-2 text-xs font-medium accent-text transition hover:bg-[var(--accent-soft)]"
+        className="mb-3 inline-block rounded-full border border-[var(--accent)] px-4 py-1.5 text-xs font-medium accent-text transition hover:bg-[var(--accent-soft)]"
       >
         נשמח לשמוע הערות ושיפורים 💬
       </a>
-      <p>נבנה באהבה על ידי בשי 🤍</p>
-      <p className="mt-1">
-        ליצירת קשר:{" "}
+      <p>
+        נבנה באהבה על ידי בשי 🤍 · ליצירת קשר:{" "}
         <a
           href="mailto:bashy3309@gmail.com"
           className="accent-text font-medium underline-offset-4 hover:underline"

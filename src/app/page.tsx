@@ -51,25 +51,25 @@ export default function HomePage() {
       <FloatingBackground />
 
       {/* ------------------------------- Hero ------------------------------- */}
-      <section className="mx-auto flex max-w-5xl flex-col items-center px-6 pt-16 pb-12 text-center sm:pt-24">
-        <Rings className="reveal mb-6 h-12 w-20" />
+      <section className="mx-auto flex max-w-5xl flex-col items-center px-6 pt-10 pb-10 text-center sm:pt-14">
+        <Rings className="reveal mb-4 h-12 w-20" />
 
         <span
-          className="reveal accent-text mb-4 text-sm font-medium tracking-wide"
+          className="reveal accent-text mb-3 text-sm font-medium tracking-wide"
           style={{ animationDelay: "0.05s" }}
         >
           ספירה אישית לכל חתונה
         </span>
 
         <h1
-          className="font-display accent-gradient-text reveal mb-6 text-5xl font-extrabold leading-tight sm:text-7xl"
+          className="font-display accent-gradient-text reveal mb-4 text-5xl font-extrabold leading-tight sm:text-7xl"
           style={{ animationDelay: "0.1s" }}
         >
           עד החתונה
         </h1>
 
         <p
-          className="reveal mb-10 max-w-md text-lg leading-relaxed text-[var(--muted)]"
+          className="reveal mb-6 max-w-md text-lg leading-relaxed text-[var(--muted)]"
           style={{ animationDelay: "0.15s" }}
         >
           צרו ספירה לאחור חגיגית לחתונה — עם השמות, תאריך עברי כראשי, וקישור ייחודי
@@ -84,7 +84,7 @@ export default function HomePage() {
           צרו ספירה
         </Link>
 
-        <div className="reveal mt-16 w-full" style={{ animationDelay: "0.3s" }}>
+        <div className="reveal mt-10 w-full" style={{ animationDelay: "0.3s" }}>
           <HeroDemo />
         </div>
       </section>
