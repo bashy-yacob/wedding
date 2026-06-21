@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { THEME_KEYS } from "./themes";
+import { THEME_KEYS, FONT_KEYS, HEX_COLOR_RE } from "./themes";
 import { INVITATION_PATH_RE } from "./storage";
 
 // ============================================================================
@@ -59,6 +59,17 @@ export const createCountdownSchema = z.object({
   show_gregorian: z.boolean().default(true),
   blessing: z.string().trim().max(280, "עד 280 תווים").optional().or(z.literal("")),
   theme: z.enum(THEME_KEYS as [string, ...string[]]),
+  // התאמה אישית (אופציונלי) מעל עיצוב הבסיס — צבע דגש ופונט בלבד.
+  // ריק = להישאר עם צבע/פונט ברירת המחדל של העיצוב הנבחר.
+  accent_color: z
+    .string()
+    .regex(HEX_COLOR_RE, "צבע לא תקין")
+    .optional()
+    .or(z.literal("")),
+  font_key: z
+    .enum(FONT_KEYS as [string, ...string[]])
+    .optional()
+    .or(z.literal("")),
   allow_blessings: z.boolean().default(true),
   // נתיב תמונת ההזמנה ב-Storage. מאומת לדפוס שם-קובץ אקראי בלבד כדי למנוע
   // הזרקת נתיב/כתובת זדוניים. ריק = אין הזמנה.

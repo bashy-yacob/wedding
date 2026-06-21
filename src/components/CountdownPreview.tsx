@@ -5,7 +5,7 @@ import { getCountdownState, type CountdownState } from "@/lib/time";
 import { toHebrewDateString, toGregorianString } from "@/lib/hebcal";
 import { CountdownDisplay } from "./CountdownDisplay";
 import { Divider } from "./Ornaments";
-import type { ThemeKey } from "@/lib/themes";
+import { customThemeVars, type ThemeKey, type FontKey } from "@/lib/themes";
 
 interface CountdownPreviewProps {
   eventType: string;
@@ -14,6 +14,8 @@ interface CountdownPreviewProps {
   weddingTime: string; // 'HH:MM' | ''
   blessing: string;
   theme: ThemeKey;
+  accentColor?: string | null;
+  fontKey?: FontKey | null;
   showGregorian: boolean;
   invitationPreview?: string | null;
 }
@@ -29,10 +31,13 @@ export function CountdownPreview({
   weddingTime,
   blessing,
   theme,
+  accentColor,
+  fontKey,
   showGregorian,
   invitationPreview,
 }: CountdownPreviewProps) {
   const valid = isValidDate(weddingDate);
+  const customStyle = customThemeVars({ accentColor, fontKey }) as React.CSSProperties;
 
   const [state, setState] = useState<CountdownState | null>(null);
 
@@ -49,7 +54,7 @@ export function CountdownPreview({
   }, [valid, weddingDate, weddingTime]);
 
   return (
-    <div data-theme={theme} className="bg-animated rounded-3xl p-1">
+    <div data-theme={theme} style={customStyle} className="bg-animated rounded-3xl p-1">
       <div className="surface-card rounded-[1.4rem] px-5 py-8 text-center">
         <p className="text-xs text-[var(--muted)]">הספירה ל{eventType || "חתונה"} של</p>
         <p className="font-display accent-gradient-text mt-1 mb-5 text-2xl font-extrabold">

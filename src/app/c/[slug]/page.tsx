@@ -16,6 +16,7 @@ import { FloatingBackground } from "@/components/FloatingBackground";
 import { InvitationView } from "@/components/InvitationView";
 import { invitationPublicUrl } from "@/lib/storage";
 import { Divider, Rings } from "@/components/Ornaments";
+import { customThemeVars } from "@/lib/themes";
 
 async function getCountdown(slug: string): Promise<Countdown | null> {
   try {
@@ -98,8 +99,18 @@ export default async function CountdownPage({
     weddingTime: countdown.wedding_time,
   });
 
+  // דריסות התאמה אישית (צבע דגש / פונט) מעל עיצוב הבסיס
+  const customStyle = customThemeVars({
+    accentColor: countdown.accent_color,
+    fontKey: countdown.font_key,
+  }) as React.CSSProperties;
+
   return (
-    <main data-theme={countdown.theme} className="bg-animated relative min-h-screen">
+    <main
+      data-theme={countdown.theme}
+      style={customStyle}
+      className="bg-animated relative min-h-screen"
+    >
       <FloatingBackground />
 
       {/* ----- מסך ראשון: כותרת + ספירה במלוא הגובה ----- */}
