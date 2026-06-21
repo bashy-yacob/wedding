@@ -45,6 +45,25 @@ const STEPS = [
   },
 ];
 
+// צילומי המסך האמיתיים מ-Lively Wallpaper (הקבצים יושבים ב-public/wallpaper).
+const SHOTS = [
+  {
+    src: "/wallpaper/add.png",
+    title: "מדביקים את הקישור",
+    caption: "בחלון “הוסף טפט” → הזן כתובת URL, מדביקים את קישור הספירה ולוחצים על החץ.",
+  },
+  {
+    src: "/wallpaper/display.png",
+    title: "בוחרים תצוגה",
+    caption: "התצוגה המקדימה מראה את הספירה. מאשרים — ואפשר לבחור על איזה מסך.",
+  },
+  {
+    src: "/wallpaper/library.png",
+    title: "מוכן! 🎉",
+    caption: "הספירה מצטרפת לספרייה ומופיעה כרקע חי על שולחן העבודה.",
+  },
+];
+
 // אייקון הורדה קטן לכפתורים.
 function DownloadIcon({ className = "" }: { className?: string }) {
   return (
@@ -259,6 +278,38 @@ export default async function WallpaperGuidePage({
               GitHub
             </a>
           </div>
+        </div>
+      </section>
+
+      <Divider className="my-4" />
+
+      {/* ---------------------------- צילומי מסך ---------------------------- */}
+      <section className="mx-auto max-w-5xl px-6 py-10">
+        <h2 className="font-display mb-2 text-center text-3xl font-bold">ככה זה נראה</h2>
+        <p className="mb-10 text-center text-sm text-[var(--muted)]">
+          שלושה מסכים, וזהו.
+        </p>
+        <div className="grid gap-6 sm:grid-cols-3">
+          {SHOTS.map((shot, i) => (
+            <figure key={shot.src} className="surface-card overflow-hidden rounded-2xl">
+              <div className="relative flex items-center justify-center bg-[var(--bg-2)]">
+                <span className="accent-gradient-text font-display absolute top-2 right-3 text-2xl font-extrabold opacity-80">
+                  {i + 1}
+                </span>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={shot.src}
+                  alt={shot.title}
+                  loading="lazy"
+                  className="h-auto w-full"
+                />
+              </div>
+              <figcaption className="p-4">
+                <h3 className="mb-1 text-sm font-bold">{shot.title}</h3>
+                <p className="text-xs leading-relaxed text-[var(--muted)]">{shot.caption}</p>
+              </figcaption>
+            </figure>
+          ))}
         </div>
       </section>
 
