@@ -203,8 +203,18 @@ export default async function CountdownPage({
           />
         )}
 
-        {/* צרו ספירה משלכם */}
+        {/* רקע חי לשולחן העבודה */}
         <div className="mt-12 text-center">
+          <Link
+            href={`/wallpaper?c=${slug}`}
+            className="inline-block text-sm font-medium accent-text underline-offset-4 hover:underline"
+          >
+            🖥️ רוצים את הספירה כרקע חי על שולחן העבודה? מדריך קצר →
+          </Link>
+        </div>
+
+        {/* צרו ספירה משלכם */}
+        <div className="mt-8 text-center">
           <p className="mb-3 text-sm text-[var(--muted)]">
             רוצים ספירה כזו לחתונה שלכם?
           </p>
