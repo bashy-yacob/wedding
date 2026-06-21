@@ -14,9 +14,8 @@ import {
   Palette,
   Photo,
   Gift,
-  Monitor,
-  ArrowLeft,
 } from "@/components/Ornaments";
+import { WallpaperChip } from "@/components/WallpaperChip";
 
 const STEPS = [
   {
@@ -53,6 +52,9 @@ export default function HomePage() {
   return (
     <main data-theme="classic" className="bg-animated relative min-h-screen overflow-hidden">
       <FloatingBackground />
+
+      {/* כפתור צד פינתי קבוע — מדריך לרקע חי על שולחן העבודה */}
+      <WallpaperChip />
 
       {/* ------------------------------- Hero ------------------------------- */}
       <section className="mx-auto flex max-w-6xl flex-col items-center px-6 pt-10 pb-10 text-center sm:pt-14">
@@ -137,17 +139,6 @@ export default function HomePage() {
           >
             צרו ספירה עכשיו
           </Link>
-
-          <div className="mt-6">
-            <Link
-              href="/wallpaper"
-              className="surface-card inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium accent-text transition hover:-translate-y-0.5 hover:shadow-lg"
-            >
-              <Monitor className="h-4 w-4" />
-              אפשר גם להפוך אותה לרקע חי על שולחן העבודה
-              <ArrowLeft className="h-4 w-4" />
-            </Link>
-          </div>
         </div>
 
         <DonationCTA />
