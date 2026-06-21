@@ -52,24 +52,24 @@ export default function HomePage() {
 
       {/* ------------------------------- Hero ------------------------------- */}
       <section className="mx-auto flex max-w-6xl flex-col items-center px-6 pt-10 pb-10 text-center sm:pt-14">
-        <Rings className="reveal mb-4 h-12 w-20" />
+        <Rings className="reveal mb-4 h-12 w-20 lg:h-16 lg:w-28" />
 
         <span
-          className="reveal accent-text mb-3 text-sm font-medium tracking-wide"
+          className="reveal accent-text mb-3 text-sm font-medium tracking-wide lg:text-base"
           style={{ animationDelay: "0.05s" }}
         >
           ספירה אישית לכל חתונה
         </span>
 
         <h1
-          className="font-display accent-gradient-text reveal mb-4 text-5xl font-extrabold leading-tight sm:text-7xl"
+          className="font-display accent-gradient-text reveal mb-4 text-5xl font-extrabold leading-tight sm:text-7xl lg:text-8xl"
           style={{ animationDelay: "0.1s" }}
         >
           עד החתונה
         </h1>
 
         <p
-          className="reveal mb-6 max-w-md text-lg leading-relaxed text-[var(--muted)]"
+          className="reveal mb-6 max-w-md text-lg leading-relaxed text-[var(--muted)] lg:max-w-xl lg:text-xl"
           style={{ animationDelay: "0.15s" }}
         >
           צרו ספירה לאחור חגיגית לחתונה — עם השמות, תאריך עברי כראשי, וקישור ייחודי
@@ -78,7 +78,7 @@ export default function HomePage() {
 
         <Link
           href="/create"
-          className="reveal animate-pulse-glow rounded-full bg-[var(--accent)] px-10 py-4 text-lg font-semibold text-white shadow-lg shadow-[var(--accent)]/30 transition hover:-translate-y-0.5 hover:shadow-xl"
+          className="reveal animate-pulse-glow rounded-full bg-[var(--accent)] px-10 py-4 text-lg font-semibold text-white shadow-lg shadow-[var(--accent)]/30 transition hover:-translate-y-0.5 hover:shadow-xl lg:px-12 lg:py-5 lg:text-xl"
           style={{ animationDelay: "0.2s" }}
         >
           צרו ספירה

@@ -26,9 +26,9 @@ export function HeroDemo() {
   }, []);
 
   return (
-    <div className="surface-card mx-auto w-full max-w-lg rounded-3xl px-8 py-10 text-center">
-      <p className="text-xs text-[var(--muted)]">הספירה לחתונה של</p>
-      <p className="font-display accent-gradient-text mt-1 mb-6 text-2xl font-bold">
+    <div className="surface-card mx-auto w-full max-w-lg rounded-3xl px-8 py-10 text-center lg:max-w-2xl lg:px-12 lg:py-14">
+      <p className="text-xs text-[var(--muted)] lg:text-sm">הספירה לחתונה של</p>
+      <p className="font-display accent-gradient-text mt-1 mb-6 text-2xl font-bold lg:text-4xl">
         חיים ושרה
       </p>
 
@@ -45,8 +45,8 @@ export function HeroDemo() {
       )}
 
       <Divider className="my-6" />
-      <p className="font-display text-lg font-semibold">כ״ב באדר התשפ״ו</p>
-      <p className="text-sm text-[var(--muted)]">22 במרץ 2026</p>
+      <p className="font-display text-lg font-semibold lg:text-2xl">כ״ב באדר התשפ״ו</p>
+      <p className="text-sm text-[var(--muted)] lg:text-base">22 במרץ 2026</p>
     </div>
   );
 }
