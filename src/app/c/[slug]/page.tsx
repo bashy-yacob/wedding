@@ -96,62 +96,88 @@ export default async function CountdownPage({
     <main data-theme={countdown.theme} className="bg-animated relative min-h-screen">
       <FloatingBackground />
 
-      <div className="mx-auto max-w-2xl px-6 py-12">
-        {created && (
-          <div className="surface-card reveal mb-8 rounded-2xl p-5 text-center">
-            <p className="font-semibold">הספירה נוצרה! 🎉</p>
-            <p className="mt-1 text-sm text-[var(--muted)]">
-              זה הקישור הייחודי שלכם — שתפו אותו. שימו לב: לא ניתן לערוך את הספירה.
-            </p>
+      {/* ----- מסך ראשון: כותרת + ספירה במלוא הגובה ----- */}
+      <section className="relative flex min-h-screen flex-col justify-center px-6 py-16">
+        <div className="mx-auto w-full max-w-2xl">
+          {created && (
+            <div className="surface-card reveal mb-8 rounded-2xl p-5 text-center">
+              <p className="font-semibold">הספירה נוצרה! 🎉</p>
+              <p className="mt-1 text-sm text-[var(--muted)]">
+                זה הקישור הייחודי שלכם — שתפו אותו. שימו לב: לא ניתן לערוך את הספירה.
+              </p>
+            </div>
+          )}
+
+          {/* כותרת */}
+          <header className="reveal mb-8 text-center" style={{ animationDelay: "0.05s" }}>
+            <Rings className="mx-auto mb-4 h-10 w-16" />
+            <p className="text-sm text-[var(--muted)]">הספירה לחתונה של</p>
+            <h1 className="font-display accent-gradient-text mt-1 text-4xl font-extrabold sm:text-5xl">
+              {countdown.display_names}
+            </h1>
+          </header>
+
+          {/* מונה / מזל טוב */}
+          <div
+            className="surface-card reveal rounded-3xl px-6 py-12"
+            style={{ animationDelay: "0.15s" }}
+          >
+            <CountdownClient
+              weddingDate={countdown.wedding_date}
+              weddingTime={countdown.wedding_time}
+              displayNames={countdown.display_names}
+              blessing={countdown.blessing}
+            />
+
+            <Divider className="my-8" />
+
+            {/* תאריך עברי כראשי, לועזי קטן לצדו */}
+            <div className="text-center">
+              <p className="wedding-date font-display text-2xl font-bold sm:text-3xl">
+                {hebrewDate}
+              </p>
+              {countdown.show_gregorian && (
+                <p className="mt-1 text-sm text-[var(--muted)]">{gregorianDate}</p>
+              )}
+            </div>
           </div>
-        )}
 
-        {/* כותרת */}
-        <header className="reveal mb-8 text-center" style={{ animationDelay: "0.05s" }}>
-          <Rings className="mx-auto mb-4 h-10 w-16" />
-          <p className="text-sm text-[var(--muted)]">הספירה לחתונה של</p>
-          <h1 className="font-display accent-gradient-text mt-1 text-4xl font-extrabold sm:text-5xl">
-            {countdown.display_names}
-          </h1>
-        </header>
-
-        {/* מונה / מזל טוב */}
-        <div
-          className="surface-card reveal rounded-3xl px-6 py-12"
-          style={{ animationDelay: "0.15s" }}
-        >
-          <CountdownClient
-            weddingDate={countdown.wedding_date}
-            weddingTime={countdown.wedding_time}
-            displayNames={countdown.display_names}
-            blessing={countdown.blessing}
-          />
-
-          <Divider className="my-8" />
-
-          {/* תאריך עברי כראשי, לועזי קטן לצדו */}
-          <div className="text-center">
-            <p className="wedding-date font-display text-2xl font-bold sm:text-3xl">
-              {hebrewDate}
+          {/* ברכת היוצר (בזמן ספירה בלבד) */}
+          {countdown.blessing && state.status === "countdown" && (
+            <p
+              className="font-display reveal mt-8 text-center text-lg"
+              style={{ animationDelay: "0.25s" }}
+            >
+              {countdown.blessing}
             </p>
-            {countdown.show_gregorian && (
-              <p className="mt-1 text-sm text-[var(--muted)]">{gregorianDate}</p>
-            )}
-          </div>
+          )}
         </div>
 
-        {/* ברכת היוצר (בזמן ספירה בלבד) */}
-        {countdown.blessing && state.status === "countdown" && (
-          <p
-            className="font-display reveal mt-8 text-center text-lg"
-            style={{ animationDelay: "0.25s" }}
+        {/* חיווי גלילה — רומז שיש עוד תוכן למטה */}
+        <a
+          href="#more"
+          aria-label="גלול לעוד"
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[var(--accent)] opacity-70 transition hover:opacity-100"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            className="h-7 w-7 animate-bounce"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden
           >
-            {countdown.blessing}
-          </p>
-        )}
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </a>
+      </section>
 
+      {/* ----- שאר התוכן: שיתוף, ברכות, יצירה ----- */}
+      <div id="more" className="mx-auto max-w-2xl px-6 pb-16">
         {/* שיתוף */}
-        <div className="reveal mt-10" style={{ animationDelay: "0.3s" }}>
+        <div className="mt-4">
           <ShareWhatsAppButton
             slug={slug}
             displayNames={countdown.display_names}
