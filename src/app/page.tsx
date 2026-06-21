@@ -14,6 +14,8 @@ import {
   Palette,
   Photo,
   Gift,
+  Monitor,
+  ArrowLeft,
 } from "@/components/Ornaments";
 
 const STEPS = [
@@ -136,14 +138,16 @@ export default function HomePage() {
             צרו ספירה עכשיו
           </Link>
 
-          <p className="mt-5 text-sm text-[var(--muted)]">
+          <div className="mt-6">
             <Link
               href="/wallpaper"
-              className="font-medium accent-text underline-offset-4 hover:underline"
+              className="surface-card inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium accent-text transition hover:-translate-y-0.5 hover:shadow-lg"
             >
-              🖥️ אפשר גם להפוך אותה לרקע חי על שולחן העבודה →
+              <Monitor className="h-4 w-4" />
+              אפשר גם להפוך אותה לרקע חי על שולחן העבודה
+              <ArrowLeft className="h-4 w-4" />
             </Link>
-          </p>
+          </div>
         </div>
 
         <DonationCTA />

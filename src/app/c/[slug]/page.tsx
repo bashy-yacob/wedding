@@ -15,7 +15,7 @@ import { DonationCTA } from "@/components/DonationCTA";
 import { FloatingBackground } from "@/components/FloatingBackground";
 import { InvitationView } from "@/components/InvitationView";
 import { invitationPublicUrl } from "@/lib/storage";
-import { Divider, Rings } from "@/components/Ornaments";
+import { Divider, Rings, Monitor } from "@/components/Ornaments";
 import { customThemeVars } from "@/lib/themes";
 
 async function getCountdown(slug: string): Promise<Countdown | null> {
@@ -112,6 +112,17 @@ export default async function CountdownPage({
       className="bg-animated relative min-h-screen"
     >
       <FloatingBackground />
+
+      {/* צ'יפ פינתי קבוע — הופך את הספירה לרקע חי על שולחן העבודה */}
+      <Link
+        href={`/wallpaper?c=${slug}`}
+        className="surface-card fixed bottom-4 left-4 z-30 flex items-center gap-2 rounded-full px-4 py-2.5 text-xs font-medium shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl"
+        title="הפכו את הספירה לרקע חי על שולחן העבודה"
+      >
+        <Monitor className="h-4 w-4 shrink-0 text-[var(--accent)]" />
+        <span className="hidden sm:inline">רקע לשולחן העבודה</span>
+        <span className="sm:hidden">רקע למחשב</span>
+      </Link>
 
       {/* ----- מסך ראשון: כותרת + ספירה במלוא הגובה ----- */}
       <section className="relative flex min-h-screen flex-col justify-center px-6 py-16">
