@@ -118,7 +118,7 @@ export default async function CountdownPage({
       <WallpaperChip slug={slug} />
 
       {/* ----- מסך ראשון: כותרת + ספירה במלוא הגובה ----- */}
-      <section className="relative flex min-h-screen flex-col justify-center px-6 py-16">
+      <section className="relative flex min-h-screen flex-col justify-start px-6 pt-16 pb-36 sm:justify-center sm:pb-16">
         <div className="mx-auto w-full max-w-2xl">
           {created && token && <CreatedBanner slug={slug} editToken={token} />}
 
@@ -207,18 +207,8 @@ export default async function CountdownPage({
           />
         )}
 
-        {/* רקע חי לשולחן העבודה */}
-        <div className="mt-12 text-center">
-          <Link
-            href={`/wallpaper?c=${slug}`}
-            className="inline-block text-sm font-medium accent-text underline-offset-4 hover:underline"
-          >
-            🖥️ רוצים את הספירה כרקע חי על שולחן העבודה? מדריך קצר →
-          </Link>
-        </div>
-
         {/* צרו ספירה משלכם */}
-        <div className="mt-8 text-center">
+        <div className="mt-12 text-center">
           <p className="mb-3 text-sm text-[var(--muted)]">
             רוצים ספירה כזו לחתונה שלכם?
           </p>
