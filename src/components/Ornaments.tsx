@@ -110,3 +110,57 @@ export function Send({ className = "" }: { className?: string }) {
     </LineIcon>
   );
 }
+
+/** לוח שנה — "תאריך עברי". */
+export function Calendar({ className = "" }: { className?: string }) {
+  return (
+    <LineIcon className={className}>
+      <rect x="3" y="4" width="18" height="18" rx="2" />
+      <path d="M16 2v4M8 2v4M3 10h18" />
+    </LineIcon>
+  );
+}
+
+/** בועת ברכה — "קיר ברכות". */
+export function Chat({ className = "" }: { className?: string }) {
+  return (
+    <LineIcon className={className}>
+      <path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.4 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8A8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5z" />
+    </LineIcon>
+  );
+}
+
+/** ניצוצות — "מצב מזל טוב". */
+export function Sparkles({ className = "" }: { className?: string }) {
+  return (
+    <LineIcon className={className}>
+      <path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6L12 3z" />
+      <path d="M19 14l.7 1.9 1.9.7-1.9.7-.7 1.9-.7-1.9-1.9-.7 1.9-.7L19 14z" />
+    </LineIcon>
+  );
+}
+
+/** פלטת צבעים — "ערכות עיצוב". */
+export function Palette({ className = "" }: { className?: string }) {
+  return (
+    <LineIcon className={className}>
+      <path d="M12 3a9 9 0 1 0 0 18c1.7 0 2-1.3 1.2-2.2-.7-.9-.4-2.3 1-2.3H17a4 4 0 0 0 4-4c0-5-4-7.5-9-7.5z" />
+      <circle cx="7.5" cy="11" r="1" fill="currentColor" stroke="none" />
+      <circle cx="12" cy="7.5" r="1" fill="currentColor" stroke="none" />
+      <circle cx="16" cy="9.5" r="1" fill="currentColor" stroke="none" />
+    </LineIcon>
+  );
+}
+
+/** מתנה — "ללא הרשמה, בחינם". */
+export function Gift({ className = "" }: { className?: string }) {
+  return (
+    <LineIcon className={className}>
+      <path d="M20 12v9H4v-9" />
+      <path d="M2 7h20v5H2z" />
+      <path d="M12 22V7" />
+      <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
+      <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
+    </LineIcon>
+  );
+}
