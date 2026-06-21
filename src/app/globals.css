@@ -27,6 +27,7 @@
   --muted: #8c8576;
   --accent: #b08d57;
   --accent-2: #d8b878;
+  --on-accent: #ffffff;
 }
 
 [data-theme="classic"] {
@@ -97,6 +98,17 @@
 
 [data-theme] {
   --accent-soft: color-mix(in srgb, var(--accent) 14%, transparent);
+  /* צבע טקסט מעל רקע ה-accent. ברירת מחדל לבן; בערכות עם accent בהיר
+     (זהב/שמי לילה) הטקסט כהה כדי לשמור על קריאוּת. */
+  --on-accent: #ffffff;
+}
+
+[data-theme="gold"] {
+  --on-accent: #2a2114;
+}
+
+[data-theme="midnight"] {
+  --on-accent: #16182b;
 }
 
 html {
@@ -116,17 +128,6 @@ body {
 
 .font-display {
   font-family: var(--font-display);
-}
-
-.accent-text {
-  color: var(--accent);
-}
-
-.accent-gradient-text {
-  background: linear-gradient(120deg, var(--accent) 0%, var(--accent-2) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
 }
 
 /* רקע — classic: נייר קרם רגוע וסטטי */
@@ -157,6 +158,20 @@ body {
   border-radius: 0;
   box-shadow: none;
   overflow: visible;
+}
+
+/* טקסט accent — מוגדר אחרי .surface-card כדי שכאשר אלמנט נושא את שתי
+   המחלקות (למשל באדג' המספרים בדף הבית) ה-gradient המקוצץ-לטקסט ינצח את
+   רקע הכרטיס, אחרת הטקסט הופך שקוף ונעלם. */
+.accent-text {
+  color: var(--accent);
+}
+
+.accent-gradient-text {
+  background: linear-gradient(120deg, var(--accent) 0%, var(--accent-2) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 /* ==========================================================================

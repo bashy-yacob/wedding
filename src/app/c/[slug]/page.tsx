@@ -171,7 +171,7 @@ export default async function CountdownPage({
           </p>
           <Link
             href="/create"
-            className="inline-block rounded-full bg-[var(--accent)] px-8 py-3 text-sm font-semibold text-white shadow-lg transition hover:opacity-90"
+            className="inline-block rounded-full bg-[var(--accent)] px-8 py-3 text-sm font-semibold text-[var(--on-accent)] shadow-lg transition hover:opacity-90"
           >
             צרו ספירה משלכם
           </Link>

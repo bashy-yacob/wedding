@@ -80,7 +80,7 @@ export default function CreatePage() {
                   onClick={() => setDateMode("greg")}
                   className={`rounded-lg px-4 py-1.5 transition ${
                     dateMode === "greg"
-                      ? "bg-[var(--accent)] text-white"
+                      ? "bg-[var(--accent)] text-[var(--on-accent)]"
                       : "text-[var(--muted)]"
                   }`}
                 >
@@ -91,7 +91,7 @@ export default function CreatePage() {
                   onClick={() => setDateMode("hebrew")}
                   className={`rounded-lg px-4 py-1.5 transition ${
                     dateMode === "hebrew"
-                      ? "bg-[var(--accent)] text-white"
+                      ? "bg-[var(--accent)] text-[var(--on-accent)]"
                       : "text-[var(--muted)]"
                   }`}
                 >
@@ -186,7 +186,7 @@ export default function CreatePage() {
             <button
               type="submit"
               disabled={pending}
-              className="w-full rounded-full bg-[var(--accent)] px-8 py-4 text-lg font-semibold text-white shadow-lg shadow-[var(--accent)]/30 transition hover:-translate-y-0.5 hover:shadow-xl disabled:opacity-50"
+              className="w-full rounded-full bg-[var(--accent)] px-8 py-4 text-lg font-semibold text-[var(--on-accent)] shadow-lg shadow-[var(--accent)]/30 transition hover:-translate-y-0.5 hover:shadow-xl disabled:opacity-50"
             >
               {pending ? "יוצר..." : "צרו את הספירה"}
             </button>

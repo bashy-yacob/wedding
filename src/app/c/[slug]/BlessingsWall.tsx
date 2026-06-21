@@ -44,7 +44,7 @@ export function BlessingsWall({ slug, blessings }: BlessingsWallProps) {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="rounded-full bg-[var(--accent)] px-5 py-2 text-sm font-semibold text-white shadow-md shadow-[var(--accent)]/30 transition hover:-translate-y-0.5"
+          className="rounded-full bg-[var(--accent)] px-5 py-2 text-sm font-semibold text-[var(--on-accent)] shadow-md shadow-[var(--accent)]/30 transition hover:-translate-y-0.5"
         >
           {open ? "סגירה" : "שלחו איחול"}
         </button>
@@ -96,7 +96,7 @@ export function BlessingsWall({ slug, blessings }: BlessingsWallProps) {
               <button
                 type="submit"
                 disabled={pending}
-                className="w-full rounded-full bg-[var(--accent)] px-6 py-3 font-semibold text-white transition hover:-translate-y-0.5 disabled:opacity-50"
+                className="w-full rounded-full bg-[var(--accent)] px-6 py-3 font-semibold text-[var(--on-accent)] transition hover:-translate-y-0.5 disabled:opacity-50"
               >
                 {pending ? "שולח…" : "שליחת איחול"}
               </button>
