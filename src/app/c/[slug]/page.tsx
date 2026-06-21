@@ -28,9 +28,14 @@ async function getCountdown(slug: string): Promise<Countdown | null> {
 }
 
 async function getBlessings(slug: string): Promise<Blessing[]> {
-  const supabase = createServerClient();
-  const { data } = await supabase.rpc("get_blessings", { p_slug: slug });
-  return (data as Blessing[]) ?? [];
+  try {
+    const supabase = createServerClient();
+    const { data } = await supabase.rpc("get_blessings", { p_slug: slug });
+    return (data as Blessing[]) ?? [];
+  } catch {
+    // כשל בטעינת הברכות לא אמור להפיל את כל עמוד הספירה — מחזירים ריק.
+    return [];
+  }
 }
 
 export async function generateMetadata({
