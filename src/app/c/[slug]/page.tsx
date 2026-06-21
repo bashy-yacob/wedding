@@ -165,18 +165,21 @@ export default async function CountdownPage({
           )}
         </div>
 
-        {/* חיווי גלילה — רומז שיש עוד תוכן למטה */}
+        {/* חיווי גלילה בולט — מבהיר שיש המשך (קיר ברכות) למטה */}
         <a
           href="#more"
-          aria-label="גלול לעוד"
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[var(--accent)] opacity-70 transition hover:opacity-100"
+          aria-label={countdown.allow_blessings ? "גלול לקיר הברכות" : "גלול להמשך"}
+          className="group absolute bottom-6 left-1/2 flex -translate-x-1/2 animate-bounce flex-col items-center gap-2 text-[var(--accent)]"
         >
+          <span className="surface-card rounded-full px-4 py-1.5 text-sm font-semibold shadow-md">
+            {countdown.allow_blessings ? "לקיר הברכות 🤍" : "להמשך"}
+          </span>
           <svg
             viewBox="0 0 24 24"
-            className="h-7 w-7 animate-bounce"
+            className="h-8 w-8 drop-shadow-sm"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth="2.5"
             strokeLinecap="round"
             strokeLinejoin="round"
             aria-hidden
