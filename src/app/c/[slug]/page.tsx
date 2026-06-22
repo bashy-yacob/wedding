@@ -7,6 +7,7 @@ import { getCountdownState } from "@/lib/time";
 import { getBaseUrl } from "@/lib/url";
 import type { Countdown, Blessing } from "@/types/db";
 import { CountdownClient } from "./CountdownClient";
+import { ScrollHint } from "./ScrollHint";
 import { CreatedBanner } from "./CreatedBanner";
 import { BlessingsWall } from "./BlessingsWall";
 import { ShareWhatsAppButton } from "@/components/ShareWhatsAppButton";
@@ -15,6 +16,8 @@ import { FloatingBackground } from "@/components/FloatingBackground";
 import { InvitationView } from "@/components/InvitationView";
 import { invitationPublicUrl } from "@/lib/storage";
 import { Divider, Rings } from "@/components/Ornaments";
+import { WallpaperChip } from "@/components/WallpaperChip";
+import { customThemeVars } from "@/lib/themes";
 
 async function getCountdown(slug: string): Promise<Countdown | null> {
   try {
@@ -48,24 +51,27 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const countdown = await getCountdown(slug);
-  if (!countdown) return { title: "ספירה לא נמצאה — עד החתונה" };
+  // דפי הספירה האישיים פרטיים — חוסמים אינדוקס בגוגל בכל מקרה.
+  const noindex = { robots: { index: false, follow: false } } as const;
+  if (!countdown) return { title: "ספירה לא נמצאה", ...noindex };
 
   const hebrew = toHebrewDateString(countdown.wedding_date);
-  const title = `${countdown.display_names} — עד החתונה`;
+  const title = countdown.display_names;
   const description = `${hebrew} · הצטרפו לספירה לאחור`;
   const baseUrl = await getBaseUrl();
 
   return {
     title,
     description,
+    ...noindex,
     openGraph: {
-      title,
+      title: `${title} — עד החתונה`,
       description,
       url: `${baseUrl}/c/${slug}`,
       type: "website",
       locale: "he_IL",
     },
-    twitter: { card: "summary_large_image", title, description },
+    twitter: { card: "summary_large_image", title: `${title} — עד החתונה`, description },
   };
 }
 
@@ -97,12 +103,25 @@ export default async function CountdownPage({
     weddingTime: countdown.wedding_time,
   });
 
+  // דריסות התאמה אישית (צבע דגש / פונט) מעל עיצוב הבסיס
+  const customStyle = customThemeVars({
+    accentColor: countdown.accent_color,
+    fontKey: countdown.font_key,
+  }) as React.CSSProperties;
+
   return (
-    <main data-theme={countdown.theme} className="bg-animated relative min-h-screen">
+    <main
+      data-theme={countdown.theme}
+      style={customStyle}
+      className="bg-animated relative min-h-screen"
+    >
       <FloatingBackground />
 
+      {/* כפתור צד פינתי קבוע — מדריך לרקע חי על שולחן העבודה */}
+      <WallpaperChip slug={slug} />
+
       {/* ----- מסך ראשון: כותרת + ספירה במלוא הגובה ----- */}
-      <section className="relative flex min-h-screen flex-col justify-center px-6 py-16">
+      <section className="relative flex min-h-screen flex-col justify-start px-6 pt-16 pb-36 sm:justify-center sm:pb-16">
         <div className="mx-auto w-full max-w-2xl">
           {created && token && <CreatedBanner slug={slug} editToken={token} />}
 
@@ -172,34 +191,8 @@ export default async function CountdownPage({
           )}
         </div>
 
-        {/* עמעום עדין בתחתית — רומז שיש תוכן "מתחת לקיפול" */}
-        <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[var(--bg)] to-transparent"
-          aria-hidden
-        />
-
-        {/* חיווי גלילה בולט — מבהיר שיש המשך (קיר ברכות) למטה */}
-        <a
-          href="#more"
-          aria-label={countdown.allow_blessings ? "גלול לקיר הברכות" : "גלול להמשך"}
-          className="group absolute bottom-6 left-1/2 flex -translate-x-1/2 animate-bounce flex-col items-center gap-2 text-[var(--accent)]"
-        >
-          <span className="surface-card rounded-full px-4 py-1.5 text-sm font-semibold shadow-md">
-            {countdown.allow_blessings ? "לקיר הברכות 🤍" : "להמשך"}
-          </span>
-          <svg
-            viewBox="0 0 24 24"
-            className="h-8 w-8 drop-shadow-sm"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden
-          >
-            <path d="M6 9l6 6 6-6" />
-          </svg>
-        </a>
+        {/* עמעום + חיווי גלילה — נעלמים כשמתחילים לגלול */}
+        <ScrollHint label={countdown.allow_blessings ? "לקיר הברכות 🤍" : "להמשך"} />
       </section>
 
       {/* ----- שאר התוכן: קיר ברכות, הזמנה, יצירה ----- */}

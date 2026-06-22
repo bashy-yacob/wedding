@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { createServerClient } from "@/lib/supabase/server";
 import { toHebrewDateString, toGregorianString } from "@/lib/hebcal";
 import { getCountdownState } from "@/lib/time";
-import { getTheme } from "@/lib/themes";
+import { getTheme, HEX_COLOR_RE } from "@/lib/themes";
 import { loadHebrewFont } from "@/lib/og";
 import type { Countdown } from "@/types/db";
 
@@ -26,6 +26,11 @@ export default async function OgImage({
   const hebrewDate = countdown ? toHebrewDateString(countdown.wedding_date) : "";
   const gregDate = countdown ? toGregorianString(countdown.wedding_date) : "";
   const theme = getTheme(countdown?.theme);
+  // צבע דגש מותאם אישית גובר על צבע העיצוב (אם נבחר). הפונט ב-OG נשאר Frank.
+  const accent =
+    countdown?.accent_color && HEX_COLOR_RE.test(countdown.accent_color)
+      ? countdown.accent_color
+      : theme.accent;
 
   let headline = "עד החתונה";
   if (countdown) {
@@ -69,7 +74,7 @@ export default async function OgImage({
           style={{
             fontSize: 64,
             fontWeight: 700,
-            color: theme.accent,
+            color: accent,
             marginBottom: 28,
           }}
         >

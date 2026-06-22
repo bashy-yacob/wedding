@@ -1,4 +1,6 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+import { getBaseUrl } from "@/lib/url";
 import { HeroDemo } from "@/components/HeroDemo";
 import { FloatingBackground } from "@/components/FloatingBackground";
 import { DonationCTA } from "@/components/DonationCTA";
@@ -15,6 +17,7 @@ import {
   Photo,
   Gift,
 } from "@/components/Ornaments";
+import { WallpaperChip } from "@/components/WallpaperChip";
 
 const STEPS = [
   {
@@ -47,10 +50,41 @@ const FEATURES = [
   { label: "ללא הרשמה, בחינם", Icon: Gift },
 ];
 
-export default function HomePage() {
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
+
+export default async function HomePage() {
+  const baseUrl = await getBaseUrl();
+
+  // נתונים מובנים (JSON-LD) — עוזרים לגוגל להבין שזה כלי/שירות חינמי.
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: "עד החתונה",
+    url: baseUrl,
+    applicationCategory: "LifestyleApplication",
+    operatingSystem: "Web",
+    inLanguage: "he-IL",
+    description:
+      "צרו ספירה לאחור אישית לחתונה, עם תאריך עברי וקישור ייחודי לשיתוף בוואטסאפ. בלי הרשמה, בחינם.",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "ILS",
+    },
+  };
+
   return (
     <main data-theme="classic" className="bg-animated relative min-h-screen overflow-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <FloatingBackground />
+
+      {/* כפתור צד פינתי קבוע — מדריך לרקע חי על שולחן העבודה */}
+      <WallpaperChip />
 
       {/* ------------------------------- Hero ------------------------------- */}
       <section className="mx-auto flex max-w-6xl flex-col items-center px-6 pt-10 pb-10 text-center sm:pt-14">

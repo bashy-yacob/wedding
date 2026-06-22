@@ -1,4 +1,4 @@
-import type { ThemeKey } from "@/lib/themes";
+import type { ThemeKey, FontKey } from "@/lib/themes";
 
 export interface Countdown {
   id: string;
@@ -10,6 +10,9 @@ export interface Countdown {
   show_gregorian: boolean;
   blessing: string | null;
   theme: ThemeKey;
+  // התאמה אישית מעל עיצוב הבסיס (null = ערכי הבסיס)
+  accent_color: string | null; // '#rrggbb'
+  font_key: FontKey | null;
   allow_blessings: boolean;
   invitation_path: string | null;
   created_at: string;
