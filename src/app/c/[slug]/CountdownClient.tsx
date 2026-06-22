@@ -60,7 +60,9 @@ export function CountdownClient({
           מזל טוב! 🎉
         </p>
         <p className="mt-4 text-xl text-[var(--muted)]">{subtitle}</p>
-        {blessing && <p className="font-display mt-6 text-lg">{blessing}</p>}
+        {blessing && (
+          <p className="creator-blessing font-display mt-6 text-lg">{blessing}</p>
+        )}
       </motion.div>
     );
   }

@@ -183,7 +183,7 @@ export default async function CountdownPage({
           {/* ברכת היוצר (בזמן ספירה בלבד) */}
           {countdown.blessing && state.status === "countdown" && (
             <p
-              className="font-display reveal mt-8 text-center text-lg"
+              className="creator-blessing font-display reveal mt-8 text-center text-lg"
               style={{ animationDelay: "0.25s" }}
             >
               {countdown.blessing}
