@@ -192,8 +192,24 @@ export default async function WallpaperGuidePage({
 }) {
   const { c } = await searchParams;
 
+  // נתונים מובנים (JSON-LD) מסוג FAQPage — עוזרים לגוגל להבין שהעמוד עונה
+  // על שאלות נפוצות סביב הפיכת הספירה לרקע חי.
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQ.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  };
+
   return (
     <main data-theme="classic" className="bg-animated relative min-h-screen overflow-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       <FloatingBackground />
 
       {/* ------------------------------- Hero ------------------------------- */}
@@ -317,7 +333,12 @@ export default async function WallpaperGuidePage({
                   {i + 1}
                 </span>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={shot.src} alt={shot.title} loading="lazy" className="h-auto w-full" />
+                <img
+                  src={shot.src}
+                  alt={`${shot.title} — צילום מסך מתוך Lively Wallpaper להגדרת הספירה כרקע חי`}
+                  loading="lazy"
+                  className="h-auto w-full"
+                />
               </div>
               <figcaption className="p-4">
                 <h3 className="mb-1 text-sm font-bold">{shot.title}</h3>
