@@ -1,21 +1,30 @@
-// קרדיט עדין בתחתית כל הדפים.
-// הכתובת מקושרת ל-mailto ליצירת קשר.
+// באנר קרדיט בתחתית כל הדפים — ממצב את האתר כתיק עבודות חי של בשי,
+// בונת אתרים. הקריאה לפעולה מובילה ל-mailto לפנייה על בניית אתר חדש.
 
-const FEEDBACK_MAILTO =
+const BUILD_MAILTO =
   "mailto:bashy3309@gmail.com" +
   "?subject=" +
-  encodeURIComponent("הערות ושיפורים — עד החתונה") +
+  encodeURIComponent("מעוניין/ת באתר") +
   "&body=" +
-  encodeURIComponent("הי בשי,\nרציתי לשתף הערה / רעיון לשיפור:\n\n");
+  encodeURIComponent(
+    "הי בשי,\nראיתי את האתר ואשמח לדבר על בניית אתר עבורי.\n\nקצת על מה שאני מחפש/ת:\n",
+  );
 
 export function SiteFooter() {
   return (
-    <footer className="px-6 py-4 text-center text-xs text-[var(--muted)]">
+    <footer className="px-6 py-8 text-center text-xs text-[var(--muted)]">
+      <p className="mb-1 text-sm font-semibold text-[var(--text)]">
+        אהבתם את האתר? אני בונה אתרים כאלה.
+      </p>
+      <p className="mx-auto mb-4 max-w-md">
+        בשי — עיצוב ובניית אתרים מהירים ויפים לעסקים וליחידים. האתר הזה הוא דוגמה
+        חיה. רוצים אחד משלכם?
+      </p>
       <a
-        href={FEEDBACK_MAILTO}
-        className="mb-3 inline-block rounded-full border border-[var(--accent)] px-4 py-1.5 text-xs font-medium accent-text transition hover:bg-[var(--accent-soft)]"
+        href={BUILD_MAILTO}
+        className="mb-4 inline-block rounded-full bg-[var(--accent)] px-6 py-2 text-sm font-semibold text-white shadow-lg shadow-[var(--accent)]/30 transition hover:-translate-y-0.5 hover:shadow-xl"
       >
-        נשמח לשמוע הערות ושיפורים 💬
+        דברו איתי ✨
       </a>
       <p>
         נבנה באהבה על ידי בשי 🤍 · ליצירת קשר:{" "}

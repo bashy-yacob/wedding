@@ -11,6 +11,7 @@ import {
 import { getBaseUrl } from "@/lib/url";
 import "./globals.css";
 import { SiteFooter } from "@/components/SiteFooter";
+import { BuilderChip } from "@/components/BuilderChip";
 
 // פונט הממשק (טקסט גוף, תוויות) — אחיד בכל הערכות לשם קריאוּת.
 const heebo = Heebo({
@@ -130,6 +131,7 @@ export default function RootLayout({
     >
       <body>
         {children}
+        <BuilderChip />
         <SiteFooter />
       </body>
     </html>
