@@ -1,8 +1,8 @@
 "use client";
 
-import { useActionState, useEffect, useRef, useState } from "react";
+import { useActionState, useEffect, useRef, useState, useTransition } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { postBlessing, type BlessingState } from "./actions";
+import { postBlessing, deleteBlessing, type BlessingState } from "./actions";
 import { Divider } from "@/components/Ornaments";
 import type { Blessing } from "@/types/db";
 
@@ -18,6 +18,20 @@ function initials(name: string): string {
   return name.trim().slice(0, 2);
 }
 
+// מפתח localStorage לטוקני-המחיקה של ברכות שנשלחו מהדפדפן הזה (לפי ספירה).
+const tokensKey = (slug: string) => `blessing-tokens:${slug}`;
+
+type TokenMap = Record<string, string>; // blessingId → deleteToken
+
+function loadTokens(slug: string): TokenMap {
+  if (typeof window === "undefined") return {};
+  try {
+    return JSON.parse(localStorage.getItem(tokensKey(slug)) ?? "{}") as TokenMap;
+  } catch {
+    return {};
+  }
+}
+
 export function BlessingsWall({ slug, blessings }: BlessingsWallProps) {
   const [state, formAction, pending] = useActionState<BlessingState, FormData>(
     postBlessing,
@@ -27,13 +41,56 @@ export function BlessingsWall({ slug, blessings }: BlessingsWallProps) {
   const renderedAt = useRef(Date.now());
   const formRef = useRef<HTMLFormElement>(null);
 
+  // הטוקנים של הברכות "שלי" (אלו שנשלחו מהדפדפן הזה).
+  const [tokens, setTokens] = useState<TokenMap>({});
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    setTokens(loadTokens(slug));
+  }, [slug]);
+
+  function persistTokens(next: TokenMap) {
+    setTokens(next);
+    try {
+      localStorage.setItem(tokensKey(slug), JSON.stringify(next));
+    } catch {
+      /* localStorage לא זמין (מצב פרטי) — המחיקה פשוט לא תהיה זמינה */
+    }
+  }
+
   useEffect(() => {
     if (state.ok) {
       formRef.current?.reset();
       renderedAt.current = Date.now();
       setOpen(false);
+      // שומרים את טוקן-המחיקה של הברכה החדשה כדי שכפתור המחיקה יופיע עבורה.
+      if (state.created) {
+        persistTokens({
+          ...loadTokens(slug),
+          [state.created.id]: state.created.deleteToken,
+        });
+      }
     }
-  }, [state.ok]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state]);
+
+  function handleDelete(id: string) {
+    const token = tokens[id];
+    if (!token) return;
+    if (!window.confirm("למחוק את הברכה שלך?")) return;
+
+    setDeletingId(id);
+    startTransition(async () => {
+      const res = await deleteBlessing(slug, token);
+      if (res.ok || res.error === "הברכה כבר אינה קיימת.") {
+        const next = { ...tokens };
+        delete next[id];
+        persistTokens(next);
+      }
+      setDeletingId(null);
+    });
+  }
 
   return (
     <section className="mt-16">
@@ -122,12 +179,23 @@ export function BlessingsWall({ slug, blessings }: BlessingsWallProps) {
               <span className="accent-gradient-text font-display flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--accent)]/30 text-sm font-bold">
                 {initials(b.author_name)}
               </span>
-              <div>
+              <div className="min-w-0 flex-1">
                 <p className="mb-1 whitespace-pre-wrap">{b.message}</p>
                 <p className="accent-text text-sm font-medium">
                   — {b.author_name}
                 </p>
               </div>
+              {tokens[b.id] && (
+                <button
+                  type="button"
+                  onClick={() => handleDelete(b.id)}
+                  disabled={isPending && deletingId === b.id}
+                  aria-label="מחיקת הברכה שלי"
+                  className="shrink-0 self-start rounded-lg px-2 py-1 text-sm text-[var(--muted)] transition hover:bg-red-50 hover:text-red-600 disabled:opacity-50"
+                >
+                  {isPending && deletingId === b.id ? "מוחק…" : "🗑 מחיקה"}
+                </button>
+              )}
             </motion.li>
           ))}
         </ul>
