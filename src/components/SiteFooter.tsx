@@ -1,14 +1,7 @@
 // באנר קרדיט בתחתית כל הדפים — ממצב את האתר כתיק עבודות חי של בשי,
-// בונת אתרים. הקריאה לפעולה מובילה ל-mailto לפנייה על בניית אתר חדש.
-
-const BUILD_MAILTO =
-  "mailto:bashy3309@gmail.com" +
-  "?subject=" +
-  encodeURIComponent("מעוניין/ת באתר") +
-  "&body=" +
-  encodeURIComponent(
-    "הי בשי,\nראיתי את האתר ואשמח לדבר על בניית אתר עבורי.\n\nקצת על מה שאני מחפש/ת:\n",
-  );
+// בונת אתרים. הקריאה לפעולה פותחת חלון כתיבת מייל ב-Gmail (אמין יותר
+// מ-mailto, שדורש אפליקציית מייל מוגדרת במכשיר).
+import { BUILD_CONTACT_URL, CONTACT_EMAIL } from "@/lib/contact";
 
 export function SiteFooter() {
   return (
@@ -20,7 +13,9 @@ export function SiteFooter() {
         אני מעצבת ובונה אתרים מהירים ויפים לעסקים וליחידים. בואו נדבר על שלכם.
       </p>
       <a
-        href={BUILD_MAILTO}
+        href={BUILD_CONTACT_URL}
+        target="_blank"
+        rel="noopener noreferrer"
         className="mb-4 inline-block rounded-full bg-[var(--accent)] px-6 py-2 text-sm font-semibold text-white shadow-lg shadow-[var(--accent)]/30 transition hover:-translate-y-0.5 hover:shadow-xl"
       >
         דברו איתי
@@ -28,10 +23,12 @@ export function SiteFooter() {
       <p>
         נבנה באהבה על ידי בשי 🤍 · ליצירת קשר:{" "}
         <a
-          href="mailto:bashy3309@gmail.com"
+          href={BUILD_CONTACT_URL}
+          target="_blank"
+          rel="noopener noreferrer"
           className="accent-text font-medium underline-offset-4 hover:underline"
         >
-          bashy3309@gmail.com
+          {CONTACT_EMAIL}
         </a>
       </p>
     </footer>
