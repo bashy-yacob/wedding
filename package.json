@@ -13,6 +13,7 @@
   "dependencies": {
     "@hebcal/core": "^5.4.11",
     "@supabase/supabase-js": "^2.45.4",
+    "@vercel/analytics": "^2.0.1",
     "canvas-confetti": "^1.9.4",
     "framer-motion": "^12.40.0",
     "nanoid": "^5.0.7",
