@@ -27,4 +27,6 @@ export interface Blessing {
   author_name: string;
   message: string;
   created_at: string;
+  // הקריאה הציבורית (get_blessings) אינה מחזירה אותו; קיים רק כסוד אצל השולח.
+  delete_token?: string;
 }

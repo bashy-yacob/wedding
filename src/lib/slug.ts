@@ -21,6 +21,11 @@ export function generateEditToken(): string {
   return generateToken();
 }
 
+/** מייצר טוקן-מחיקה סודי לברכה, המאפשר לשולח בלבד למחוק את הברכה שלו. */
+export function generateDeleteToken(): string {
+  return generateToken();
+}
+
 /** בודק אם מחרוזת היא slug תקין שנוצר על ידינו. */
 export function isValidSlug(value: string): boolean {
   if (value.length !== SLUG_LENGTH) return false;
