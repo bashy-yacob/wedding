@@ -7,6 +7,9 @@ import { blessingSchema } from "@/lib/validation";
 export interface BlessingState {
   error?: string;
   ok?: boolean;
+  // מוחזרים לשולח בלבד כדי שהדפדפן ישמור אותם ב-localStorage ויוכל למחוק בעתיד.
+  id?: string;
+  token?: string;
 }
 
 // סף time-trap: דחיית טפסים שנשלחו מהר מדי (בוטים)
@@ -40,21 +43,12 @@ export async function postBlessing(
   try {
     const supabase = createServerClient();
 
-    // מאתרים את הספירה לפי slug כדי לקבל את ה-id (וגם לוודא שהיא קיימת).
-    // דרך RPC מאובטח — אין קריאה ישירה לטבלה (ראו migration 0003).
-    const { data } = await supabase.rpc("get_countdown", { p_slug: slug });
-    const countdown = (Array.isArray(data) ? data[0] : data) as
-      | { id: string; allow_blessings: boolean }
-      | undefined;
-
-    if (!countdown || !countdown.allow_blessings) {
-      return { error: "קיר הברכות אינו פעיל עבור ספירה זו." };
-    }
-
-    const { error } = await supabase.from("blessings").insert({
-      countdown_id: countdown.id,
-      author_name: parsed.data.author_name,
-      message: parsed.data.message,
+    // הוספה דרך RPC מאובטח: מאמת קיום ספירה + קיר ברכות פעיל, ומחזיר id וטוקן
+    // מחיקה. ה-trigger לקצב עדיין חל על ה-INSERT הפנימי (ראו migration 0008).
+    const { data, error } = await supabase.rpc("add_blessing", {
+      p_slug: slug,
+      p_author: parsed.data.author_name,
+      p_message: parsed.data.message,
     });
 
     if (error) {
@@ -62,13 +56,46 @@ export async function postBlessing(
       if (error.message?.includes("rate_limited")) {
         return { error: "נשלחו יותר מדי ברכות כעת. נסו שוב בעוד רגע." };
       }
+      if (error.message?.includes("blessings_disabled")) {
+        return { error: "קיר הברכות אינו פעיל עבור ספירה זו." };
+      }
       return { error: `אירעה שגיאה בשליחת האיחול: ${error.message}` };
     }
+
+    const row = (Array.isArray(data) ? data[0] : data) as
+      | { id: string; delete_token: string }
+      | undefined;
+
+    revalidatePath(`/c/${slug}`);
+    return { ok: true, id: row?.id, token: row?.delete_token };
   } catch (e) {
     const message = e instanceof Error ? e.message : String(e);
     return { error: `תקלת חיבור למסד הנתונים: ${message}` };
   }
+}
 
+export interface DeleteBlessingResult {
+  ok?: boolean;
+  error?: string;
+}
+
+// מחיקת ברכה — מותרת רק למי שמחזיק בטוקן המחיקה (נשמר ב-localStorage בעת השליחה).
+export async function deleteBlessing(
+  slug: string,
+  id: string,
+  token: string,
+): Promise<DeleteBlessingResult> {
+  try {
+    const supabase = createServerClient();
+    const { data, error } = await supabase.rpc("delete_blessing", {
+      p_id: id,
+      p_token: token,
+    });
+    if (error) return { error: "מחיקת האיחול נכשלה. נסו שוב." };
+    if (data !== true) return { error: "לא ניתן למחוק את האיחול הזה." };
+  } catch {
+    return { error: "תקלת חיבור. נסו שוב." };
+  }
   revalidatePath(`/c/${slug}`);
   return { ok: true };
 }
