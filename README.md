@@ -47,6 +47,9 @@ npm run dev                  # http://localhost:3000
      (קישור עריכה אישי + RPC לעדכון).
    - `supabase/migrations/0007_custom_design.sql` — התאמה אישית מעל עיצוב הבסיס:
      צבע דגש (`accent_color`) ופונט (`font_key`) אופציונליים.
+   - `supabase/migrations/0008_blessing_delete.sql` — מחיקת ברכה ע"י השולח:
+     טוקן מחיקה סודי לכל ברכה (`add_blessing` מחזיר אותו, `delete_blessing` מאמת
+     אותו), ו-`get_blessings` משוכתב כדי לא לחשוף את הטוקן.
 3. (אופציונלי, לפיתוח) הריצו `supabase/seed.sql` לנתוני דמו.
 4. העתיקו את ה‑URL וה‑anon key מ‑**Project Settings → API** אל `.env.local`.
 
