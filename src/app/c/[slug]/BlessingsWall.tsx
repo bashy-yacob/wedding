@@ -119,12 +119,14 @@ export function BlessingsWall({ slug, blessings }: BlessingsWallProps) {
               transition={{ duration: 0.4, delay: Math.min(i * 0.05, 0.4) }}
               className="surface-card flex gap-3 rounded-2xl p-4"
             >
-              <span className="accent-gradient-text font-display flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--accent)]/30 text-sm font-bold">
+              <span className="font-display flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--accent)] text-sm font-bold text-[var(--on-accent)]">
                 {initials(b.author_name)}
               </span>
               <div>
-                <p className="mb-1 whitespace-pre-wrap">{b.message}</p>
-                <p className="accent-text text-sm font-medium">
+                <p className="mb-1 whitespace-pre-wrap text-[var(--text)]">
+                  {b.message}
+                </p>
+                <p className="text-sm font-semibold text-[var(--text)]">
                   — {b.author_name}
                 </p>
               </div>
