@@ -23,7 +23,7 @@ export function AddToCalendar(props: CalendarEventInput) {
           href={googleUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition hover:bg-[var(--accent-soft)]"
+          className="accent-text flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition hover:bg-[var(--accent-soft)]"
         >
           <Google className="h-4 w-4 text-[var(--accent)]" />
           Google Calendar
@@ -31,7 +31,7 @@ export function AddToCalendar(props: CalendarEventInput) {
         <a
           href={ics}
           download="event.ics"
-          className="flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition hover:bg-[var(--accent-soft)]"
+          className="accent-text flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition hover:bg-[var(--accent-soft)]"
         >
           <Apple className="h-4 w-4 text-[var(--accent)]" />
           Apple / Outlook
