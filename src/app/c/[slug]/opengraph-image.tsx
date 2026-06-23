@@ -41,7 +41,7 @@ export default async function OgImage({
     headline =
       state.status === "countdown"
         ? `נשארו ${state.remaining!.days} ימים`
-        : "מזל טוב! 🎉";
+        : "מזל טוב!";
   }
 
   const allText = `${names}${hebrewDate}${gregDate}${headline}${eventType}עדהחתונה0123456789`;

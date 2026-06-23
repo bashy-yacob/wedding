@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Sparkles, Key, Check } from "@/components/Ornaments";
 
 interface CreatedBannerProps {
   slug: string;
@@ -24,7 +25,10 @@ export function CreatedBanner({ slug, editToken }: CreatedBannerProps) {
 
   return (
     <div className="surface-card reveal mb-8 rounded-2xl p-5">
-      <p className="text-center font-semibold">הספירה נוצרה! 🎉</p>
+      <p className="flex items-center justify-center gap-2 text-center font-semibold">
+        הספירה נוצרה!
+        <Sparkles className="h-5 w-5 text-[var(--accent)]" />
+      </p>
 
       <div className="mt-4 space-y-4">
         <LinkRow
@@ -34,7 +38,8 @@ export function CreatedBanner({ slug, editToken }: CreatedBannerProps) {
         />
 
         <LinkRow
-          label="🔑 קישור עריכה אישי"
+          icon={<Key className="h-4 w-4 text-[var(--accent)]" />}
+          label="קישור עריכה אישי"
           hint="שמרו אותו! רק דרכו תוכלו לעדכן פרטים או להוסיף את ההזמנה בהמשך. אל תשתפו אותו."
           url={editUrl}
           highlight
@@ -51,12 +56,14 @@ function LinkRow({
   url,
   highlight,
   whatsappText,
+  icon,
 }: {
   label: string;
   hint: string;
   url: string;
   highlight?: boolean;
   whatsappText?: string;
+  icon?: React.ReactNode;
 }) {
   const [copied, setCopied] = useState(false);
 
@@ -79,7 +86,10 @@ function LinkRow({
           : "bg-[var(--surface)]/50"
       }`}
     >
-      <p className="text-sm font-medium">{label}</p>
+      <p className="flex items-center gap-1.5 text-sm font-medium">
+        {icon}
+        {label}
+      </p>
       <p className="mt-0.5 text-xs text-[var(--muted)]">{hint}</p>
 
       <div className="mt-2 flex gap-2">
@@ -94,9 +104,16 @@ function LinkRow({
         <button
           type="button"
           onClick={copy}
-          className="shrink-0 rounded-lg bg-[var(--accent)] px-3 py-2 text-xs font-semibold text-[var(--on-accent)] transition hover:opacity-90"
+          className="inline-flex shrink-0 items-center gap-1 rounded-lg bg-[var(--accent)] px-3 py-2 text-xs font-semibold text-[var(--on-accent)] transition hover:opacity-90"
         >
-          {copied ? "הועתק ✓" : "העתקה"}
+          {copied ? (
+            <>
+              <Check className="h-3.5 w-3.5" />
+              הועתק
+            </>
+          ) : (
+            "העתקה"
+          )}
         </button>
       </div>
 

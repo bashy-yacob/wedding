@@ -8,6 +8,7 @@ import {
   ACCEPTED_INVITATION_TYPES,
   invitationFileName,
 } from "@/lib/storage";
+import { Check } from "@/components/Ornaments";
 
 interface InvitationUploadProps {
   // מדווח על הנתיב שנשמר ב-Storage (או null) ועל כתובת תצוגה מקדימה מקומית.
@@ -87,7 +88,10 @@ export function InvitationUpload({ onChange, previewUrl }: InvitationUploadProps
             className="h-20 w-20 rounded-lg object-cover"
           />
           <div className="flex-1 text-sm">
-            <p className="font-medium">ההזמנה הועלתה ✓</p>
+            <p className="flex items-center gap-1.5 font-medium">
+              <Check className="h-4 w-4 text-[var(--accent)]" />
+              ההזמנה הועלתה
+            </p>
             <button
               type="button"
               onClick={clear}

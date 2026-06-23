@@ -3,7 +3,7 @@
 import { useActionState, useEffect, useRef, useState, useTransition } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { postBlessing, deleteBlessing, type BlessingState } from "./actions";
-import { Divider } from "@/components/Ornaments";
+import { Divider, Heart, Trash } from "@/components/Ornaments";
 import type { Blessing } from "@/types/db";
 
 interface BlessingsWallProps {
@@ -163,8 +163,9 @@ export function BlessingsWall({ slug, blessings }: BlessingsWallProps) {
       </AnimatePresence>
 
       {blessings.length === 0 ? (
-        <p className="text-center text-[var(--muted)]">
-          עדיין אין ברכות — היו הראשונים לאחל! 🤍
+        <p className="flex items-center justify-center gap-1.5 text-center text-[var(--muted)]">
+          עדיין אין ברכות — היו הראשונים לאחל!
+          <Heart className="h-4 w-4 text-[var(--accent)]" />
         </p>
       ) : (
         <ul className="space-y-3">
@@ -193,9 +194,16 @@ export function BlessingsWall({ slug, blessings }: BlessingsWallProps) {
                   onClick={() => handleDelete(b.id)}
                   disabled={isPending && deletingId === b.id}
                   aria-label="מחיקת הברכה שלי"
-                  className="shrink-0 self-start rounded-lg px-2 py-1 text-sm text-[var(--muted)] transition hover:bg-red-50 hover:text-red-600 disabled:opacity-50"
+                  className="inline-flex shrink-0 items-center gap-1 self-start rounded-lg px-2 py-1 text-sm text-[var(--muted)] transition hover:bg-red-50 hover:text-red-600 disabled:opacity-50"
                 >
-                  {isPending && deletingId === b.id ? "מוחק…" : "🗑 מחיקה"}
+                  {isPending && deletingId === b.id ? (
+                    "מוחק…"
+                  ) : (
+                    <>
+                      <Trash className="h-3.5 w-3.5" />
+                      מחיקה
+                    </>
+                  )}
                 </button>
               )}
             </motion.li>

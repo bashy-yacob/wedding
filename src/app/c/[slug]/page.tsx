@@ -15,7 +15,7 @@ import { DonationCTA } from "@/components/DonationCTA";
 import { FloatingBackground } from "@/components/FloatingBackground";
 import { InvitationView } from "@/components/InvitationView";
 import { invitationPublicUrl } from "@/lib/storage";
-import { Divider, Rings } from "@/components/Ornaments";
+import { Divider, Rings, Check } from "@/components/Ornaments";
 import { WallpaperChip } from "@/components/WallpaperChip";
 import { AddToCalendar } from "@/components/AddToCalendar";
 import { customThemeVars } from "@/lib/themes";
@@ -129,7 +129,10 @@ export default async function CountdownPage({
 
           {updated && (
             <div className="surface-card reveal mb-8 rounded-2xl p-5 text-center">
-              <p className="font-semibold">השינויים נשמרו ✓</p>
+              <p className="flex items-center justify-center gap-1.5 font-semibold">
+                <Check className="h-4 w-4 text-[var(--accent)]" />
+                השינויים נשמרו
+              </p>
               <p className="mt-1 text-sm text-[var(--muted)]">
                 הספירה עודכנה. קישור השיתוף נשאר זהה.
               </p>
@@ -206,7 +209,10 @@ export default async function CountdownPage({
         </div>
 
         {/* עמעום + חיווי גלילה — נעלמים כשמתחילים לגלול */}
-        <ScrollHint label={countdown.allow_blessings ? "לקיר הברכות 🤍" : "להמשך"} />
+        <ScrollHint
+          label={countdown.allow_blessings ? "לקיר הברכות" : "להמשך"}
+          withHeart={countdown.allow_blessings}
+        />
       </section>
 
       {/* ----- שאר התוכן: קיר ברכות, הזמנה, יצירה ----- */}
