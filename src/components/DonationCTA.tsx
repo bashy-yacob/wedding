@@ -1,5 +1,6 @@
 // קטע תרומה עדין בתחתית דף הספירה.
 // היעד נקבע ע"י NEXT_PUBLIC_DONATION_URL — אם ריק, הקטע לא מוצג.
+import { Heart } from "@/components/Ornaments";
 
 export function DonationCTA() {
   const url = process.env.NEXT_PUBLIC_DONATION_URL;
@@ -7,8 +8,9 @@ export function DonationCTA() {
 
   return (
     <div className="mt-12 text-center">
-      <p className="mb-3 text-sm text-[var(--muted)]">
-        נהניתם? המוצר חינמי — אפשר לתמוך בנו 🤍
+      <p className="flex items-center justify-center gap-1.5 text-sm text-[var(--muted)] mb-3">
+        נהניתם? המוצר חינמי — אפשר לתמוך בנו
+        <Heart className="h-4 w-4 text-[var(--accent)]" />
       </p>
       <a
         href={url}

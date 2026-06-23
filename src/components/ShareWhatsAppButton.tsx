@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Check } from "@/components/Ornaments";
 
 interface ShareWhatsAppButtonProps {
   slug: string;
@@ -27,7 +28,7 @@ export function ShareWhatsAppButton({
     setUrl(`${window.location.origin}/c/${slug}`);
   }, [slug]);
 
-  const text = `הצטרפו לספירה לאחור ל${eventType} של ${displayNames} 🤍\n${hebrewDate}\n${url}`;
+  const text = `הצטרפו לספירה לאחור ל${eventType} של ${displayNames}\n${hebrewDate}\n${url}`;
   const waHref = `https://wa.me/?text=${encodeURIComponent(text)}`;
 
   const copy = async () => {
@@ -62,9 +63,16 @@ export function ShareWhatsAppButton({
         <button
           type="button"
           onClick={copy}
-          className="inline-flex items-center justify-center gap-2 rounded-full border border-[var(--accent)]/40 bg-[var(--surface)]/60 px-4 py-2 text-sm font-medium text-[var(--text)] backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-[var(--accent)]"
+          className="inline-flex items-center justify-center gap-1.5 rounded-full border border-[var(--accent)]/40 bg-[var(--surface)]/60 px-4 py-2 text-sm font-medium text-[var(--text)] backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-[var(--accent)]"
         >
-          {copied ? "הועתק ✓" : "העתקת קישור"}
+          {copied ? (
+            <>
+              <Check className="h-4 w-4" />
+              הועתק
+            </>
+          ) : (
+            "העתקת קישור"
+          )}
         </button>
       </div>
     );
@@ -85,9 +93,16 @@ export function ShareWhatsAppButton({
       <button
         type="button"
         onClick={copy}
-        className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[var(--accent)]/40 bg-[var(--surface)]/60 px-7 py-3.5 font-medium text-[var(--text)] backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-[var(--accent)] sm:w-auto"
+        className="inline-flex w-full items-center justify-center gap-1.5 rounded-full border border-[var(--accent)]/40 bg-[var(--surface)]/60 px-7 py-3.5 font-medium text-[var(--text)] backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-[var(--accent)] sm:w-auto"
       >
-        {copied ? "הקישור הועתק ✓" : "העתקת קישור"}
+        {copied ? (
+          <>
+            <Check className="h-4 w-4" />
+            הקישור הועתק
+          </>
+        ) : (
+          "העתקת קישור"
+        )}
       </button>
     </div>
   );

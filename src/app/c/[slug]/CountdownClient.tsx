@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { getCountdownState, type CountdownState } from "@/lib/time";
 import { CountdownDisplay } from "@/components/CountdownDisplay";
+import { Sparkles } from "@/components/Ornaments";
 import { useConfetti } from "@/lib/useConfetti";
 
 interface CountdownClientProps {
@@ -56,8 +57,9 @@ export function CountdownClient({
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         className="text-center"
       >
-        <p className="accent-gradient-text font-display text-5xl font-extrabold sm:text-7xl">
-          מזל טוב! 🎉
+        <p className="accent-gradient-text font-display flex items-center justify-center gap-3 text-5xl font-extrabold sm:text-7xl">
+          מזל טוב!
+          <Sparkles className="h-9 w-9 sm:h-14 sm:w-14" />
         </p>
         <p className="mt-4 text-xl text-[var(--muted)]">{subtitle}</p>
         {blessing && (

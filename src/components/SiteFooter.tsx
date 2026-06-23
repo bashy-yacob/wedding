@@ -4,6 +4,7 @@
 // בונת אתרים. הקריאה לפעולה פותחת חלון כתיבת מייל ב-Gmail (אמין יותר
 // מ-mailto, שדורש אפליקציית מייל מוגדרת במכשיר).
 import { usePathname } from "next/navigation";
+import { Heart } from "@/components/Ornaments";
 import { BUILD_CONTACT_URL, CONTACT_EMAIL } from "@/lib/contact";
 
 export function SiteFooter() {
@@ -29,8 +30,9 @@ export function SiteFooter() {
       >
         דברו איתי
       </a>
-      <p>
-        נבנה באהבה על ידי בשי 🤍 · ליצירת קשר:{" "}
+      <p className="flex flex-wrap items-center justify-center gap-1">
+        נבנה באהבה על ידי בשי
+        <Heart className="h-3.5 w-3.5 text-[var(--accent)]" />· ליצירת קשר:{" "}
         <a
           href={BUILD_CONTACT_URL}
           target="_blank"

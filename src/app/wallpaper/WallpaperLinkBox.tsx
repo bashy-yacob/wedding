@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Clipboard, Check } from "@/components/Ornaments";
 
 // תיבת "הקישור שלך להדבקה" — מוצגת בראש המדריך כשמגיעים מתוך עמוד ספירה
 // (‎/wallpaper?c=slug). מרכיבה את הכתובת המלאה בצד הלקוח (origin + slug) ומאפשרת
@@ -31,7 +32,8 @@ export function WallpaperLinkBox({ slug }: { slug: string }) {
   return (
     <div className="surface-card mx-auto mb-12 max-w-xl rounded-3xl border-2 border-[var(--accent)] bg-[var(--accent-soft)] p-6 text-center shadow-lg">
       <span className="accent-text inline-flex items-center gap-1.5 rounded-full bg-[var(--surface)] px-3 py-1 text-xs font-bold">
-        📋 התחילו מכאן
+        <Clipboard className="h-3.5 w-3.5" />
+        התחילו מכאן
       </span>
       <p className="mt-3 text-lg font-bold">הקישור שלך, מוכן להעתקה</p>
       <p className="mt-1 text-sm text-[var(--muted)]">
@@ -49,9 +51,16 @@ export function WallpaperLinkBox({ slug }: { slug: string }) {
         <button
           type="button"
           onClick={copy}
-          className="shrink-0 rounded-lg bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-[var(--on-accent)] transition hover:opacity-90"
+          className="inline-flex shrink-0 items-center gap-1 rounded-lg bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-[var(--on-accent)] transition hover:opacity-90"
         >
-          {copied ? "הועתק ✓" : "העתקה"}
+          {copied ? (
+            <>
+              <Check className="h-3.5 w-3.5" />
+              הועתק
+            </>
+          ) : (
+            "העתקה"
+          )}
         </button>
       </div>
     </div>

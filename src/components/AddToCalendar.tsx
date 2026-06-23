@@ -1,4 +1,4 @@
-import { Calendar } from "@/components/Ornaments";
+import { Calendar, Google, Apple } from "@/components/Ornaments";
 import {
   googleCalendarUrl,
   icsDataUrl,
@@ -23,16 +23,18 @@ export function AddToCalendar(props: CalendarEventInput) {
           href={googleUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded-xl px-4 py-2.5 text-sm font-medium transition hover:bg-[var(--accent-soft)]"
+          className="flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition hover:bg-[var(--accent-soft)]"
         >
-          📆 Google Calendar
+          <Google className="h-4 w-4 text-[var(--accent)]" />
+          Google Calendar
         </a>
         <a
           href={ics}
           download="event.ics"
-          className="rounded-xl px-4 py-2.5 text-sm font-medium transition hover:bg-[var(--accent-soft)]"
+          className="flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition hover:bg-[var(--accent-soft)]"
         >
-          🍎 Apple / Outlook
+          <Apple className="h-4 w-4 text-[var(--accent)]" />
+          Apple / Outlook
         </a>
       </div>
     </details>

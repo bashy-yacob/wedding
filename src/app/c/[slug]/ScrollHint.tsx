@@ -1,10 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Heart } from "@/components/Ornaments";
 
 // חיווי גלילה + עמעום בתחתית המסך הראשון. נעלם בעדינות ברגע שמתחילים
 // לגלול, כדי שלא יפריע בהמשך הדף.
-export function ScrollHint({ label }: { label: string }) {
+export function ScrollHint({
+  label,
+  withHeart,
+}: {
+  label: string;
+  withHeart?: boolean;
+}) {
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
@@ -32,8 +39,9 @@ export function ScrollHint({ label }: { label: string }) {
         aria-label={label}
         className="group absolute bottom-6 left-1/2 flex -translate-x-1/2 animate-bounce flex-col items-center gap-2 text-[var(--accent)]"
       >
-        <span className="surface-card rounded-full px-4 py-1.5 text-sm font-semibold shadow-md">
+        <span className="surface-card inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-semibold shadow-md">
           {label}
+          {withHeart && <Heart className="h-3.5 w-3.5" />}
         </span>
         <svg
           viewBox="0 0 24 24"

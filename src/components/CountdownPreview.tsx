@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { getCountdownState, type CountdownState } from "@/lib/time";
 import { toHebrewDateString, toGregorianString } from "@/lib/hebcal";
 import { CountdownDisplay } from "./CountdownDisplay";
-import { Divider } from "./Ornaments";
+import { Divider, Sparkles } from "./Ornaments";
 import { customThemeVars, type ThemeKey, type FontKey } from "@/lib/themes";
 
 interface CountdownPreviewProps {
@@ -72,8 +72,9 @@ export function CountdownPreview({
                 compact
               />
             ) : (
-              <p className="accent-gradient-text font-display text-3xl font-extrabold">
-                מזל טוב! 🎉
+              <p className="accent-gradient-text font-display flex items-center justify-center gap-2 text-3xl font-extrabold">
+                מזל טוב!
+                <Sparkles className="h-6 w-6" />
               </p>
             )}
 
