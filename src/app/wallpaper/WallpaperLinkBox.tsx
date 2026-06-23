@@ -29,13 +29,15 @@ export function WallpaperLinkBox({ slug }: { slug: string }) {
   }
 
   return (
-    <div className="surface-card mx-auto mb-12 max-w-xl rounded-2xl border border-[var(--accent)]/40 p-5 text-center">
-      <p className="text-sm font-semibold">הקישור שלך, מוכן להדבקה 👇</p>
-      <p className="mt-1 text-xs text-[var(--muted)]">
-        זה קישור מצב-הרקע — גרסה נקייה ומסך-מלא של הספירה, מותאמת במיוחד
-        ל-Lively. העתיקו אותו והדביקו בשלב 3.
+    <div className="surface-card mx-auto mb-12 max-w-xl rounded-3xl border-2 border-[var(--accent)] bg-[var(--accent-soft)] p-6 text-center shadow-lg">
+      <span className="accent-text inline-flex items-center gap-1.5 rounded-full bg-[var(--surface)] px-3 py-1 text-xs font-bold">
+        📋 התחילו מכאן
+      </span>
+      <p className="mt-3 text-lg font-bold">הקישור שלך, מוכן להעתקה</p>
+      <p className="mt-1 text-sm text-[var(--muted)]">
+        זה הקישור שתדביקו בשלב 2. (גרסת רקע נקייה, מסך-מלא.)
       </p>
-      <div className="mt-3 flex gap-2">
+      <div className="mt-4 flex gap-2">
         <input
           type="text"
           readOnly
