@@ -6,7 +6,7 @@ import { getCountdownState } from "@/lib/time";
 import type { Countdown } from "@/types/db";
 import { CountdownClient } from "../CountdownClient";
 import { FloatingBackground } from "@/components/FloatingBackground";
-import { Rings } from "@/components/Ornaments";
+import { EventOrnament } from "@/components/Ornaments";
 import { customThemeVars } from "@/lib/themes";
 
 async function getCountdown(slug: string): Promise<Countdown | null> {
@@ -62,7 +62,7 @@ export default async function WallpaperCountdownPage({
     >
       <FloatingBackground />
 
-      <Rings className="mb-6 h-12 w-20 sm:h-14 sm:w-24" />
+      <EventOrnament eventType={eventType} className="mb-6 h-12 w-auto sm:h-14" />
 
       <p className="text-base text-[var(--muted)] sm:text-lg">
         הספירה ל{eventType} של

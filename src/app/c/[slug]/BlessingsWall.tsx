@@ -2,8 +2,13 @@
 
 import { useActionState, useEffect, useRef, useState, useTransition } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { postBlessing, deleteBlessing, type BlessingState } from "./actions";
-import { Divider, Heart, Trash } from "@/components/Ornaments";
+import {
+  postBlessing,
+  deleteBlessing,
+  editBlessing,
+  type BlessingState,
+} from "./actions";
+import { Divider, Heart, Trash, Pencil, Check } from "@/components/Ornaments";
 import type { Blessing } from "@/types/db";
 
 interface BlessingsWallProps {
@@ -45,6 +50,12 @@ export function BlessingsWall({ slug, blessings }: BlessingsWallProps) {
   const [tokens, setTokens] = useState<TokenMap>({});
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+
+  // עריכת ברכה קיימת ("שלי") — נוסח חדש נשמר דרך editBlessing.
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editText, setEditText] = useState("");
+  const [savingId, setSavingId] = useState<string | null>(null);
+  const [editError, setEditError] = useState<string | null>(null);
 
   useEffect(() => {
     setTokens(loadTokens(slug));
@@ -89,6 +100,41 @@ export function BlessingsWall({ slug, blessings }: BlessingsWallProps) {
         persistTokens(next);
       }
       setDeletingId(null);
+    });
+  }
+
+  function startEdit(id: string, message: string) {
+    setEditingId(id);
+    setEditText(message);
+    setEditError(null);
+  }
+
+  function cancelEdit() {
+    setEditingId(null);
+    setEditText("");
+    setEditError(null);
+  }
+
+  function saveEdit(id: string) {
+    const token = tokens[id];
+    if (!token) return;
+    const msg = editText.trim();
+    if (!msg) {
+      setEditError("יש להזין איחול");
+      return;
+    }
+
+    setSavingId(id);
+    startTransition(async () => {
+      const res = await editBlessing(slug, token, msg);
+      if (res.ok) {
+        setEditingId(null);
+        setEditText("");
+        setEditError(null);
+      } else {
+        setEditError(res.error ?? "העריכה נכשלה");
+      }
+      setSavingId(null);
     });
   }
 
@@ -181,30 +227,83 @@ export function BlessingsWall({ slug, blessings }: BlessingsWallProps) {
                 {initials(b.author_name)}
               </span>
               <div className="min-w-0 flex-1">
-                <p className="mb-1 whitespace-pre-wrap text-[var(--text)]">
-                  {b.message}
-                </p>
-                <p className="text-sm font-semibold text-[var(--text)]">
-                  — {b.author_name}
-                </p>
+                {editingId === b.id ? (
+                  <div className="space-y-2">
+                    <textarea
+                      value={editText}
+                      onChange={(e) => setEditText(e.target.value)}
+                      maxLength={280}
+                      rows={3}
+                      className={fieldClass}
+                      aria-label="עריכת הברכה שלי"
+                    />
+                    {editError && (
+                      <p className="text-sm text-red-600">{editError}</p>
+                    )}
+                    <div className="flex gap-2">
+                      <button
+                        type="button"
+                        onClick={() => saveEdit(b.id)}
+                        disabled={savingId === b.id}
+                        className="inline-flex items-center gap-1 rounded-lg bg-[var(--accent)] px-3 py-1.5 text-sm font-semibold text-[var(--on-accent)] transition hover:opacity-90 disabled:opacity-50"
+                      >
+                        {savingId === b.id ? (
+                          "שומר…"
+                        ) : (
+                          <>
+                            <Check className="h-3.5 w-3.5" />
+                            שמירה
+                          </>
+                        )}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={cancelEdit}
+                        className="rounded-lg px-3 py-1.5 text-sm text-[var(--muted)] transition hover:text-[var(--text)]"
+                      >
+                        ביטול
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <p className="mb-1 whitespace-pre-wrap text-[var(--text)]">
+                      {b.message}
+                    </p>
+                    <p className="text-sm font-semibold text-[var(--text)]">
+                      — {b.author_name}
+                    </p>
+                  </>
+                )}
               </div>
-              {tokens[b.id] && (
-                <button
-                  type="button"
-                  onClick={() => handleDelete(b.id)}
-                  disabled={isPending && deletingId === b.id}
-                  aria-label="מחיקת הברכה שלי"
-                  className="inline-flex shrink-0 items-center gap-1 self-start rounded-lg px-2 py-1 text-sm text-[var(--muted)] transition hover:bg-red-50 hover:text-red-600 disabled:opacity-50"
-                >
-                  {isPending && deletingId === b.id ? (
-                    "מוחק…"
-                  ) : (
-                    <>
-                      <Trash className="h-3.5 w-3.5" />
-                      מחיקה
-                    </>
-                  )}
-                </button>
+              {tokens[b.id] && editingId !== b.id && (
+                <div className="flex shrink-0 flex-col gap-1 self-start">
+                  <button
+                    type="button"
+                    onClick={() => startEdit(b.id, b.message)}
+                    aria-label="עריכת הברכה שלי"
+                    className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-sm text-[var(--muted)] transition hover:bg-[var(--accent-soft)] hover:text-[var(--accent)]"
+                  >
+                    <Pencil className="h-3.5 w-3.5" />
+                    עריכה
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(b.id)}
+                    disabled={isPending && deletingId === b.id}
+                    aria-label="מחיקת הברכה שלי"
+                    className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-sm text-[var(--muted)] transition hover:bg-red-50 hover:text-red-600 disabled:opacity-50"
+                  >
+                    {isPending && deletingId === b.id ? (
+                      "מוחק…"
+                    ) : (
+                      <>
+                        <Trash className="h-3.5 w-3.5" />
+                        מחיקה
+                      </>
+                    )}
+                  </button>
+                </div>
               )}
             </motion.li>
           ))}
