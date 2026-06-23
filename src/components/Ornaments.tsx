@@ -215,6 +215,38 @@ export function Check({ className = "" }: { className?: string }) {
   );
 }
 
+/** מגן דוד — לאירועים יהודיים (בר/בת מצווה). */
+export function StarOfDavid({ className = "" }: { className?: string }) {
+  return (
+    <LineIcon className={className}>
+      <path d="M12 3 20 17 4 17 Z" />
+      <path d="M12 21 4 7 20 7 Z" />
+    </LineIcon>
+  );
+}
+
+/**
+ * עיטור לפי סוג האירוע — חתונה מקבלת טבעות, בר/בת מצווה מגן דוד, וכל
+ * אירוע אחר (ברית, חלאקה, יום הולדת...) מקבל ניצוצות חגיגיים ונייטרליים.
+ * סוג האירוע הוא טקסט חופשי, ולכן ההתאמה לפי מילות מפתח.
+ */
+export function EventOrnament({
+  eventType,
+  className = "",
+}: {
+  eventType?: string;
+  className?: string;
+}) {
+  const t = (eventType ?? "").trim();
+  if (/חתונה|חינה|אירוס|כלה|חתן|נישוא/.test(t)) {
+    return <Rings className={className} />;
+  }
+  if (/מצווה|מצוה/.test(t)) {
+    return <StarOfDavid className={className} />;
+  }
+  return <Sparkles className={className} />;
+}
+
 /** חץ עדין לסוף קישור (פונה שמאלה — מתאים ל-RTL). */
 export function ArrowLeft({ className = "" }: { className?: string }) {
   return (

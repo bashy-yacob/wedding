@@ -115,3 +115,43 @@ export async function deleteBlessing(
   revalidatePath(`/c/${slug}`);
   return { ok: true };
 }
+
+export interface EditBlessingResult {
+  ok?: boolean;
+  error?: string;
+}
+
+/** עריכת נוסח הברכה ע"י השולח — מאומתת מול אותו טוקן סודי כמו במחיקה. */
+export async function editBlessing(
+  slug: string,
+  deleteToken: string,
+  message: string,
+): Promise<EditBlessingResult> {
+  if (!deleteToken) return { error: "אין הרשאת עריכה." };
+
+  const parsed = blessingSchema.shape.message.safeParse(message);
+  if (!parsed.success) {
+    return { error: parsed.error.issues[0]?.message ?? "איחול לא תקין" };
+  }
+
+  try {
+    const supabase = createServerClient();
+    const { data, error } = await supabase.rpc("update_blessing", {
+      p_token: deleteToken,
+      p_message: parsed.data,
+    });
+
+    if (error) {
+      return { error: `עריכה נכשלה: ${error.message}` };
+    }
+    if (data !== true) {
+      return { error: "לא ניתן לעדכן את הברכה." };
+    }
+  } catch (e) {
+    const message = e instanceof Error ? e.message : String(e);
+    return { error: `תקלת חיבור למסד הנתונים: ${message}` };
+  }
+
+  revalidatePath(`/c/${slug}`);
+  return { ok: true };
+}

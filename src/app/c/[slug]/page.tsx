@@ -15,7 +15,7 @@ import { DonationCTA } from "@/components/DonationCTA";
 import { FloatingBackground } from "@/components/FloatingBackground";
 import { InvitationView } from "@/components/InvitationView";
 import { invitationPublicUrl } from "@/lib/storage";
-import { Divider, Rings, Check } from "@/components/Ornaments";
+import { Divider, EventOrnament, Check } from "@/components/Ornaments";
 import { WallpaperChip } from "@/components/WallpaperChip";
 import { AddToCalendar } from "@/components/AddToCalendar";
 import { customThemeVars } from "@/lib/themes";
@@ -141,7 +141,7 @@ export default async function CountdownPage({
 
           {/* כותרת + שיתוף מאופק בצד (בגובה השמות) */}
           <header className="reveal relative mb-8 text-center" style={{ animationDelay: "0.05s" }}>
-            <Rings className="mx-auto mb-4 h-10 w-16" />
+            <EventOrnament eventType={eventType} className="mx-auto mb-4 h-10 w-auto" />
             <p className="text-sm text-[var(--muted)]">הספירה ל{eventType} של</p>
             <h1 className="font-display accent-gradient-text mt-1 text-4xl font-extrabold sm:text-5xl">
               {countdown.display_names}
