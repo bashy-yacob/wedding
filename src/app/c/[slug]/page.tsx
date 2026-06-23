@@ -17,6 +17,7 @@ import { InvitationView } from "@/components/InvitationView";
 import { invitationPublicUrl } from "@/lib/storage";
 import { Divider, Rings } from "@/components/Ornaments";
 import { WallpaperChip } from "@/components/WallpaperChip";
+import { AddToCalendar } from "@/components/AddToCalendar";
 import { customThemeVars } from "@/lib/themes";
 
 async function getCountdown(slug: string): Promise<Countdown | null> {
@@ -92,6 +93,7 @@ export default async function CountdownPage({
     ? await getBlessings(slug)
     : [];
 
+  const baseUrl = await getBaseUrl();
   const hebrewDate = toHebrewDateString(countdown.wedding_date);
   const gregorianDate = toGregorianString(countdown.wedding_date);
   // סוג האירוע — נופל ל"חתונה" עבור ספירות ישנות שנוצרו לפני התוספת.
@@ -177,6 +179,18 @@ export default async function CountdownPage({
               {countdown.show_gregorian && (
                 <p className="mt-1 text-sm text-[var(--muted)]">{gregorianDate}</p>
               )}
+
+              <div className="mt-6">
+                <AddToCalendar
+                  slug={slug}
+                  displayNames={countdown.display_names}
+                  eventType={eventType}
+                  weddingDate={countdown.wedding_date}
+                  weddingTime={countdown.wedding_time}
+                  hebrewDate={hebrewDate}
+                  url={`${baseUrl}/c/${slug}`}
+                />
+              </div>
             </div>
           </div>
 
