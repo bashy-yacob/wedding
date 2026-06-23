@@ -6,7 +6,6 @@ import {
   Rings,
   Monitor,
   Download,
-  Plus,
   LinkIcon,
   Check,
 } from "@/components/Ornaments";
@@ -31,45 +30,31 @@ const STORE_URL = "https://apps.microsoft.com/detail/9NTM2QC6QWS7";
 const SITE_URL = "https://www.rocksdanister.com/lively/";
 const GITHUB_URL = "https://github.com/rocksdanister/lively";
 
+// כל שלב עם צילום המסך שלו (אם יש) — כך קל לעקוב: קוראים, ומיד רואים איך זה נראה.
 const STEPS = [
   {
     Icon: Download,
-    title: "מתקינים את Lively Wallpaper",
-    body: "אפליקציה חינמית מ-Microsoft Store. פותחים את החנות, מחפשים “Lively Wallpaper” ולוחצים התקנה.",
-  },
-  {
-    Icon: Plus,
-    title: "מוסיפים רקע חדש",
-    body: "פותחים את Lively ולוחצים על כפתור ה-＋ (Add Wallpaper). נפתחת שורת כתובת.",
+    title: "מתקינים את Lively (חינם)",
+    body: "פותחים את Microsoft Store, מחפשים “Lively Wallpaper”, ומתקינים.",
+    img: null,
   },
   {
     Icon: LinkIcon,
-    title: "מדביקים את קישור מצב-הרקע",
-    body: "מדביקים בשורה את קישור מצב-הרקע (מהתיבה שלמעלה, או קישור הספירה שלכם עם /wallpaper בסוף) ולוחצים על החץ. זו גרסה נקייה ומסך-מלא, בלי כפתורים וגלילה.",
+    title: "מדביקים את הקישור שלכם",
+    body: "ב-Lively לוחצים על ＋, בוחרים “הזן כתובת URL”, מדביקים את הקישור (מהתיבה למעלה) ולוחצים על החץ.",
+    img: "/wallpaper/add.png",
   },
   {
     Icon: Check,
-    title: "וזהו — הספירה על שולחן העבודה",
-    body: "הספירה הופכת לרקע חי שמתעדכן בזמן אמת, מאחורי האייקונים. בלי דפדפן פתוח.",
-  },
-];
-
-// צילומי המסך האמיתיים מ-Lively Wallpaper (הקבצים יושבים ב-public/wallpaper).
-const SHOTS = [
-  {
-    src: "/wallpaper/add.png",
-    title: "מדביקים את הקישור",
-    caption: "בחלון “הוסף טפט” → “הזן כתובת URL”, מדביקים את קישור הספירה ולוחצים על החץ.",
+    title: "לוחצים אישור",
+    body: "Lively מציג תצוגה מקדימה של הספירה. לוחצים “אישור”.",
+    img: "/wallpaper/display.png",
   },
   {
-    src: "/wallpaper/display.png",
-    title: "מאשרים",
-    caption: "Lively טוען את הספירה ומציג תצוגה מקדימה עם הפרטים. לוחצים “אישור”.",
-  },
-  {
-    src: "/wallpaper/library.png",
-    title: "בוחרים מסך — וזהו",
-    caption: "בוחרים על איזה מסך יופיע הרקע ומאשרים. הספירה רצה חי על שולחן העבודה.",
+    Icon: Monitor,
+    title: "בוחרים מסך — וזהו! 🎉",
+    body: "בוחרים על איזה מסך יופיע הרקע. הספירה כבר רצה חי על שולחן העבודה.",
+    img: "/wallpaper/library.png",
   },
 ];
 
@@ -259,98 +244,84 @@ export default async function WallpaperGuidePage({
         </section>
       )}
 
-      {/* ------------------------------ שלבים ------------------------------ */}
-      <section className="mx-auto max-w-3xl px-6 py-10">
+      {/* --------------------- שלבים (כל שלב עם התמונה שלו) --------------------- */}
+      <section className="mx-auto max-w-2xl px-6 py-10">
         <h2 className="font-display mb-12 text-center text-3xl font-bold sm:text-4xl">
-          ארבעה שלבים
+          4 שלבים פשוטים
         </h2>
 
-        <ol className="relative space-y-4">
+        <ol className="space-y-8">
           {STEPS.map((s, i) => (
-            <li key={s.title} className="surface-card flex items-center gap-5 rounded-2xl p-5">
-              <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[var(--accent-soft)] text-[var(--accent)]">
-                <s.Icon className="h-6 w-6" />
-                <span className="accent-gradient-text font-display surface-card absolute -top-1.5 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full text-xs font-extrabold">
-                  {i + 1}
-                </span>
+            <li
+              key={s.title}
+              className="surface-card overflow-hidden rounded-3xl"
+            >
+              <div className="flex items-start gap-4 p-5">
+                <div className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[var(--accent-soft)] text-[var(--accent)]">
+                  <s.Icon className="h-6 w-6" />
+                  <span className="accent-gradient-text font-display surface-card absolute -top-1.5 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full text-xs font-extrabold">
+                    {i + 1}
+                  </span>
+                </div>
+                <div className="flex-1">
+                  <h3 className="mb-1 text-lg font-bold">{s.title}</h3>
+                  <p className="text-sm leading-relaxed text-[var(--muted)]">
+                    {s.body}
+                  </p>
+
+                  {/* שלב ההתקנה — כפתור הורדה ישיר בתוך השלב */}
+                  {i === 0 && (
+                    <a
+                      href={STORE_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-3 inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-5 py-2.5 text-sm font-semibold text-[var(--on-accent)] shadow transition hover:-translate-y-0.5 hover:opacity-95"
+                    >
+                      <Download className="h-4 w-4" />
+                      התקנה מ-Microsoft Store
+                    </a>
+                  )}
+                </div>
               </div>
-              <div>
-                <h3 className="mb-1 text-lg font-bold">{s.title}</h3>
-                <p className="text-sm leading-relaxed text-[var(--muted)]">{s.body}</p>
-              </div>
+
+              {/* צילום המסך של השלב — מודבק ישר מתחת לטקסט */}
+              {s.img && (
+                <>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={s.img}
+                    alt={`${s.title} — צילום מסך מתוך Lively Wallpaper`}
+                    loading="lazy"
+                    className="w-full border-t border-black/5 bg-[var(--bg-2)]"
+                  />
+                </>
+              )}
             </li>
           ))}
         </ol>
 
-        {/* כפתורי הורדה */}
-        <div className="mt-12 text-center">
-          <p className="mb-4 text-sm text-[var(--muted)]">
-            להורדת Lively Wallpaper (חינם):
-          </p>
-          <div className="flex flex-wrap justify-center gap-3">
-            <a
-              href={STORE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-7 py-3 text-sm font-semibold text-[var(--on-accent)] shadow-lg transition hover:-translate-y-0.5 hover:opacity-95"
-            >
-              <Download className="h-4 w-4" />
-              Microsoft Store
-            </a>
-            <a
-              href={SITE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-[var(--accent)] px-7 py-3 text-sm font-semibold accent-text transition hover:bg-[var(--accent-soft)]"
-            >
-              האתר הרשמי
-            </a>
-            <a
-              href={GITHUB_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-[var(--accent)] px-7 py-3 text-sm font-semibold accent-text transition hover:bg-[var(--accent-soft)]"
-            >
-              GitHub
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <Divider className="my-6" />
-
-      {/* ---------------------------- צילומי מסך ---------------------------- */}
-      <section className="mx-auto max-w-5xl px-6 py-10">
-        <h2 className="font-display mb-2 text-center text-3xl font-bold sm:text-4xl">
-          ככה זה נראה
-        </h2>
-        <p className="mb-12 text-center text-sm text-[var(--muted)]">שלושה מסכים, וזהו.</p>
-
-        <div className="grid gap-6 sm:grid-cols-3">
-          {SHOTS.map((shot, i) => (
-            <figure
-              key={shot.src}
-              className="surface-card overflow-hidden rounded-2xl transition hover:-translate-y-1"
-            >
-              <div className="relative flex items-center justify-center bg-[var(--bg-2)]">
-                <span className="accent-gradient-text font-display surface-card absolute top-2 right-2 flex h-7 w-7 items-center justify-center rounded-full text-sm font-extrabold">
-                  {i + 1}
-                </span>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={shot.src}
-                  alt={`${shot.title} — צילום מסך מתוך Lively Wallpaper להגדרת הספירה כרקע חי`}
-                  loading="lazy"
-                  className="h-auto w-full"
-                />
-              </div>
-              <figcaption className="p-4">
-                <h3 className="mb-1 text-sm font-bold">{shot.title}</h3>
-                <p className="text-xs leading-relaxed text-[var(--muted)]">{shot.caption}</p>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
+        {/* קישורי הורדה משניים */}
+        <p className="mt-8 text-center text-xs text-[var(--muted)]">
+          אפשר גם דרך{" "}
+          <a
+            href={SITE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="accent-text font-medium underline-offset-4 hover:underline"
+          >
+            האתר הרשמי
+          </a>{" "}
+          או{" "}
+          <a
+            href={GITHUB_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="accent-text font-medium underline-offset-4 hover:underline"
+          >
+            GitHub
+          </a>
+          .
+        </p>
       </section>
 
       <Divider className="my-6" />
