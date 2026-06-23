@@ -97,7 +97,7 @@ export function BlessingsWall({ slug, blessings }: BlessingsWallProps) {
       <Divider className="mb-8" />
 
       <div className="mb-6 flex items-center justify-between">
-        <h2 className="font-display text-2xl font-bold">קיר ברכות</h2>
+        <h2 className="accent-text font-display text-2xl font-bold">קיר ברכות</h2>
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}

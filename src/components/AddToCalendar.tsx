@@ -13,7 +13,7 @@ export function AddToCalendar(props: CalendarEventInput) {
 
   return (
     <details className="group relative mx-auto w-fit">
-      <summary className="surface-card flex cursor-pointer list-none items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold shadow-md transition hover:-translate-y-0.5">
+      <summary className="surface-card accent-text flex cursor-pointer list-none items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold shadow-md transition hover:-translate-y-0.5">
         <Calendar className="h-4 w-4 text-[var(--accent)]" />
         הוספה ליומן
       </summary>

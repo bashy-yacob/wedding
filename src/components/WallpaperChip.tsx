@@ -13,7 +13,7 @@ export function WallpaperChip({ slug }: { slug?: string }) {
       title="מדריך: הפכו את הספירה לרקע חי על שולחן העבודה"
     >
       <Monitor className="h-5 w-5 shrink-0 text-[var(--accent)] sm:h-4 sm:w-4" />
-      <span className="hidden sm:inline">מדריך לרקע לשולחן עבודה</span>
+      <span className="accent-text hidden sm:inline">מדריך לרקע לשולחן עבודה</span>
     </Link>
   );
 }
