@@ -13,7 +13,9 @@ export function WallpaperLinkBox({ slug }: { slug: string }) {
     setOrigin(window.location.origin);
   }, []);
 
-  const url = origin ? `${origin}/c/${slug}` : "";
+  // קישור מצב-הרקע הייעודי: גרסה נקייה ומסך-מלא של הספירה, בלי כפתורים/גלילה,
+  // מותאמת במיוחד להדבקה ב-Lively Wallpaper.
+  const url = origin ? `${origin}/c/${slug}/wallpaper` : "";
 
   async function copy() {
     if (!url) return;
@@ -30,7 +32,8 @@ export function WallpaperLinkBox({ slug }: { slug: string }) {
     <div className="surface-card mx-auto mb-12 max-w-xl rounded-2xl border border-[var(--accent)]/40 p-5 text-center">
       <p className="text-sm font-semibold">הקישור שלך, מוכן להדבקה 👇</p>
       <p className="mt-1 text-xs text-[var(--muted)]">
-        זה הקישור שתדביקו בשלב 3. העתיקו אותו עכשיו.
+        זה קישור מצב-הרקע — גרסה נקייה ומסך-מלא של הספירה, מותאמת במיוחד
+        ל-Lively. העתיקו אותו והדביקו בשלב 3.
       </p>
       <div className="mt-3 flex gap-2">
         <input
