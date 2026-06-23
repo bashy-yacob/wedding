@@ -225,9 +225,32 @@ export function StarOfDavid({ className = "" }: { className?: string }) {
   );
 }
 
+/** בלון — ליום הולדת. */
+export function Balloon({ className = "" }: { className?: string }) {
+  return (
+    <LineIcon className={className}>
+      <path d="M12 3c2.8 0 5 2.3 5 5.2 0 3.4-2.8 6.1-5 6.8-2.2-.7-5-3.4-5-6.8C7 5.3 9.2 3 12 3z" />
+      <path d="M12 15v1.5" />
+      <path d="M12 16.5c0 1.4 1.4 1.4 1.4 2.8" />
+    </LineIcon>
+  );
+}
+
+/** בקבוק תינוק — ללידה / ברית. */
+export function BabyBottle({ className = "" }: { className?: string }) {
+  return (
+    <LineIcon className={className}>
+      <path d="M8 9h8v10a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V9z" />
+      <path d="M8 12.5h8" />
+      <path d="M9.5 9V6.5h5V9" />
+      <path d="M11 6.5V4.5h2v2" />
+    </LineIcon>
+  );
+}
+
 /**
- * עיטור לפי סוג האירוע — חתונה מקבלת טבעות, בר/בת מצווה מגן דוד, וכל
- * אירוע אחר (ברית, חלאקה, יום הולדת...) מקבל ניצוצות חגיגיים ונייטרליים.
+ * עיטור לפי סוג האירוע — חתונה מקבלת טבעות, בר/בת מצווה מגן דוד, יום הולדת
+ * בלון, לידה/ברית בקבוק, וכל אירוע אחר מקבל ניצוצות חגיגיים ונייטרליים.
  * סוג האירוע הוא טקסט חופשי, ולכן ההתאמה לפי מילות מפתח.
  */
 export function EventOrnament({
@@ -243,6 +266,12 @@ export function EventOrnament({
   }
   if (/מצווה|מצוה/.test(t)) {
     return <StarOfDavid className={className} />;
+  }
+  if (/הולדת|יומולדת/.test(t)) {
+    return <Balloon className={className} />;
+  }
+  if (/לידה|נולד|תינוק|ברית/.test(t)) {
+    return <BabyBottle className={className} />;
   }
   return <Sparkles className={className} />;
 }
