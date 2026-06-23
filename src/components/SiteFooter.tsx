@@ -1,9 +1,18 @@
+"use client";
+
 // באנר קרדיט בתחתית כל הדפים — ממצב את האתר כתיק עבודות חי של בשי,
 // בונת אתרים. הקריאה לפעולה פותחת חלון כתיבת מייל ב-Gmail (אמין יותר
 // מ-mailto, שדורש אפליקציית מייל מוגדרת במכשיר).
+import { usePathname } from "next/navigation";
 import { BUILD_CONTACT_URL, CONTACT_EMAIL } from "@/lib/contact";
 
 export function SiteFooter() {
+  // מצב רקע לשולחן העבודה (/c/.../wallpaper) — בלי פוטר, כדי לא ליצור גלילה.
+  const pathname = usePathname();
+  if (pathname?.startsWith("/c/") && pathname.endsWith("/wallpaper")) {
+    return null;
+  }
+
   return (
     <footer className="px-6 py-8 text-center text-xs text-[var(--muted)]">
       <p className="mb-1 text-sm font-semibold text-[var(--text)]">

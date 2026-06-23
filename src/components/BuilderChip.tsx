@@ -1,3 +1,6 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import { Sparkles } from "@/components/Ornaments";
 import { BUILD_CONTACT_URL } from "@/lib/contact";
 
@@ -5,6 +8,12 @@ import { BUILD_CONTACT_URL } from "@/lib/contact";
 // "נבנה ע״י בשי · רוצים אתר כזה?" — מוביל לכתיבת מייל ב-Gmail ליצירת קשר.
 // פינה ימנית כדי לא להתנגש ב-WallpaperChip שיושב בפינה השמאלית.
 export function BuilderChip() {
+  // מצב רקע לשולחן העבודה (/c/.../wallpaper) — מסך נקי בלבד, בלי צ'יפים.
+  const pathname = usePathname();
+  if (pathname?.startsWith("/c/") && pathname.endsWith("/wallpaper")) {
+    return null;
+  }
+
   return (
     <a
       href={BUILD_CONTACT_URL}
