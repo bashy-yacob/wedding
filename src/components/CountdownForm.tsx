@@ -50,6 +50,8 @@ interface CountdownFormProps {
   initial?: CountdownFormInitial;
   /** מפתח העריכה — נשלח כשדה נסתר במצב עריכה בלבד. */
   editToken?: string;
+  /** סוג אירוע למילוי-מראש (מגיע מדפי הנחיתה, למשל ?event=בר מצווה). */
+  defaultEventType?: string;
 }
 
 const fieldClass =
@@ -63,6 +65,7 @@ export function CountdownForm({
   pendingLabel,
   initial,
   editToken,
+  defaultEventType,
 }: CountdownFormProps) {
   const isEdit = Boolean(editToken);
 
@@ -91,7 +94,9 @@ export function CountdownForm({
   });
 
   // שדות נשלטים שמזינים את התצוגה המקדימה החיה
-  const [eventType, setEventType] = useState(initial?.eventType ?? "חתונה");
+  const [eventType, setEventType] = useState(
+    initial?.eventType ?? defaultEventType?.slice(0, 30) ?? "חתונה",
+  );
   const [displayNames, setDisplayNames] = useState(initial?.displayNames ?? "");
   const [weddingTime, setWeddingTime] = useState(initial?.weddingTime ?? "");
   const [blessing, setBlessing] = useState(initial?.blessing ?? "");
