@@ -126,6 +126,22 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ----- סופרים למשהו אחר? קישור לדפי האירועים האחרים ----- */}
+      <section className="mx-auto max-w-3xl px-6 pb-4 text-center">
+        <p className="mb-4 text-sm text-[var(--muted)]">סופרים למשהו אחר?</p>
+        <div className="flex flex-wrap justify-center gap-2">
+          {LANDINGS.map((l) => (
+            <Link
+              key={l.slug}
+              href={`/countdown/${l.slug}`}
+              className="surface-card rounded-full px-4 py-2 text-sm font-medium transition hover:-translate-y-0.5 hover:text-[var(--accent)]"
+            >
+              {l.eventType}
+            </Link>
+          ))}
+        </div>
+      </section>
+
       <Divider className="my-4" />
 
       {/* ---------------------------- איך זה עובד ---------------------------- */}
