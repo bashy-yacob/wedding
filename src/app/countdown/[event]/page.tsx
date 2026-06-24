@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getBaseUrl } from "@/lib/url";
+import { customThemeVars } from "@/lib/themes";
 import { LANDINGS, getLanding } from "@/lib/landings";
 import { LandingDemo } from "@/components/LandingDemo";
 import { FloatingBackground } from "@/components/FloatingBackground";
@@ -115,9 +116,15 @@ export default async function LandingPage({
   // שאר הנחיתות לקישור פנימי (כל אירוע מלבד הנוכחי).
   const others = LANDINGS.filter((l) => l.slug !== landing.slug);
 
+  // דריסת צבע דגש מעל תמת הבסיס (אם הוגדרה לנחיתה הזו).
+  const customStyle = customThemeVars({
+    accentColor: landing.accentColor,
+  }) as React.CSSProperties;
+
   return (
     <main
       data-theme={landing.theme}
+      style={customStyle}
       className="bg-animated relative min-h-screen overflow-hidden"
     >
       <script
