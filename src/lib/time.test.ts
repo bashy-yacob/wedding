@@ -25,10 +25,37 @@ describe("getCountdownState", () => {
     expect(state.remaining!.days).toBeGreaterThanOrEqual(4);
   });
 
-  it("במהלך יום החתונה → מזל טוב", () => {
+  it("ביום החתונה אך לפני השעה → עדיין ספירה (פחות מיממה)", () => {
     const now = israelWallTimeToEpoch(2026, 7, 15, 9, 0);
     const state = getCountdownState({ weddingDate, weddingTime: "19:00", now });
+    expect(state.status).toBe("countdown");
+    expect(state.remaining!.days).toBe(0);
+    expect(state.remaining!.hours).toBe(10);
+  });
+
+  it("ביום החתונה אחרי השעה → מזל טוב", () => {
+    const now = israelWallTimeToEpoch(2026, 7, 15, 20, 0);
+    const state = getCountdownState({ weddingDate, weddingTime: "19:00", now });
     expect(state.status).toBe("mazaltov");
+  });
+
+  it("ללא שעה — היום כולו מזל טוב (התנהגות שמורה)", () => {
+    const now = israelWallTimeToEpoch(2026, 7, 15, 9, 0);
+    const state = getCountdownState({ weddingDate, weddingTime: null, now });
+    expect(state.status).toBe("mazaltov");
+  });
+
+  it("ספירה של פחות מיממה עד הבוקר פועלת", () => {
+    // האירוע מחר ב-08:00, ועכשיו אתמול בערב — כ-13 שעות לפני.
+    const now = israelWallTimeToEpoch(2026, 7, 14, 19, 0);
+    const state = getCountdownState({
+      weddingDate: "2026-07-15",
+      weddingTime: "08:00",
+      now,
+    });
+    expect(state.status).toBe("countdown");
+    expect(state.remaining!.days).toBe(0);
+    expect(state.remaining!.hours).toBe(13);
   });
 
   it("אחרי יום החתונה → after", () => {
