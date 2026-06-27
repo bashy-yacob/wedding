@@ -227,6 +227,10 @@ export function CountdownForm({
                 onChange={(e) => setWeddingTime(e.target.value)}
                 className={fieldClass}
               />
+              <p className="mt-2 text-xs text-[var(--muted)]">
+                לספירה קצרה (פחות מיממה) הזינו שעה — כך הספירה תרוץ עד לשעה
+                המדויקת. בלי שעה, הספירה מסתיימת בתחילת היום.
+              </p>
             </div>
 
             <div>

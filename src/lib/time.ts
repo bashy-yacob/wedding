@@ -82,9 +82,14 @@ interface CountdownInput {
 
 /**
  * מצב הספירה ברגע נתון:
- * - לפני יום החתונה → "countdown" עם הזמן שנותר עד מועד החתונה.
- * - במהלך יום החתונה כולו (לפי ישראל) → "mazaltov".
- * - אחרי יום החתונה → "after" (נשאר חגיגי).
+ * - לפני מועד האירוע → "countdown" עם הזמן המדויק שנותר (גם פחות מיממה).
+ * - ממועד האירוע ועד תום אותו יום (לפי ישראל) → "mazaltov".
+ * - אחרי יום האירוע → "after" (נשאר חגיגי).
+ *
+ * הספירה לאחור היא תמיד עד ל-target — תאריך האירוע בצירוף השעה אם נמסרה.
+ * כשלא נמסרה שעה, target הוא חצות תחילת היום, ולכן היום כולו "mazaltov"
+ * (התנהגות זהה לקודם). כשנמסרה שעה, סופרים עד לאותה שעה בדיוק — כך שגם
+ * ספירה של פחות מיממה (למשל עד מחר בבוקר) פועלת כראוי.
  */
 export function getCountdownState(input: CountdownInput): CountdownState {
   const now = input.now ?? Date.now();
@@ -98,14 +103,13 @@ export function getCountdownState(input: CountdownInput): CountdownState {
     minute = m;
   }
 
-  const dayStart = israelWallTimeToEpoch(y, mo, d, 0, 0);
   const nextDayStart = israelWallTimeToEpoch(y, mo, d + 1, 0, 0);
   const target = israelWallTimeToEpoch(y, mo, d, hour, minute);
 
   if (now >= nextDayStart) {
     return { status: "after" };
   }
-  if (now >= dayStart) {
+  if (now >= target) {
     return { status: "mazaltov" };
   }
   return { status: "countdown", remaining: splitRemaining(target - now) };
