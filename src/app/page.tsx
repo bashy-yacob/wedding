@@ -27,8 +27,7 @@ import { BUILD_CONTACT_URL, CONTACT_EMAIL } from "@/lib/contact";
 import "./home.css";
 
 // דף הבית בשפת עיצוב "בוטיק" (home.css, תחום תחת .boutique).
-// הפוטר והצ'יפ הגלובליים (SiteFooter / BuilderChip) מוסתרים כאן — אזור
-// הסטודיו בתחתית מחליף אותם — ובשאר הדפים הם נשארים כמו שהם.
+// הפוטר הגלובלי (SiteFooter) מוסתר כאן — אזור הסטודיו בתחתית מחליף אותו.
 
 const STEPS = [
   {
