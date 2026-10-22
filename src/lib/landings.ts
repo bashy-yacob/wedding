@@ -1,5 +1,3 @@
-import type { ThemeKey } from "@/lib/themes";
-
 // ============================================================================
 // landings.ts — דפי נחיתה ל-SEO לכל סוג אירוע (לא חתונה).
 // כל דף ממוקד לביטוי חיפוש משלו ("ספירה לאחור לבר מצווה" וכו'), עם כותרת,
@@ -26,15 +24,23 @@ export interface Landing {
   intro: string;
   /** שם לדוגמה לתצוגה החיה */
   exampleNames: string;
-  /** ערכת העיצוב שמלבישה את דף הנחיתה */
-  theme: ThemeKey;
   /**
-   * דריסת צבע הדגש מעל תמת הבסיס (אופציונלי, '#rrggbb').
-   * לגוונים שאין להם תמה ייעודית מבין השש (למשל כחול/תכלת לברית) — מגוונים
-   * תמה בהירה קיימת בלי להוסיף שפת-עיצוב חדשה, דרך שכבת ההתאמה האישית.
+   * צבעי הדגש של דף הנחיתה (שפת ה"בוטיק", כמו דף הבית). אם לא הוגדר —
+   * הזהב של דף הבית. accent לעיטורים וקווים, ink לטקסט קטן ולכפתורים
+   * (ניגודיות ~5:1 על קרם), display לכותרות גדולות (ניגודיות ~4:1).
    */
-  accentColor?: string;
+  palette?: LandingPalette;
 }
+
+export interface LandingPalette {
+  accent: string;
+  ink: string;
+  display: string;
+}
+
+const ROSE: LandingPalette = { accent: "#d98ba0", ink: "#a8506a", display: "#b8607a" };
+const SKY: LandingPalette = { accent: "#3e92cc", ink: "#2a6c9c", display: "#3479aa" };
+const GREEN: LandingPalette = { accent: "#4e9f3d", ink: "#3b7a2e", display: "#468c37" };
 
 export const LANDINGS: Landing[] = [
   {
@@ -55,8 +61,6 @@ export const LANDINGS: Landing[] = [
     intro:
       "כמה ימים נשארו לבר המצווה? צרו ספירה לאחור יפה עם התאריך העברי, שתפו את כל המשפחה בוואטסאפ, ותנו לכולם לספור יחד עד היום הגדול.",
     exampleNames: "יונתן",
-    // שחור/זהב, ארט דקו — אווירה מכובדת לבר מצווה.
-    theme: "gold",
   },
   {
     slug: "bat-mitzva",
@@ -76,7 +80,7 @@ export const LANDINGS: Landing[] = [
     intro:
       "כמה ימים נשארו לבת המצווה? צרו ספירה לאחור יפה עם התאריך העברי, שתפו את כל המשפחה בוואטסאפ, ותנו לכולם לספור יחד עד היום הגדול.",
     exampleNames: "נועה",
-    theme: "blush",
+    palette: ROSE,
   },
   {
     slug: "birthday",
@@ -96,7 +100,7 @@ export const LANDINGS: Landing[] = [
     intro:
       "כמה ימים נשארו ליום ההולדת? צרו ספירה לאחור שמחה, שתפו אותה עם החברים בוואטסאפ, ותבנו ציפייה עד החגיגה.",
     exampleNames: "מאיה",
-    theme: "blush",
+    palette: ROSE,
   },
   {
     slug: "brit",
@@ -116,9 +120,7 @@ export const LANDINGS: Landing[] = [
     intro:
       "סופרים את הימים עד הברית? צרו ספירה לאחור מרגשת עם התאריך העברי, ושתפו את כל המשפחה בקישור אחד פשוט.",
     exampleNames: "משפחת כהן",
-    // בסיס בהיר ונקי עם דגש כחול/תכלת — אווירה רכה ומתאימה לברית.
-    theme: "classic",
-    accentColor: "#3e92cc",
+    palette: SKY,
   },
   {
     slug: "birth",
@@ -138,8 +140,6 @@ export const LANDINGS: Landing[] = [
     intro:
       "סופרים את הימים עד הלידה? צרו ספירה לאחור מרגשת לתאריך המשוער, ושתפו את הציפייה עם המשפחה והחברים בקישור אחד.",
     exampleNames: "התינוק/ת שלנו",
-    // שמנת פסטלי בהיר — רך ועדין, לא כהה.
-    theme: "classic",
   },
   {
     slug: "trip",
@@ -159,9 +159,7 @@ export const LANDINGS: Landing[] = [
     intro:
       "כמה ימים נשארו לטיול? צרו ספירה לאחור שתבנה את ההתרגשות, שתפו אותה עם כל מי שטס איתכם, וספרו יחד עד ההמראה.",
     exampleNames: "הטיול ליוון",
-    // בוטני ירוק, עם דגש ירוק חי יותר — אווירת טבע וטיול.
-    theme: "olive",
-    accentColor: "#4e9f3d",
+    palette: GREEN,
   },
 ];
 
