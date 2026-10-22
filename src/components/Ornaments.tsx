@@ -20,6 +20,19 @@ export function Divider({ className = "" }: { className?: string }) {
   );
 }
 
+/** יהלום/כוכב קטן מלא — המוטיב שבמרכז ה-Divider, לשימוש עצמאי. */
+export function Diamond({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" aria-hidden>
+      <path
+        d="M12 3l2.2 5.6L20 11l-5.8 2.4L12 19l-2.2-5.6L4 11l5.8-2.4L12 3z"
+        fill="currentColor"
+        opacity="0.85"
+      />
+    </svg>
+  );
+}
+
 /** זוג טבעות שלובות — מוטיב חתונה צנוע. */
 export function Rings({ className = "" }: { className?: string }) {
   return (
@@ -281,6 +294,15 @@ export function ArrowLeft({ className = "" }: { className?: string }) {
   return (
     <LineIcon className={className}>
       <path d="M19 12H5M12 19l-7-7 7-7" />
+    </LineIcon>
+  );
+}
+
+/** חץ למעלה — "חזרה למעלה". */
+export function ArrowUp({ className = "" }: { className?: string }) {
+  return (
+    <LineIcon className={className}>
+      <path d="M12 19V5M5 12l7-7 7 7" />
     </LineIcon>
   );
 }

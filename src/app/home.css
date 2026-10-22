@@ -1,0 +1,767 @@
+/* ==========================================================================
+   home.css — שפת העיצוב "בוטיק" של דף הבית בלבד.
+   כל הכללים תחומים תחת .boutique, כך שאינם נוגעים בדפי הספירה, בשש
+   ערכות העיצוב או בשום דף אחר. נשען על משתני classic מ-globals.css
+   (--bg, --text, --muted, --accent ...) ומוסיף כמה משתנים משלו.
+   ========================================================================== */
+
+.boutique {
+  --accent-ink: #86663a; /* זהב כהה לטקסט קטן ולכפתורים (ניגודיות ~5:1) */
+  --accent-display: #9c7a45; /* זהב לכותרות גדולות (ניגודיות ~3.7:1) */
+  --line: #e2d6c1;
+  --line-strong: #cbbb9e;
+  --paper: #fffdf9;
+  --body-soft: #625e57;
+  --deep: #17222f;
+  --deep-2: #0f1924;
+  --deep-text: #f7f0e5;
+  --deep-muted: #b8c0c9;
+  --deep-accent: #d1b27b;
+  --deep-accent-hover: #e5c88f;
+  --muted: #77716a; /* כהה מעט מ-classic בשביל ניגודיות על קרם */
+
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+}
+
+.boutique h1,
+.boutique h2,
+.boutique h3,
+.boutique .b-display {
+  font-family: var(--font-display);
+  font-weight: 500;
+}
+
+.boutique .b-container {
+  width: min(1160px, 100% - 32px);
+  margin-inline: auto;
+}
+
+/* ---------- רכיבים משותפים ---------- */
+.boutique .b-eyebrow {
+  color: var(--accent-ink);
+  letter-spacing: 2px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.boutique .b-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  color: var(--accent);
+  margin: 18px auto;
+}
+.boutique .b-divider::before,
+.boutique .b-divider::after {
+  content: "";
+  height: 1px;
+  width: 70px;
+  opacity: 0.6;
+  background: linear-gradient(to left, transparent, var(--accent));
+}
+.boutique .b-divider::after {
+  background: linear-gradient(to right, transparent, var(--accent));
+}
+
+.boutique .b-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 50px;
+  background: var(--accent-ink);
+  color: var(--on-accent);
+  font-weight: 700;
+  padding: 16px 34px;
+  box-shadow: 0 10px 22px #7960382a;
+  transition: transform 0.25s, background 0.25s;
+}
+.boutique .b-btn:hover {
+  transform: translateY(-3px);
+  background: #735630;
+}
+
+.boutique .b-textlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent-ink);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.boutique .b-textlink svg {
+  transition: transform 0.2s;
+}
+.boutique .b-textlink:hover svg,
+.boutique .b-occasion:hover .b-textlink svg {
+  transform: translateX(-4px);
+}
+
+.boutique .b-section {
+  padding: 110px 0;
+}
+.boutique .b-section-heading {
+  text-align: center;
+  max-width: 650px;
+  margin: 0 auto 60px;
+}
+.boutique .b-section-heading p {
+  color: var(--muted);
+  font-size: 19px;
+  line-height: 1.7;
+}
+.boutique h2 {
+  font-size: clamp(38px, 5vw, 60px);
+  line-height: 1.15;
+  margin: 14px 0 18px;
+}
+
+/* ---------- ניווט ---------- */
+.boutique .b-nav {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid #d8c9af80;
+}
+.boutique .b-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--accent-ink);
+  font-weight: 700;
+  font-size: 18px;
+}
+.boutique .b-navlinks {
+  display: flex;
+  gap: 32px;
+  font-size: 15px;
+}
+.boutique .b-navlinks a:hover {
+  color: var(--accent-ink);
+}
+.boutique .b-navcta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--accent);
+  border-radius: 30px;
+  padding: 9px 20px;
+  color: var(--accent-ink);
+  font-weight: 600;
+  font-size: 15px;
+  transition: 0.2s;
+}
+.boutique .b-navcta:hover {
+  background: var(--accent-ink);
+  border-color: var(--accent-ink);
+  color: var(--on-accent);
+}
+
+/* ---------- Hero ---------- */
+.boutique .b-hero {
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(
+    ellipse at 50% 40%,
+    #fffdf6 0%,
+    var(--bg) 55%,
+    var(--bg-2) 100%
+  );
+}
+.boutique .b-hero::before,
+.boutique .b-hero::after {
+  content: "";
+  position: absolute;
+  width: 550px;
+  height: 550px;
+  border: 1px solid #d5bd9255;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.boutique .b-hero::before {
+  right: -410px;
+  top: 20px;
+}
+.boutique .b-hero::after {
+  left: -420px;
+  bottom: 0;
+}
+.boutique .b-hero-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 56px 0 90px;
+}
+.boutique h1 {
+  font-size: clamp(64px, 9vw, 128px);
+  line-height: 1.05;
+  color: var(--accent-display);
+  margin: 8px 0 14px;
+}
+.boutique .b-intro {
+  font-size: 20px;
+  max-width: 640px;
+  margin: 0 auto 30px;
+  color: var(--body-soft);
+  line-height: 1.75;
+}
+.boutique .b-micro {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 14px 0 44px;
+}
+.boutique .b-sample-label {
+  font-size: 14px;
+  color: var(--accent-ink);
+  margin: 0 0 14px;
+}
+
+/* כרטיס הדוגמה (HeroDemo) */
+.boutique .b-count-card {
+  position: relative;
+  width: min(640px, 100%);
+  margin: auto;
+  padding: 38px 32px 30px;
+  background: var(--paper);
+  border: 1px solid #e7dbc8;
+  border-radius: 6px;
+  box-shadow: 0 25px 65px #55452b19;
+}
+.boutique .b-count-card::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 1px solid var(--line);
+  pointer-events: none;
+}
+.boutique .b-card-kicker {
+  font-size: 14px;
+  color: var(--muted);
+}
+.boutique .b-names {
+  font-size: 42px;
+  color: var(--accent-display);
+  margin: 2px 0 22px;
+}
+.boutique .b-clock {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  min-height: 92px;
+}
+.boutique .b-clock-item {
+  text-align: center;
+}
+.boutique .b-digits {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 6vw, 58px);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+.boutique .b-clock-item small {
+  display: block;
+  width: 70%;
+  margin: 8px auto 0;
+  padding-top: 8px;
+  border-top: 1px solid #d9c8a9;
+  color: var(--muted);
+  font-size: 13px;
+}
+.boutique .b-heb-date {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 500;
+}
+.boutique .b-greg-date {
+  color: var(--muted);
+  font-size: 15px;
+  margin-top: 2px;
+}
+
+/* ---------- איך זה עובד ---------- */
+.boutique .b-steps {
+  background: var(--paper);
+}
+.boutique .b-step-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 44px;
+}
+.boutique .b-step {
+  border-top: 1px solid var(--line);
+  padding-top: 26px;
+}
+.boutique .b-step-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.boutique .b-step-num {
+  font-family: var(--font-display);
+  color: var(--accent);
+  font-size: 56px;
+  line-height: 1;
+}
+.boutique .b-step-icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  color: var(--accent-ink);
+}
+.boutique .b-step h3 {
+  font-size: 27px;
+  margin: 10px 0 8px;
+}
+.boutique .b-step p {
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+/* ---------- יכולות ---------- */
+.boutique .b-features {
+  background: var(--bg-2);
+}
+.boutique .b-feature-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.boutique .b-feature-copy p {
+  font-size: 19px;
+  color: var(--body-soft);
+  line-height: 1.8;
+}
+.boutique .b-feature-points {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 26px;
+  margin-top: 30px;
+}
+.boutique .b-feature-points li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid var(--line-strong);
+  padding-bottom: 12px;
+}
+.boutique .b-feature-points svg {
+  color: var(--accent-ink);
+}
+
+.boutique .b-theme-board {
+  position: relative;
+  background: var(--paper);
+  border: 1px solid #d8c9af;
+  padding: 44px 34px 34px;
+}
+.boutique .b-theme-board::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid var(--line);
+  pointer-events: none;
+}
+.boutique .b-theme-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.boutique .b-theme-chip {
+  aspect-ratio: 3 / 4;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  box-shadow: 0 6px 16px #3b2f1c14;
+}
+.boutique .b-theme-chip b {
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 500;
+  line-height: 1;
+}
+.boutique .b-theme-chip span {
+  font-size: 12px;
+  opacity: 0.85;
+}
+.boutique .b-theme-chip em {
+  font-style: normal;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+.boutique .b-theme-caption {
+  position: relative;
+  text-align: center;
+  margin-top: 26px;
+  color: var(--accent-ink);
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.boutique .b-wallpaper-band {
+  margin-top: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+  padding: 24px 4px;
+}
+.boutique .b-wallpaper-band > div {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.boutique .b-wallpaper-band > div > svg {
+  color: var(--accent-ink);
+}
+.boutique .b-wallpaper-band strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 23px;
+  font-weight: 500;
+}
+.boutique .b-wallpaper-band span {
+  color: var(--muted);
+  font-size: 15px;
+}
+
+/* ---------- לא רק לחתונה ---------- */
+.boutique .b-occasions {
+  background: var(--paper);
+}
+.boutique .b-occasion-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.boutique .b-occasion {
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px;
+  background: #fffefa;
+  border: 1px solid #e6dac6;
+  transition: 0.25s;
+}
+.boutique .b-occasion:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 10px 24px #55452b13;
+}
+.boutique .b-occasion-icon {
+  color: var(--oc, var(--accent));
+}
+.boutique .b-occasion strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 500;
+}
+.boutique .b-occasion .b-textlink {
+  font-size: 14px;
+}
+
+/* ---------- קריאה לפעולה (בהירה — כדי שהסטודיו הכהה ייקרא כגוש נפרד) ---------- */
+.boutique .b-finalcta {
+  background: var(--bg-2);
+  text-align: center;
+  padding: 96px 0;
+}
+.boutique .b-finalcta p {
+  color: var(--muted);
+  margin: 0 0 30px;
+  font-size: 18px;
+}
+
+/* ---------- סטודיו: מי בנתה את האתר ---------- */
+.boutique .b-studio {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--deep);
+  color: var(--deep-text);
+}
+.boutique .b-studio::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 55%, #263748 0%, transparent 60%);
+  opacity: 0.65;
+  pointer-events: none;
+}
+.boutique .b-studio-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.14;
+  background-image: radial-gradient(#d6bc8b 0.55px, transparent 0.55px);
+  background-size: 7px 7px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000);
+  mask-image: linear-gradient(to bottom, transparent, #000);
+}
+.boutique .b-studio-inner {
+  position: relative;
+  z-index: 1;
+}
+.boutique .b-studio-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  padding: 19px 0;
+  border-bottom: 1px solid #d4b98b38;
+  font-size: 14px;
+}
+.boutique .b-studio-signature {
+  font-weight: 600;
+  color: #f5eadd;
+}
+.boutique .b-studio-signature span {
+  color: var(--deep-accent);
+}
+.boutique .b-studio-tagline {
+  color: #e7c996;
+}
+.boutique .b-studio-main {
+  max-width: 780px;
+  margin-inline: auto;
+  padding: 76px 0 88px;
+  text-align: center;
+}
+.boutique .b-studio-kicker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  font-size: 13px;
+  color: #dfc38f;
+  letter-spacing: 0.04em;
+}
+.boutique .b-studio-kicker::before,
+.boutique .b-studio-kicker::after {
+  content: "";
+  width: 38px;
+  height: 1px;
+  background: #dfc38f;
+}
+.boutique .b-studio h2 {
+  font-size: clamp(58px, 6.2vw, 88px);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  margin: 16px 0 22px;
+  color: var(--deep-text);
+}
+.boutique .b-studio h2 em {
+  font-style: normal;
+  color: #d5b67d;
+}
+.boutique .b-studio-lead {
+  font-family: var(--font-display);
+  font-size: clamp(23px, 2.35vw, 31px);
+  line-height: 1.4;
+  color: #f5e9d7;
+  margin: 0 0 16px;
+}
+.boutique .b-studio-description {
+  font-size: 16px;
+  line-height: 1.85;
+  color: #c5cbd0;
+  max-width: 640px;
+  margin: 0 auto 10px;
+}
+.boutique .b-studio-proof {
+  font-size: 15px;
+  line-height: 1.75;
+  color: #d8c4a3;
+  max-width: 640px;
+  margin: 0 auto 32px;
+}
+.boutique .b-studio-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 22px;
+  padding: 12px 15px 12px 23px;
+  border-radius: 12px;
+  background: var(--deep-accent);
+  color: var(--deep);
+  font-size: 16px;
+  font-weight: 650;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transition: transform 0.25s, box-shadow 0.25s, background 0.25s;
+}
+.boutique .b-studio-button svg {
+  display: block;
+  width: 35px;
+  height: 35px;
+  padding: 8px;
+  border-radius: 50%;
+  background: rgba(23, 34, 47, 0.09);
+  transition: transform 0.25s, background 0.25s;
+}
+.boutique .b-studio-button:hover {
+  background: var(--deep-accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+.boutique .b-studio-button:hover svg {
+  transform: translateX(-3px);
+  background: rgba(23, 34, 47, 0.14);
+}
+.boutique .b-studio-button:focus-visible,
+.boutique .b-studio-contact a:focus-visible {
+  outline: 3px solid #f4d7a0;
+  outline-offset: 5px;
+}
+.boutique .b-studio-contact {
+  font-size: 13px;
+  color: var(--deep-muted);
+  margin-top: 14px;
+}
+.boutique .b-studio-contact a {
+  display: inline-block;
+  direction: ltr;
+  color: #e8cb94;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+/* ---------- פוטר של דף הבית (במקום SiteFooter, שמוסתר ב-"/") ---------- */
+.boutique .b-footer {
+  background: var(--deep-2);
+  color: var(--deep-muted);
+  padding: 30px 0;
+}
+.boutique .b-foot-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+  font-size: 14px;
+}
+.boutique .b-foot-inner .b-credit {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.boutique .b-foot-inner svg {
+  color: var(--deep-accent);
+}
+.boutique .b-footer a {
+  color: #e3c492;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ---------- מובייל ---------- */
+@media (max-width: 760px) {
+  .boutique .b-nav {
+    height: 66px;
+  }
+  .boutique .b-navlinks {
+    display: none;
+  }
+  .boutique .b-navcta {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+  .boutique .b-hero-content {
+    padding: 44px 0 64px;
+  }
+  .boutique .b-intro {
+    font-size: 17px;
+  }
+  .boutique .b-count-card {
+    padding: 30px 16px 26px;
+  }
+  .boutique .b-names {
+    font-size: 32px;
+  }
+  .boutique .b-heb-date {
+    font-size: 20px;
+  }
+  .boutique .b-section {
+    padding: 74px 0;
+  }
+  .boutique .b-section-heading {
+    margin-bottom: 40px;
+  }
+  .boutique .b-step-list,
+  .boutique .b-occasion-grid,
+  .boutique .b-feature-layout {
+    grid-template-columns: 1fr;
+  }
+  .boutique .b-step-list {
+    gap: 28px;
+  }
+  .boutique .b-feature-layout {
+    gap: 36px;
+  }
+  .boutique .b-feature-points {
+    gap: 12px 16px;
+  }
+  .boutique .b-theme-board {
+    padding: 32px 20px 24px;
+  }
+  .boutique .b-wallpaper-band {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .boutique .b-occasion {
+    min-height: 120px;
+  }
+  .boutique .b-studio-topline {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 17px 0;
+  }
+  .boutique .b-studio-main {
+    padding: 48px 0 56px;
+  }
+  .boutique .b-studio h2 {
+    font-size: clamp(48px, 12vw, 72px);
+  }
+  .boutique .b-studio-lead {
+    font-size: 24px;
+  }
+  .boutique .b-studio-description {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .boutique .b-studio-proof {
+    font-size: 14px;
+    margin-bottom: 26px;
+  }
+  .boutique .b-studio-button {
+    width: 100%;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 14px 12px 18px;
+    font-size: 15px;
+  }
+  .boutique .b-foot-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+}

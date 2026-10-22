@@ -1,0 +1,227 @@
+/* ==========================================================================
+   site-footer.css — הפוטר הגלובלי (SiteFooter).
+   צבעי מותג קבועים (כחול כהה וזהב) שאינם תלויים בערכת העיצוב של הדף,
+   כך שהפוטר נראה אותו דבר מתחת לכל שש הערכות. כל הכללים תחת .sf.
+   ========================================================================== */
+
+.sf {
+  --sf-deep: #17222f;
+  --sf-text: #f7f0e5;
+  --sf-muted: #b5bec7;
+  --sf-body: #c3cbd3;
+  --sf-accent: #d1b27b;
+  --sf-button: #d8b878;
+  --sf-button-hover: #e6c995;
+  --sf-link: #e4c895;
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--sf-deep);
+  color: var(--sf-text);
+  font-family: var(--font-ui);
+}
+.sf::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.sf .sf-identity {
+  color: #f0e7d9;
+  font-weight: 600;
+}
+.sf .sf-slash {
+  color: var(--sf-accent);
+  margin: 0 5px;
+}
+
+/* כפתור יצירת קשר — משותף לשתי הגרסאות */
+.sf .sf-contact {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 10px 20px 10px 10px;
+  background: var(--sf-button);
+  color: var(--sf-deep);
+  border-radius: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 10px 28px #0002;
+  transition: transform 0.2s, background 0.2s;
+}
+.sf .sf-contact:hover {
+  transform: translateY(-2px);
+  background: var(--sf-button-hover);
+}
+.sf .sf-contact:focus-visible,
+.sf a:focus-visible {
+  outline: 3px solid #f4d7a0;
+  outline-offset: 4px;
+}
+.sf .sf-arrow {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  background: #17222f15;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+.sf .sf-contact:hover .sf-arrow {
+  transform: translateX(-3px);
+}
+
+/* ---------- גרסה מלאה — דפים כלליים ---------- */
+.sf-full::before {
+  opacity: 0.3;
+  background: radial-gradient(ellipse at 0% 100%, #30465b 0%, transparent 58%);
+}
+.sf-full .sf-inner {
+  position: relative;
+  width: min(1152px, 100% - 48px);
+  margin: auto;
+  padding: 48px 0;
+}
+.sf-full .sf-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 48px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid rgba(209, 178, 123, 0.2);
+}
+.sf-full .sf-copy {
+  max-width: 670px;
+}
+.sf-full .sf-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  color: var(--sf-accent);
+  font-size: 12px;
+  letter-spacing: 0.3px;
+}
+.sf-full .sf-eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: var(--sf-accent);
+}
+.sf-full h2 {
+  font-family: var(--font-display);
+  font-size: 38px;
+  font-weight: 500;
+  line-height: 1.2;
+  margin: 0 0 12px;
+}
+.sf-full p {
+  max-width: 600px;
+  font-size: 16px;
+  line-height: 1.85;
+  color: var(--sf-body);
+}
+.sf-full .sf-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding-top: 20px;
+  font-size: 12px;
+  color: var(--sf-muted);
+}
+.sf-full .sf-bottom a {
+  color: var(--sf-link);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ---------- גרסה מצומצמת — דפי הספירה ---------- */
+.sf-mini {
+  border-top: 1px solid rgba(209, 178, 123, 0.3);
+}
+.sf-mini::before {
+  opacity: 0.35;
+  background: radial-gradient(ellipse at 100% 0%, #30465b 0%, transparent 55%);
+}
+.sf-mini .sf-inner {
+  position: relative;
+  width: min(1152px, 100% - 32px);
+  margin: auto;
+  padding: 18px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 28px;
+}
+.sf-mini .sf-hook {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 21px;
+  line-height: 1.3;
+}
+.sf-mini .sf-by {
+  display: block;
+  margin-top: 2px;
+  font-size: 14px;
+  color: var(--sf-muted);
+}
+.sf-mini .sf-by b {
+  color: #f0e7d9;
+  font-weight: 600;
+}
+.sf-mini .sf-contact {
+  flex-shrink: 0;
+  gap: 12px;
+  padding: 8px 16px 8px 8px;
+  border-radius: 11px;
+  font-size: 14px;
+}
+.sf-mini .sf-arrow {
+  width: 28px;
+  height: 28px;
+}
+
+@media (max-width: 760px) {
+  .sf-full .sf-inner {
+    padding: 40px 0;
+  }
+  .sf-full .sf-main {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+  .sf-full h2 {
+    font-size: 32px;
+  }
+  .sf-full p {
+    font-size: 15px;
+  }
+  .sf-full .sf-contact {
+    width: fit-content;
+    white-space: normal;
+  }
+  .sf-full .sf-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .sf-mini .sf-inner {
+    flex-direction: column;
+    text-align: center;
+    gap: 14px;
+    padding: 22px 0;
+  }
+  .sf-mini .sf-hook {
+    font-size: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sf .sf-contact,
+  .sf .sf-arrow {
+    transition: none;
+  }
+}

@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { getCountdownState, type CountdownState } from "@/lib/time";
-import { CountdownDisplay } from "./CountdownDisplay";
-import { Divider } from "./Ornaments";
+import { toGregorianString, toHebrewDateString } from "@/lib/hebcal";
+import { Diamond } from "./Ornaments";
 
-// מונה דמו חי לדף הבית — תאריך יעד ~93 ימים קדימה, מחושב רק אחרי mount
-// כדי להימנע מאי-התאמת hydration.
+// כרטיס דמו חי לדף הבית — תאריך יעד ~93 ימים קדימה, מחושב רק אחרי mount
+// כדי להימנע מאי-התאמת hydration. התאריך העברי נגזר מהתאריך האמיתי.
+// מעוצב לפי שפת ה"בוטיק" של דף הבית (home.css) ולא נוגע בעיצובי הספירה.
 export function HeroDemo() {
+  const [weddingDate, setWeddingDate] = useState<string | null>(null);
   const [state, setState] = useState<CountdownState | null>(null);
 
   useEffect(() => {
@@ -16,37 +18,45 @@ export function HeroDemo() {
     const y = target.getFullYear();
     const m = String(target.getMonth() + 1).padStart(2, "0");
     const d = String(target.getDate()).padStart(2, "0");
-    const weddingDate = `${y}-${m}-${d}`;
+    const date = `${y}-${m}-${d}`;
+    setWeddingDate(date);
 
     const tick = () =>
-      setState(getCountdownState({ weddingDate, weddingTime: "19:00" }));
+      setState(getCountdownState({ weddingDate: date, weddingTime: "19:00" }));
     tick();
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
   }, []);
 
+  const r = state?.status === "countdown" ? state.remaining : null;
+  const units = r
+    ? [
+        { label: "ימים", value: String(r.days) },
+        { label: "שעות", value: String(r.hours).padStart(2, "0") },
+        { label: "דקות", value: String(r.minutes).padStart(2, "0") },
+        { label: "שניות", value: String(r.seconds).padStart(2, "0") },
+      ]
+    : null;
+
   return (
-    <div className="surface-card mx-auto w-full max-w-lg rounded-3xl px-8 py-10 text-center lg:max-w-2xl lg:px-12 lg:py-14">
-      <p className="text-xs text-[var(--muted)] lg:text-sm">הספירה לחתונה של</p>
-      <p className="font-display accent-gradient-text mt-1 mb-6 text-2xl font-bold lg:text-4xl">
-        חיים ושרה
-      </p>
+    <div className="b-count-card">
+      <p className="b-card-kicker">הספירה לחתונה של</p>
+      <p className="b-names b-display">חיים ושרה</p>
 
-      {state && state.status === "countdown" ? (
-        <CountdownDisplay
-          days={state.remaining!.days}
-          hours={state.remaining!.hours}
-          minutes={state.remaining!.minutes}
-          seconds={state.remaining!.seconds}
-          compact
-        />
-      ) : (
-        <div className="h-14 sm:h-16" />
-      )}
+      <div className="b-clock" dir="ltr">
+        {units?.map((u) => (
+          <div key={u.label} className="b-clock-item">
+            <div className="b-digits">{u.value}</div>
+            <small>{u.label}</small>
+          </div>
+        ))}
+      </div>
 
-      <Divider className="my-6" />
-      <p className="font-display text-lg font-semibold lg:text-2xl">כ״ב באדר התשפ״ו</p>
-      <p className="text-sm text-[var(--muted)] lg:text-base">22 במרץ 2026</p>
+      <div className="b-divider">
+        <Diamond className="h-5 w-5" />
+      </div>
+      <p className="b-heb-date">{weddingDate ? toHebrewDateString(weddingDate) : " "}</p>
+      <p className="b-greg-date">{weddingDate ? toGregorianString(weddingDate) : " "}</p>
     </div>
   );
 }
