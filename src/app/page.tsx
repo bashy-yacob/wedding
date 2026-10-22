@@ -2,11 +2,15 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getBaseUrl } from "@/lib/url";
 import { HeroDemo } from "@/components/HeroDemo";
-import { DonationCTA } from "@/components/DonationCTA";
+import {
+  BoutiqueNav,
+  BoutiqueSteps,
+  BoutiqueFeatures,
+  BoutiqueOccasions,
+  BoutiqueFinalCta,
+} from "@/components/Boutique";
 import {
   Rings,
-  Pencil,
-  LinkIcon,
   Send,
   Calendar,
   Chat,
@@ -14,41 +18,17 @@ import {
   Palette,
   Photo,
   Gift,
-  Monitor,
   ArrowLeft,
   ArrowUp,
   Heart,
-  EventOrnament,
 } from "@/components/Ornaments";
 import { WallpaperChip } from "@/components/WallpaperChip";
 import { LANDINGS } from "@/lib/landings";
-import { THEMES, THEME_KEYS } from "@/lib/themes";
 import { BUILD_CONTACT_URL, CONTACT_EMAIL } from "@/lib/contact";
 import "./home.css";
 
 // דף הבית בשפת עיצוב "בוטיק" (home.css, תחום תחת .boutique).
 // הפוטר הגלובלי (SiteFooter) מוסתר כאן — אזור הסטודיו בתחתית מחליף אותו.
-
-const STEPS = [
-  {
-    n: "01",
-    Icon: Pencil,
-    title: "ממלאים פרטים",
-    body: "שמות, תאריך החתונה (עברי או לועזי), ובוחרים ערכת עיצוב.",
-  },
-  {
-    n: "02",
-    Icon: LinkIcon,
-    title: "מקבלים קישור",
-    body: "נוצר קישור ייחודי וקצר לספירה שלכם — בלי הרשמה.",
-  },
-  {
-    n: "03",
-    Icon: Send,
-    title: "משתפים בוואטסאפ",
-    body: "כל מי שנכנס רואה את הספירה ויכול לשלוח איחול.",
-  },
-];
 
 const FEATURES = [
   { label: "תאריך עברי כראשי", Icon: Calendar },
@@ -97,22 +77,15 @@ export default async function HomePage() {
 
       {/* ------------------------------- Hero ------------------------------- */}
       <header className="b-hero" id="top">
-        <nav className="b-nav b-container">
-          <Link href="/" className="b-brand">
-            <Rings className="h-[25px] w-10" />
-            עד החתונה
-          </Link>
-          <div className="b-navlinks">
-            <a href="#example">הספירה לדוגמה</a>
-            <a href="#how">איך זה עובד</a>
-            <a href="#events">לא רק לחתונה</a>
-            <a href="#studio">מי בנתה את האתר?</a>
-          </div>
-          <Link href="/create" className="b-navcta">
-            צרו ספירה
-            <ArrowLeft className="h-4 w-4" />
-          </Link>
-        </nav>
+        <BoutiqueNav
+          createHref="/create"
+          links={[
+            { href: "#example", label: "הספירה לדוגמה" },
+            { href: "#how", label: "איך זה עובד" },
+            { href: "#events", label: "לא רק לחתונה" },
+            { href: "#studio", label: "מי בנתה את האתר?" },
+          ]}
+        />
 
         <div className="b-hero-content b-container">
           <Rings className="reveal mx-auto mb-1.5 h-[52px] w-[84px]" />
@@ -143,138 +116,19 @@ export default async function HomePage() {
         </div>
       </header>
 
-      {/* ---------------------------- איך זה עובד ---------------------------- */}
-      <section className="b-section b-steps" id="how">
-        <div className="b-container">
-          <div className="b-section-heading">
-            <div className="b-eyebrow">פשוט, אישי, שלכם</div>
-            <h2>איך זה עובד</h2>
-            <p>שלושה צעדים קטנים — ויש לכם ספירה אישית שכל המשפחה יכולה לפתוח.</p>
-          </div>
-          <div className="b-step-list">
-            {STEPS.map((s) => (
-              <article key={s.n} className="b-step">
-                <div className="b-step-head">
-                  <span className="b-step-num">{s.n}</span>
-                  <span className="b-step-icon">
-                    <s.Icon className="h-6 w-6" />
-                  </span>
-                </div>
-                <h3>{s.title}</h3>
-                <p>{s.body}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      <BoutiqueSteps firstStepBody="שמות, תאריך החתונה (עברי או לועזי), ובוחרים ערכת עיצוב." />
+      <BoutiqueFeatures features={FEATURES} />
 
-      {/* ----------------------------- יכולות ----------------------------- */}
-      <section className="b-section b-features">
-        <div className="b-container">
-          <div className="b-feature-layout">
-            <div className="b-feature-copy">
-              <div className="b-eyebrow">כל הפרטים הקטנים</div>
-              <h2>
-                הרבה יותר
-                <br />
-                מספירה לאחור.
-              </h2>
-              <p>
-                ספירה שכיף לפתוח שוב ושוב — עם קיר ברכות מהמשפחה והחברים, ומצב
-                מזל טוב חגיגי כשהרגע מגיע.
-              </p>
-              <ul className="b-feature-points">
-                {FEATURES.map((f) => (
-                  <li key={f.label}>
-                    <f.Icon className="h-[19px] w-[19px] shrink-0" />
-                    {f.label}
-                  </li>
-                ))}
-              </ul>
-            </div>
+      {/* לא רק לחתונה — קישורים פנימיים לדפי הנחיתה */}
+      <BoutiqueOccasions
+        occasions={LANDINGS.map((l) => ({
+          href: `/countdown/${l.slug}`,
+          eventType: l.eventType,
+          color: l.palette?.accent,
+        }))}
+      />
 
-            {/* שש ערכות העיצוב — הצבעים נלקחים מ-themes.ts */}
-            <div className="b-theme-board" aria-label="שש ערכות העיצוב">
-              <div className="b-theme-grid">
-                {THEME_KEYS.map((k) => {
-                  const t = THEMES[k];
-                  return (
-                    <div
-                      key={k}
-                      className="b-theme-chip"
-                      style={{ background: t.bgGradient, color: t.text }}
-                    >
-                      <b style={{ color: t.accent }}>93</b>
-                      <span>ימים</span>
-                      <em>{t.label}</em>
-                    </div>
-                  );
-                })}
-              </div>
-              <p className="b-theme-caption">כל ספירה בשפת עיצוב משלה</p>
-            </div>
-          </div>
-
-          <div className="b-wallpaper-band">
-            <div>
-              <Monitor className="h-[34px] w-[34px] shrink-0" />
-              <p>
-                <strong>הספירה גם על שולחן העבודה</strong>
-                <span>מדריך קצר להפוך את הספירה לרקע חי שמתעדכן בזמן אמת.</span>
-              </p>
-            </div>
-            <Link href="/wallpaper" className="b-textlink">
-              למדריך
-              <ArrowLeft className="h-[18px] w-[18px]" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ------------- לא רק לחתונה — קישורים פנימיים לדפי הנחיתה ------------- */}
-      <section className="b-section b-occasions" id="events">
-        <div className="b-container">
-          <div className="b-section-heading">
-            <div className="b-eyebrow">לא רק לחתונה</div>
-            <h2>סופרים למשהו אחר?</h2>
-            <p>אותה ספירה, אותה התרגשות — לכל רגע ששווה לחכות לו.</p>
-          </div>
-          <div className="b-occasion-grid">
-            {LANDINGS.map((l) => (
-              <Link
-                key={l.slug}
-                href={`/countdown/${l.slug}`}
-                className="b-occasion"
-                style={l.accentColor ? ({ "--oc": l.accentColor } as React.CSSProperties) : undefined}
-              >
-                <EventOrnament
-                  eventType={l.eventType}
-                  className="b-occasion-icon h-8 w-8"
-                />
-                <strong>{l.eventType}</strong>
-                <span className="b-textlink">
-                  ספירה ל{l.eventType}
-                  <ArrowLeft className="h-[18px] w-[18px]" />
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ---------------------------- קריאה לפעולה ---------------------------- */}
-      <section className="b-finalcta">
-        <div className="b-container">
-          <div className="b-eyebrow">הגיע הזמן להתחיל לספור</div>
-          <h2>הספירה שלכם מתחילה כאן.</h2>
-          <p>בוחרים תאריך, מוסיפים שמות — ויש לכם ספירה אישית.</p>
-          <Link href="/create" className="b-btn">
-            צרו ספירה עכשיו
-            <ArrowLeft className="h-5 w-5" />
-          </Link>
-          <DonationCTA />
-        </div>
-      </section>
+      <BoutiqueFinalCta createHref="/create" buttonLabel="צרו ספירה עכשיו" />
 
       {/* ------------------------ סטודיו: מי בנתה את האתר ------------------------ */}
       <section className="b-studio" id="studio" aria-labelledby="studio-title">

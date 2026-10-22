@@ -1,13 +1,16 @@
 /* ==========================================================================
-   home.css — שפת העיצוב "בוטיק" של דף הבית בלבד.
+   home.css — שפת העיצוב "בוטיק" של דף הבית ודפי הנחיתה לאירועים.
    כל הכללים תחומים תחת .boutique, כך שאינם נוגעים בדפי הספירה, בשש
    ערכות העיצוב או בשום דף אחר. נשען על משתני classic מ-globals.css
    (--bg, --text, --muted, --accent ...) ומוסיף כמה משתנים משלו.
+   דף נחיתה יכול לדרוס את --accent / --accent-ink / --accent-display
+   (ראו palette ב-landings.ts) כדי לצבוע את הדף בצבע האירוע.
    ========================================================================== */
 
 .boutique {
   --accent-ink: #86663a; /* זהב כהה לטקסט קטן ולכפתורים (ניגודיות ~5:1) */
   --accent-display: #9c7a45; /* זהב לכותרות גדולות (ניגודיות ~3.7:1) */
+  --oc-default: #b08d57; /* צבע אייקון ברירת מחדל בכרטיסי האירועים — לא נצבע מחדש */
   --line: #e2d6c1;
   --line-strong: #cbbb9e;
   --paper: #fffdf9;
@@ -81,7 +84,7 @@
 }
 .boutique .b-btn:hover {
   transform: translateY(-3px);
-  background: #735630;
+  background: color-mix(in srgb, var(--accent-ink) 86%, #000);
 }
 
 .boutique .b-textlink {
@@ -202,6 +205,13 @@
   line-height: 1.05;
   color: var(--accent-display);
   margin: 8px 0 14px;
+}
+/* דפי הנחיתה — כותרת ארוכה יותר ("ספירה לאחור לבר מצווה") ועיטור לפי האירוע */
+.boutique h1.b-h1-long {
+  font-size: clamp(46px, 6.6vw, 96px);
+}
+.boutique .b-hero-ornament {
+  color: var(--accent);
 }
 .boutique .b-intro {
   font-size: 20px;
@@ -467,7 +477,7 @@
   box-shadow: 0 10px 24px #55452b13;
 }
 .boutique .b-occasion-icon {
-  color: var(--oc, var(--accent));
+  color: var(--oc, var(--oc-default));
 }
 .boutique .b-occasion strong {
   display: block;

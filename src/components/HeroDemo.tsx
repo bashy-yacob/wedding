@@ -5,16 +5,24 @@ import { getCountdownState, type CountdownState } from "@/lib/time";
 import { toGregorianString, toHebrewDateString } from "@/lib/hebcal";
 import { Diamond } from "./Ornaments";
 
-// כרטיס דמו חי לדף הבית — תאריך יעד ~93 ימים קדימה, מחושב רק אחרי mount
-// כדי להימנע מאי-התאמת hydration. התאריך העברי נגזר מהתאריך האמיתי.
-// מעוצב לפי שפת ה"בוטיק" של דף הבית (home.css) ולא נוגע בעיצובי הספירה.
-export function HeroDemo() {
+// כרטיס דמו חי לדף הבית ולדפי הנחיתה — תאריך יעד daysAhead ימים קדימה,
+// מחושב רק אחרי mount כדי להימנע מאי-התאמת hydration. התאריך העברי נגזר
+// מהתאריך האמיתי. מעוצב לפי שפת ה"בוטיק" (home.css) ולא נוגע בעיצובי הספירה.
+export function HeroDemo({
+  eventType = "חתונה",
+  names = "חיים ושרה",
+  daysAhead = 93,
+}: {
+  eventType?: string;
+  names?: string;
+  daysAhead?: number;
+}) {
   const [weddingDate, setWeddingDate] = useState<string | null>(null);
   const [state, setState] = useState<CountdownState | null>(null);
 
   useEffect(() => {
     const target = new Date();
-    target.setDate(target.getDate() + 93);
+    target.setDate(target.getDate() + daysAhead);
     const y = target.getFullYear();
     const m = String(target.getMonth() + 1).padStart(2, "0");
     const d = String(target.getDate()).padStart(2, "0");
@@ -26,7 +34,7 @@ export function HeroDemo() {
     tick();
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
-  }, []);
+  }, [daysAhead]);
 
   const r = state?.status === "countdown" ? state.remaining : null;
   const units = r
@@ -40,8 +48,8 @@ export function HeroDemo() {
 
   return (
     <div className="b-count-card">
-      <p className="b-card-kicker">הספירה לחתונה של</p>
-      <p className="b-names b-display">חיים ושרה</p>
+      <p className="b-card-kicker">הספירה ל{eventType} של</p>
+      <p className="b-names b-display">{names}</p>
 
       <div className="b-clock" dir="ltr">
         {units?.map((u) => (

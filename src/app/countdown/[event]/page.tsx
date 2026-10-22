@@ -2,17 +2,18 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getBaseUrl } from "@/lib/url";
-import { customThemeVars } from "@/lib/themes";
 import { LANDINGS, getLanding } from "@/lib/landings";
-import { LandingDemo } from "@/components/LandingDemo";
-import { FloatingBackground } from "@/components/FloatingBackground";
-import { DonationCTA } from "@/components/DonationCTA";
+import { HeroDemo } from "@/components/HeroDemo";
 import { WallpaperChip } from "@/components/WallpaperChip";
 import {
-  Divider,
+  BoutiqueNav,
+  BoutiqueSteps,
+  BoutiqueFeatures,
+  BoutiqueOccasions,
+  BoutiqueFinalCta,
+} from "@/components/Boutique";
+import {
   EventOrnament,
-  Pencil,
-  LinkIcon,
   Send,
   Calendar,
   Chat,
@@ -21,6 +22,7 @@ import {
   Gift,
   ArrowLeft,
 } from "@/components/Ornaments";
+import "../../home.css";
 
 // יוצר עמוד סטטי לכל סוג אירוע מתוך רשימת הנחיתות.
 export function generateStaticParams() {
@@ -28,24 +30,6 @@ export function generateStaticParams() {
 }
 
 export const dynamicParams = false;
-
-const STEPS = [
-  {
-    Icon: Pencil,
-    title: "ממלאים פרטים",
-    body: "שם, תאריך (עברי או לועזי), ובוחרים ערכת עיצוב.",
-  },
-  {
-    Icon: LinkIcon,
-    title: "מקבלים קישור",
-    body: "נוצר קישור ייחודי וקצר לספירה שלכם — בלי הרשמה.",
-  },
-  {
-    Icon: Send,
-    title: "משתפים בוואטסאפ",
-    body: "כל מי שנכנס רואה את הספירה ויכול לשלוח איחול.",
-  },
-];
 
 const FEATURES = [
   { label: "תאריך עברי כראשי", Icon: Calendar },
@@ -113,141 +97,86 @@ export default async function LandingPage({
     offers: { "@type": "Offer", price: "0", priceCurrency: "ILS" },
   };
 
-  // שאר הנחיתות לקישור פנימי (כל אירוע מלבד הנוכחי).
-  const others = LANDINGS.filter((l) => l.slug !== landing.slug);
+  // שאר הנחיתות לקישור פנימי (כל אירוע מלבד הנוכחי), ובסוף — חתונה (דף הבית).
+  const others = [
+    ...LANDINGS.filter((l) => l.slug !== landing.slug).map((l) => ({
+      href: `/countdown/${l.slug}`,
+      eventType: l.eventType,
+      color: l.palette?.accent,
+    })),
+    { href: "/", eventType: "חתונה" },
+  ];
 
-  // דריסת צבע דגש מעל תמת הבסיס (אם הוגדרה לנחיתה הזו).
-  const customStyle = customThemeVars({
-    accentColor: landing.accentColor,
-  }) as React.CSSProperties;
+  // צבעי הדגש של האירוע מעל שפת ה"בוטיק" (ברירת מחדל — הזהב של דף הבית).
+  const paletteStyle = landing.palette
+    ? ({
+        "--accent": landing.palette.accent,
+        "--accent-ink": landing.palette.ink,
+        "--accent-display": landing.palette.display,
+      } as React.CSSProperties)
+    : undefined;
 
   return (
-    <main
-      data-theme={landing.theme}
-      style={customStyle}
-      className="bg-animated relative min-h-screen overflow-hidden"
-    >
+    <main data-theme="classic" className="boutique" style={paletteStyle}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <FloatingBackground />
       <WallpaperChip />
 
       {/* ------------------------------- Hero ------------------------------- */}
-      <section className="mx-auto flex max-w-6xl flex-col items-center px-6 pt-10 pb-10 text-center sm:pt-14">
-        <EventOrnament
-          eventType={landing.eventType}
-          className="reveal mb-4 h-12 w-auto lg:h-16"
+      <header className="b-hero" id="top">
+        <BoutiqueNav
+          createHref={createHref}
+          links={[
+            { href: "#example", label: "הספירה לדוגמה" },
+            { href: "#how", label: "איך זה עובד" },
+            { href: "#events", label: "ספירות נוספות" },
+          ]}
         />
 
-        <span
-          className="reveal accent-text mb-3 text-sm font-medium tracking-wide lg:text-base"
-          style={{ animationDelay: "0.05s" }}
-        >
-          {landing.tagline}
-        </span>
-
-        <h1
-          className="font-display accent-gradient-text reveal mb-4 text-4xl font-extrabold leading-tight sm:text-6xl lg:text-7xl"
-          style={{ animationDelay: "0.1s" }}
-        >
-          {landing.heading}
-        </h1>
-
-        <p
-          className="reveal mb-6 max-w-md text-lg leading-relaxed text-[var(--muted)] lg:max-w-xl lg:text-xl"
-          style={{ animationDelay: "0.15s" }}
-        >
-          {landing.intro}
-        </p>
-
-        <Link
-          href={createHref}
-          className="reveal animate-pulse-glow rounded-full bg-[var(--accent)] px-10 py-4 text-lg font-semibold text-white shadow-lg shadow-[var(--accent)]/30 transition hover:-translate-y-0.5 hover:shadow-xl lg:px-12 lg:py-5 lg:text-xl"
-          style={{ animationDelay: "0.2s" }}
-        >
-          צרו ספירה
-        </Link>
-
-        <div className="reveal mt-10 w-full" style={{ animationDelay: "0.3s" }}>
-          <LandingDemo eventType={landing.eventType} names={landing.exampleNames} />
-        </div>
-      </section>
-
-      <Divider className="my-4" />
-
-      {/* ---------------------------- איך זה עובד ---------------------------- */}
-      <section className="mx-auto max-w-6xl px-6 py-16">
-        <h2 className="font-display mb-10 text-center text-3xl font-bold sm:text-4xl">
-          איך זה עובד
-        </h2>
-        <div className="grid gap-6 sm:grid-cols-3 lg:gap-8">
-          {STEPS.map((s, i) => (
-            <div key={i} className="surface-card rounded-3xl p-7 text-center">
-              <div className="relative mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[var(--accent-soft)] text-[var(--accent)]">
-                <s.Icon className="h-7 w-7" />
-                <span className="accent-gradient-text font-display surface-card absolute -top-1 -left-1 flex h-6 w-6 items-center justify-center rounded-full text-sm font-extrabold">
-                  {i + 1}
-                </span>
-              </div>
-              <h3 className="mb-2 text-lg font-bold">{s.title}</h3>
-              <p className="text-sm text-[var(--muted)]">{s.body}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ----------------------------- יתרונות ----------------------------- */}
-      <section className="mx-auto max-w-5xl px-6 pb-8">
-        <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:gap-4">
-          {FEATURES.map((f) => (
-            <li
-              key={f.label}
-              className="surface-card flex items-center gap-2 rounded-2xl px-4 py-3 text-sm"
-            >
-              <f.Icon className="h-4 w-4 shrink-0 text-[var(--accent)]" />
-              {f.label}
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-14 text-center">
-          <Link
-            href={createHref}
-            className="rounded-full bg-[var(--accent)] px-10 py-4 text-lg font-semibold text-white shadow-lg shadow-[var(--accent)]/30 transition hover:-translate-y-0.5 hover:shadow-xl"
-          >
-            צרו ספירה ל{landing.eventType}
-          </Link>
-        </div>
-      </section>
-
-      {/* ----------------------- קישורים פנימיים ----------------------- */}
-      <section className="mx-auto max-w-3xl px-6 pb-16">
-        <p className="mb-4 text-center text-sm text-[var(--muted)]">
-          ספירה לאחור גם ל…
-        </p>
-        <div className="flex flex-wrap justify-center gap-2">
-          {others.map((l) => (
-            <Link
-              key={l.slug}
-              href={`/countdown/${l.slug}`}
-              className="surface-card rounded-full px-4 py-2 text-sm font-medium transition hover:-translate-y-0.5 hover:text-[var(--accent)]"
-            >
-              {l.eventType}
+        <div className="b-hero-content b-container">
+          <EventOrnament
+            eventType={landing.eventType}
+            className="reveal b-hero-ornament mx-auto mb-1.5 h-[52px] w-auto"
+          />
+          <div className="reveal b-eyebrow" style={{ animationDelay: "0.05s" }}>
+            {landing.tagline}
+          </div>
+          <h1 className="reveal b-h1-long" style={{ animationDelay: "0.1s" }}>
+            {landing.heading}
+          </h1>
+          <p className="reveal b-intro" style={{ animationDelay: "0.15s" }}>
+            {landing.intro}
+          </p>
+          <div className="reveal" style={{ animationDelay: "0.2s" }}>
+            <Link href={createHref} className="b-btn">
+              גם אני רוצה ספירה משלי
+              <ArrowLeft className="h-5 w-5" />
             </Link>
-          ))}
-          <Link
-            href="/"
-            className="surface-card inline-flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium transition hover:-translate-y-0.5 hover:text-[var(--accent)]"
-          >
-            חתונה
-            <ArrowLeft className="h-3.5 w-3.5" />
-          </Link>
-        </div>
+          </div>
+          <div className="b-micro">בחינם · בלי הרשמה · מוכן תוך דקה</div>
 
-        <DonationCTA />
-      </section>
+          <div className="reveal" style={{ animationDelay: "0.3s" }}>
+            <p className="b-sample-label" id="example">
+              כך תיראה הספירה שלכם
+            </p>
+            <HeroDemo
+              eventType={landing.eventType}
+              names={landing.exampleNames}
+              daysAhead={120}
+            />
+          </div>
+        </div>
+      </header>
+
+      <BoutiqueSteps firstStepBody="שם, תאריך (עברי או לועזי), ובוחרים ערכת עיצוב." />
+      <BoutiqueFeatures features={FEATURES} />
+      <BoutiqueOccasions occasions={others} />
+      <BoutiqueFinalCta
+        createHref={createHref}
+        buttonLabel={`צרו ספירה ל${landing.eventType}`}
+      />
     </main>
   );
 }
