@@ -9,7 +9,9 @@ import { BUILD_CONTACT_URL, CONTACT_EMAIL } from "@/lib/contact";
 
 export function SiteFooter() {
   // מצב רקע לשולחן העבודה (/c/.../wallpaper) — בלי פוטר, כדי לא ליצור גלילה.
+  // דף הבית — בלי פוטר, כי אזור הסטודיו שבתחתיתו מחליף אותו.
   const pathname = usePathname();
+  if (pathname === "/") return null;
   if (pathname?.startsWith("/c/") && pathname.endsWith("/wallpaper")) {
     return null;
   }

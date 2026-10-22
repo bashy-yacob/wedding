@@ -9,7 +9,9 @@ import { BUILD_CONTACT_URL } from "@/lib/contact";
 // פינה ימנית כדי לא להתנגש ב-WallpaperChip שיושב בפינה השמאלית.
 export function BuilderChip() {
   // מצב רקע לשולחן העבודה (/c/.../wallpaper) — מסך נקי בלבד, בלי צ'יפים.
+  // דף הבית — בלי צ'יפ, כי אזור הסטודיו שבתחתיתו מחליף אותו.
   const pathname = usePathname();
+  if (pathname === "/") return null;
   if (pathname?.startsWith("/c/") && pathname.endsWith("/wallpaper")) {
     return null;
   }
