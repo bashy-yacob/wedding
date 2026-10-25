@@ -10,6 +10,7 @@ export const metadata: Metadata = {
     title: "יצירת ספירה לחתונה — עד החתונה",
     description:
       "ממלאים פרטים, בוחרים עיצוב, ומקבלים קישור ייחודי לספירה לאחור — בחינם.",
+    url: "/create",
     type: "website",
     locale: "he_IL",
   },

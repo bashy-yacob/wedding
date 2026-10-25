@@ -489,6 +489,27 @@
   font-size: 14px;
 }
 
+/* ---------- שאלות נפוצות ---------- */
+.boutique .b-faq-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+.boutique .b-faq-item {
+  padding: 26px 28px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+}
+.boutique .b-faq-item h3 {
+  font-size: 22px;
+  line-height: 1.3;
+  margin: 0 0 10px;
+}
+.boutique .b-faq-item p {
+  color: var(--body-soft);
+  margin: 0;
+}
+
 /* ---------- קריאה לפעולה (בהירה — כדי שהסטודיו הכהה ייקרא כגוש נפרד) ---------- */
 .boutique .b-finalcta {
   background: var(--bg-2);
@@ -718,6 +739,7 @@
   }
   .boutique .b-step-list,
   .boutique .b-occasion-grid,
+  .boutique .b-faq-list,
   .boutique .b-feature-layout {
     grid-template-columns: 1fr;
   }

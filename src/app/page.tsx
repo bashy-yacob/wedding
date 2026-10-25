@@ -8,6 +8,9 @@ import {
   BoutiqueFeatures,
   BoutiqueOccasions,
   BoutiqueFinalCta,
+  BoutiqueFaq,
+  faqJsonLd,
+  type FaqItem,
 } from "@/components/Boutique";
 import {
   Rings,
@@ -25,6 +28,7 @@ import {
 import { WallpaperChip } from "@/components/WallpaperChip";
 import { LANDINGS } from "@/lib/landings";
 import { BUILD_CONTACT_URL, CONTACT_EMAIL } from "@/lib/contact";
+import { SITE_NAME, SITE_DESCRIPTION } from "@/lib/site";
 import "./home.css";
 
 // דף הבית בשפת עיצוב "בוטיק" (home.css, תחום תחת .boutique).
@@ -40,29 +44,86 @@ const FEATURES = [
   { label: "ללא הרשמה, בחינם", Icon: Gift },
 ];
 
+// שאלות נפוצות — מוצגות בעמוד וגם כנתונים מובנים (FAQPage), ועונות על
+// הביטויים שמחפשים ("כמה ימים נשארו לחתונה", "תאריך עברי לחתונה").
+const FAQ: FaqItem[] = [
+  {
+    q: "כמה ימים נשארו לחתונה?",
+    a: "יוצרים ספירה עם תאריך החתונה, והיא מראה בכל רגע כמה ימים, שעות ודקות נשארו — ומתעדכנת לבד בזמן אמת. אפשר להוסיף גם את שעת החופה, והספירה תגיע עד לשעה המדויקת.",
+  },
+  {
+    q: "אפשר להזין תאריך עברי לחתונה?",
+    a: "כן. בוחרים תאריך עברי או לועזי, והספירה מציגה את התאריך העברי כראשי — ואם רוצים, גם את התאריך הלועזי לצידו.",
+  },
+  {
+    q: "זה עולה כסף? צריך להירשם?",
+    a: "לא. יצירת הספירה חינמית לגמרי ואין צורך בהרשמה — ממלאים שמות ותאריך, בוחרים עיצוב, ומקבלים קישור תוך דקה.",
+  },
+  {
+    q: "איך משתפים את הספירה עם המשפחה והחברים?",
+    a: "כל ספירה מקבלת קישור ייחודי וקצר שאפשר לשלוח בוואטסאפ בלחיצה אחת. מי שפותח את הקישור רואה את הספירה ויכול להשאיר ברכה בקיר הברכות.",
+  },
+  {
+    q: "אפשר לשנות את הפרטים אחרי שהספירה נוצרה?",
+    a: "כן. עם יצירת הספירה מקבלים קישור עריכה אישי, שדרכו אפשר לעדכן את הפרטים ואת העיצוב בכל זמן. כדאי לשמור אותו במקום בטוח.",
+  },
+  {
+    q: "הספירה שלנו תופיע בגוגל?",
+    a: "לא. דפי הספירה האישיים אינם מופיעים בתוצאות החיפוש — רק מי שקיבל את הקישור יכול לראות אותם.",
+  },
+];
+
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
+  // openGraph של העמוד מחליף את זה של ה-layout, ולכן כל השדות חוזרים כאן.
+  openGraph: {
+    siteName: SITE_NAME,
+    title: "עד החתונה — ספירה לאחור לחתונה",
+    description: "ספירה אישית לחתונה עם תאריך עברי וקישור לשיתוף.",
+    url: "/",
+    type: "website",
+    locale: "he_IL",
+  },
 };
 
 export default async function HomePage() {
   const baseUrl = await getBaseUrl();
 
-  // נתונים מובנים (JSON-LD) — עוזרים לגוגל להבין שזה כלי/שירות חינמי.
+  // נתונים מובנים (JSON-LD): האתר, הארגון שמאחוריו, הכלי עצמו והשאלות הנפוצות.
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
-    name: "עד החתונה",
-    url: baseUrl,
-    applicationCategory: "LifestyleApplication",
-    operatingSystem: "Web",
-    inLanguage: "he-IL",
-    description:
-      "צרו ספירה לאחור אישית לחתונה, עם תאריך עברי וקישור ייחודי לשיתוף בוואטסאפ. בלי הרשמה, בחינם.",
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "ILS",
-    },
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${baseUrl}/#website`,
+        name: SITE_NAME,
+        url: baseUrl,
+        inLanguage: "he-IL",
+        publisher: { "@id": `${baseUrl}/#organization` },
+      },
+      {
+        "@type": "Organization",
+        "@id": `${baseUrl}/#organization`,
+        name: SITE_NAME,
+        url: baseUrl,
+        logo: `${baseUrl}/icon-512.png`,
+      },
+      {
+        "@type": "WebApplication",
+        name: SITE_NAME,
+        url: baseUrl,
+        applicationCategory: "LifestyleApplication",
+        operatingSystem: "Web",
+        inLanguage: "he-IL",
+        description: SITE_DESCRIPTION,
+        offers: {
+          "@type": "Offer",
+          price: "0",
+          priceCurrency: "ILS",
+        },
+      },
+      faqJsonLd(FAQ),
+    ],
   };
 
   return (
@@ -94,6 +155,7 @@ export default async function HomePage() {
           </div>
           <h1 className="reveal" style={{ animationDelay: "0.1s" }}>
             עד החתונה
+            <span className="sr-only"> — ספירה לאחור לחתונה</span>
           </h1>
           <p className="reveal b-intro" style={{ animationDelay: "0.15s" }}>
             צרו ספירה לאחור חגיגית לחתונה — עם השמות, תאריך עברי כראשי, וקישור
@@ -127,6 +189,8 @@ export default async function HomePage() {
           color: l.palette?.accent,
         }))}
       />
+
+      <BoutiqueFaq items={FAQ} />
 
       <BoutiqueFinalCta createHref="/create" buttonLabel="צרו ספירה עכשיו" />
 

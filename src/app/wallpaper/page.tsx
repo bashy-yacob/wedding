@@ -20,6 +20,7 @@ export const metadata: Metadata = {
     title: "הספירה על שולחן העבודה של Windows",
     description:
       "הופכים את הספירה לאחור לרקע חי שמתעדכן בזמן אמת — בעזרת Lively Wallpaper, חינמי.",
+    url: "/wallpaper",
     type: "article",
     locale: "he_IL",
   },

@@ -1,8 +1,10 @@
 import type { MetadataRoute } from "next";
 import { getBaseUrl } from "@/lib/url";
 
-// robots.txt — מאשר זחילה של העמודים הציבוריים, וחוסם את דפי הספירה
-// האישיים (/c/...) שהם פרטיים מטבעם ולא נועדו להופיע בחיפוש.
+// robots.txt — מאשר זחילה של כל האתר. דפי הספירה האישיים (/c/...) לא נחסמים
+// כאן בכוונה: הם מסומנים noindex, וגוגל צריך לסרוק אותם כדי לראות את התגית.
+// חסימה ב-robots הייתה מונעת את הסריקה, וקישורים משותפים עלולים היו להיכנס
+// לאינדקס כ"כתובת בלבד".
 export default async function robots(): Promise<MetadataRoute.Robots> {
   const baseUrl = await getBaseUrl();
 
@@ -10,7 +12,6 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: "/c/",
     },
     sitemap: `${baseUrl}/sitemap.xml`,
   };

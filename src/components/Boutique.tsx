@@ -220,3 +220,41 @@ export function BoutiqueFinalCta({
     </section>
   );
 }
+
+export interface FaqItem {
+  q: string;
+  a: string;
+}
+
+/** בונה נתונים מובנים מסוג FAQPage מאותן שאלות שמוצגות בעמוד. */
+export function faqJsonLd(items: FaqItem[]) {
+  return {
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  };
+}
+
+export function BoutiqueFaq({ items }: { items: FaqItem[] }) {
+  return (
+    <section className="b-section b-faq" id="faq">
+      <div className="b-container">
+        <div className="b-section-heading">
+          <div className="b-eyebrow">שאלות ותשובות</div>
+          <h2>שאלות נפוצות</h2>
+        </div>
+        <div className="b-faq-list">
+          {items.map((item) => (
+            <article key={item.q} className="b-faq-item">
+              <h3>{item.q}</h3>
+              <p>{item.a}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
