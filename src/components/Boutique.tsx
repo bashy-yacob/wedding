@@ -10,6 +10,7 @@ import {
   Monitor,
   ArrowLeft,
   EventOrnament,
+  Plus,
 } from "@/components/Ornaments";
 
 // קטעים משותפים בשפת ה"בוטיק" (src/app/home.css) — דף הבית ודפי הנחיתה
@@ -246,12 +247,19 @@ export function BoutiqueFaq({ items }: { items: FaqItem[] }) {
           <div className="b-eyebrow">שאלות ותשובות</div>
           <h2>שאלות נפוצות</h2>
         </div>
+        {/* אקורדיון — רואים רק את השאלות, ולחיצה פותחת את התשובה. התשובות
+            נשארות ב-HTML (בתוך details), כך שגוגל קורא אותן. */}
         <div className="b-faq-list">
           {items.map((item) => (
-            <article key={item.q} className="b-faq-item">
-              <h3>{item.q}</h3>
+            <details key={item.q} className="b-faq-item">
+              <summary>
+                <h3>{item.q}</h3>
+                <span className="b-faq-toggle" aria-hidden>
+                  <Plus className="h-5 w-5" />
+                </span>
+              </summary>
               <p>{item.a}</p>
-            </article>
+            </details>
           ))}
         </div>
       </div>
