@@ -10,6 +10,7 @@ import {
   Monitor,
   ArrowLeft,
   EventOrnament,
+  Plus,
 } from "@/components/Ornaments";
 
 // קטעים משותפים בשפת ה"בוטיק" (src/app/home.css) — דף הבית ודפי הנחיתה
@@ -216,6 +217,51 @@ export function BoutiqueFinalCta({
           <ArrowLeft className="h-5 w-5" />
         </Link>
         <DonationCTA />
+      </div>
+    </section>
+  );
+}
+
+export interface FaqItem {
+  q: string;
+  a: string;
+}
+
+/** בונה נתונים מובנים מסוג FAQPage מאותן שאלות שמוצגות בעמוד. */
+export function faqJsonLd(items: FaqItem[]) {
+  return {
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  };
+}
+
+export function BoutiqueFaq({ items }: { items: FaqItem[] }) {
+  return (
+    <section className="b-section b-faq" id="faq">
+      <div className="b-container">
+        <div className="b-section-heading">
+          <div className="b-eyebrow">שאלות ותשובות</div>
+          <h2>שאלות נפוצות</h2>
+        </div>
+        {/* אקורדיון — רואים רק את השאלות, ולחיצה פותחת את התשובה. התשובות
+            נשארות ב-HTML (בתוך details), כך שגוגל קורא אותן. */}
+        <div className="b-faq-list">
+          {items.map((item) => (
+            <details key={item.q} className="b-faq-item">
+              <summary>
+                <h3>{item.q}</h3>
+                <span className="b-faq-toggle" aria-hidden>
+                  <Plus className="h-5 w-5" />
+                </span>
+              </summary>
+              <p>{item.a}</p>
+            </details>
+          ))}
+        </div>
       </div>
     </section>
   );

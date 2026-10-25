@@ -2,11 +2,15 @@ import type { MetadataRoute } from "next";
 import { getBaseUrl } from "@/lib/url";
 import { LANDINGS } from "@/lib/landings";
 
+const CONTENT_UPDATED = "2026-10-25";
+
 // מפת אתר לגוגל. כוללת אך ורק את העמודים הציבוריים והקבועים —
 // דפי הספירה האישיים (/c/[slug]) הם פרטיים ולא נכנסים לאינדוקס.
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = await getBaseUrl();
-  const lastModified = new Date();
+  // תאריך קבוע — מעדכנים אותו כשתוכן העמודים הציבוריים משתנה. תאריך שמשתנה
+  // בכל בקשה (new Date()) גורם לגוגל להתעלם מהשדה.
+  const lastModified = new Date(CONTENT_UPDATED);
 
   // דפי הנחיתה לכל סוג אירוע — נכסי ה-SEO שמושכים תנועה ממוקדת מגוגל.
   const landings: MetadataRoute.Sitemap = LANDINGS.map((l) => ({

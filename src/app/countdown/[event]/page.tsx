@@ -11,6 +11,9 @@ import {
   BoutiqueFeatures,
   BoutiqueOccasions,
   BoutiqueFinalCta,
+  BoutiqueFaq,
+  faqJsonLd,
+  type FaqItem,
 } from "@/components/Boutique";
 import {
   EventOrnament,
@@ -23,6 +26,28 @@ import {
   ArrowLeft,
 } from "@/components/Ornaments";
 import "../../home.css";
+
+// שאלות נפוצות לכל דף נחיתה — לפי סוג האירוע (מוצגות וגם כנתונים מובנים).
+function landingFaq(eventType: string): FaqItem[] {
+  return [
+    {
+      q: `כמה ימים נשארו ל${eventType}?`,
+      a: `יוצרים ספירה עם התאריך, והיא מראה בכל רגע כמה ימים, שעות ודקות נשארו ל${eventType} — ומתעדכנת לבד בזמן אמת. אפשר להוסיף גם שעה מדויקת.`,
+    },
+    {
+      q: `איך יוצרים ספירה לאחור ל${eventType}?`,
+      a: "לוחצים על \"צרו ספירה\", ממלאים שם ותאריך (עברי או לועזי), ובוחרים אחת משש ערכות העיצוב. בסיום מקבלים קישור אישי לספירה, מוכן לשליחה בוואטסאפ — ומי שפותח אותו יכול גם להשאיר ברכה.",
+    },
+    {
+      q: "אפשר להזין תאריך עברי?",
+      a: "כן. בוחרים תאריך עברי או לועזי, והספירה מציגה את התאריך העברי כראשי — ואם רוצים, גם את התאריך הלועזי לצידו.",
+    },
+    {
+      q: "זה עולה כסף? צריך להירשם?",
+      a: "לא. יצירת הספירה חינמית לגמרי ואין צורך בהרשמה — ממלאים שם ותאריך, בוחרים עיצוב, ומקבלים קישור תוך דקה.",
+    },
+  ];
+}
 
 // יוצר עמוד סטטי לכל סוג אירוע מתוך רשימת הנחיתות.
 export function generateStaticParams() {
@@ -58,7 +83,8 @@ export async function generateMetadata({
     keywords: landing.keywords,
     alternates: { canonical: `/countdown/${landing.slug}` },
     openGraph: {
-      title: `${landing.heading} — עד החתונה`,
+      siteName: "עד החתונה",
+      title: landing.title,
       description: landing.description,
       url,
       type: "website",
@@ -66,7 +92,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: `${landing.heading} — עד החתונה`,
+      title: landing.title,
       description: landing.description,
     },
   };
@@ -84,17 +110,25 @@ export default async function LandingPage({
   const baseUrl = await getBaseUrl();
   const createHref = `/create?event=${encodeURIComponent(landing.eventType)}`;
 
-  // נתונים מובנים (JSON-LD) — מסבירים לגוגל שזה כלי חינמי ייעודי לאירוע.
+  const faq = landingFaq(landing.eventType);
+
+  // נתונים מובנים (JSON-LD) — מסבירים לגוגל שזה כלי חינמי ייעודי לאירוע,
+  // ומצרפים את השאלות הנפוצות שבעמוד.
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
-    name: `${landing.heading} — עד החתונה`,
-    url: `${baseUrl}/countdown/${landing.slug}`,
-    applicationCategory: "LifestyleApplication",
-    operatingSystem: "Web",
-    inLanguage: "he-IL",
-    description: landing.description,
-    offers: { "@type": "Offer", price: "0", priceCurrency: "ILS" },
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        name: `${landing.heading} — עד החתונה`,
+        url: `${baseUrl}/countdown/${landing.slug}`,
+        applicationCategory: "LifestyleApplication",
+        operatingSystem: "Web",
+        inLanguage: "he-IL",
+        description: landing.description,
+        offers: { "@type": "Offer", price: "0", priceCurrency: "ILS" },
+      },
+      faqJsonLd(faq),
+    ],
   };
 
   // שאר הנחיתות לקישור פנימי (כל אירוע מלבד הנוכחי), ובסוף — חתונה (דף הבית).
@@ -173,6 +207,7 @@ export default async function LandingPage({
       <BoutiqueSteps firstStepBody="שם, תאריך (עברי או לועזי), ובוחרים ערכת עיצוב." />
       <BoutiqueFeatures features={FEATURES} />
       <BoutiqueOccasions occasions={others} />
+      <BoutiqueFaq items={faq} />
       <BoutiqueFinalCta
         createHref={createHref}
         buttonLabel={`צרו ספירה ל${landing.eventType}`}

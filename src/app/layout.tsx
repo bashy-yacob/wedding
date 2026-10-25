@@ -10,6 +10,7 @@ import {
 } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { getBaseUrl } from "@/lib/url";
+import { SITE_DESCRIPTION } from "@/lib/site";
 import "./globals.css";
 import { SiteFooter } from "@/components/SiteFooter";
 
@@ -21,6 +22,8 @@ const heebo = Heebo({
 });
 
 // פונט תצוגה לכל שפת עיצוב — כותרות, שמות, ספרות ותאריך מקבלים אופי שונה.
+// רק Heebo ו-Frank Ruhl (של classic, דף הבית) נטענים מראש; פונטי שאר הערכות
+// מסומנים preload: false ונטענים רק בעמוד שמשתמש בהם בפועל.
 // classic — סריף מעודן
 const frankRuhl = Frank_Ruhl_Libre({
   subsets: ["hebrew", "latin"],
@@ -33,6 +36,7 @@ const frankRuhl = Frank_Ruhl_Libre({
 const suezOne = Suez_One({
   subsets: ["hebrew", "latin"],
   variable: "--font-suez",
+  preload: false,
   weight: "400",
   display: "swap",
 });
@@ -41,6 +45,7 @@ const suezOne = Suez_One({
 const rubik = Rubik({
   subsets: ["hebrew", "latin"],
   variable: "--font-rubik",
+  preload: false,
   weight: ["400", "500", "700"],
   display: "swap",
 });
@@ -49,6 +54,7 @@ const rubik = Rubik({
 const amaticSC = Amatic_SC({
   subsets: ["hebrew", "latin"],
   variable: "--font-amatic",
+  preload: false,
   weight: ["400", "700"],
   display: "swap",
 });
@@ -57,6 +63,7 @@ const amaticSC = Amatic_SC({
 const secularOne = Secular_One({
   subsets: ["hebrew", "latin"],
   variable: "--font-secular",
+  preload: false,
   weight: "400",
   display: "swap",
 });
@@ -65,6 +72,7 @@ const secularOne = Secular_One({
 const bellefair = Bellefair({
   subsets: ["hebrew", "latin"],
   variable: "--font-bellefair",
+  preload: false,
   weight: "400",
   display: "swap",
 });
@@ -77,8 +85,7 @@ export async function generateMetadata(): Promise<Metadata> {
       default: "עד החתונה — ספירה לאחור לחתונה",
       template: "%s — עד החתונה",
     },
-    description:
-      "צרו ספירה לאחור אישית לחתונה, עם תאריך עברי וקישור ייחודי לשיתוף בוואטסאפ. בלי הרשמה, בחינם.",
+    description: SITE_DESCRIPTION,
     applicationName: "עד החתונה",
     verification: {
       google: "dfbUFrKHhvCENBsQlPvc66bouOqHHNVEFZgD44R_mAk",
