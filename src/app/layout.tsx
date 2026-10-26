@@ -9,6 +9,7 @@ import {
   Bellefair,
 } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { getBaseUrl } from "@/lib/url";
 import { SITE_DESCRIPTION } from "@/lib/site";
 import "./globals.css";
@@ -140,6 +141,7 @@ export default function RootLayout({
         {children}
         <SiteFooter />
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
