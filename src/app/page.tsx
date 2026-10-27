@@ -14,6 +14,7 @@ import {
 } from "@/components/Boutique";
 import {
   Rings,
+  Diamond,
   Send,
   Calendar,
   Chat,
@@ -26,6 +27,7 @@ import {
   Heart,
 } from "@/components/Ornaments";
 import { WallpaperChip } from "@/components/WallpaperChip";
+import { BoutiqueMotion } from "@/components/BoutiqueMotion";
 import { LANDINGS } from "@/lib/landings";
 import { BUILD_CONTACT_URL, CONTACT_EMAIL } from "@/lib/contact";
 import { SITE_NAME, SITE_DESCRIPTION } from "@/lib/site";
@@ -72,6 +74,9 @@ const FAQ: FaqItem[] = [
     a: "כן. עם יצירת הספירה מקבלים קישור עריכה אישי, שדרכו אפשר לעדכן את הפרטים ואת העיצוב בכל זמן. כדאי לשמור אותו במקום בטוח.",
   },
 ];
+
+// מיקומי הניצוצות המרחפים ב-Hero (home.css → .b-spark-N).
+const SPARKLES = [1, 2, 3, 4, 5, 6, 7];
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -136,8 +141,18 @@ export default async function HomePage() {
       {/* כפתור צד פינתי קבוע — מדריך לרקע חי על שולחן העבודה */}
       <WallpaperChip />
 
+      {/* אנימציות כניסה וגלילה (home.css → "תנועה") וסרגל התקדמות הגלילה */}
+      <BoutiqueMotion />
+      <div className="b-progress" aria-hidden />
+
       {/* ------------------------------- Hero ------------------------------- */}
       <header className="b-hero" id="top">
+        {/* ניצוצות מרחפים — קישוט בלבד */}
+        <div className="b-hero-sparkles" aria-hidden>
+          {SPARKLES.map((n) => (
+            <Diamond key={n} className={`b-spark b-spark-${n}`} />
+          ))}
+        </div>
         <BoutiqueNav
           createHref="/create"
           links={[
@@ -149,27 +164,34 @@ export default async function HomePage() {
         />
 
         <div className="b-hero-content b-container">
-          <Rings className="reveal mx-auto mb-1.5 h-[52px] w-[84px]" />
-          <div className="reveal b-eyebrow" style={{ animationDelay: "0.05s" }}>
-            ספירה אישית לכל חתונה
-          </div>
-          <h1 className="reveal" style={{ animationDelay: "0.1s" }}>
-            עד החתונה
+          <Rings className="b-hero-rings mx-auto mb-1.5 h-[52px] w-[84px]" />
+          <div className="b-eyebrow b-hero-eyebrow">ספירה אישית לכל חתונה</div>
+          <h1 className="b-hero-title">
+            {/* כל אות נכנסת בנפרד (b-letter-in), והטקסט נשאר רציף לקוראי מסך */}
+            {Array.from("עד החתונה").map((ch, i) => (
+              <span
+                key={i}
+                className="b-letter"
+                style={{ "--i": i } as React.CSSProperties}
+              >
+                {ch === " " ? "\u00a0" : ch}
+              </span>
+            ))}
             <span className="sr-only"> — ספירה לאחור לחתונה</span>
           </h1>
-          <p className="reveal b-intro" style={{ animationDelay: "0.15s" }}>
+          <p className="b-intro b-hero-intro">
             צרו ספירה לאחור חגיגית לחתונה — עם השמות, תאריך עברי כראשי, וקישור
             ייחודי לשיתוף קל בוואטסאפ.
           </p>
-          <div className="reveal" style={{ animationDelay: "0.2s" }}>
-            <Link href="/create" className="b-btn">
+          <div className="b-hero-cta">
+            <Link href="/create" className="b-btn b-btn-shine">
               גם אני רוצה ספירה משלי
               <ArrowLeft className="h-5 w-5" />
             </Link>
           </div>
-          <div className="b-micro">בחינם · בלי הרשמה · מוכן תוך דקה</div>
+          <div className="b-micro b-hero-micro">בחינם · בלי הרשמה · מוכן תוך דקה</div>
 
-          <div className="reveal" style={{ animationDelay: "0.3s" }}>
+          <div className="b-hero-demo">
             <p className="b-sample-label" id="example">
               כך תיראה הספירה שלכם
             </p>
@@ -198,26 +220,26 @@ export default async function HomePage() {
       <section className="b-studio" id="studio" aria-labelledby="studio-title">
         <div className="b-studio-grain" aria-hidden />
         <div className="b-container b-studio-inner">
-          <div className="b-studio-topline">
+          <div className="b-studio-topline" data-reveal="wipe">
             <span className="b-studio-signature">
               באשי קליין <span>/</span> פיתוח אתרים ומערכות דיגיטליות
             </span>
             <span className="b-studio-tagline">מרעיון למוצר שעובד.</span>
           </div>
-          <div className="b-studio-main">
-            <div className="b-studio-kicker">מאחורי האתר הזה</div>
-            <h2 id="studio-title">
+          <div className="b-studio-main" data-stagger="0.12">
+            <div className="b-studio-kicker" data-reveal="blur">מאחורי האתר הזה</div>
+            <h2 id="studio-title" data-reveal="mask">
               אהבתם את
               <br />
               <em>מה שראיתם?</em>
             </h2>
-            <p className="b-studio-lead">עכשיו תארו לעצמכם מה אפשר ליצור בשבילכם.</p>
-            <p className="b-studio-description">
+            <p className="b-studio-lead" data-reveal="up">עכשיו תארו לעצמכם מה אפשר ליצור בשבילכם.</p>
+            <p className="b-studio-description" data-reveal="up">
               אני באשי קליין, מפתחת אתרים ומערכות דיגיטליות. מאתר תדמית לעסק ועד
               מערכת מורכבת בהתאמה אישית — אני הופכת רעיונות למוצרים שנראים מצוין
               ועובדים באמת.
             </p>
-            <p className="b-studio-proof">
+            <p className="b-studio-proof" data-reveal="up">
               האתר הזה הוא אחד הפרויקטים שפיתחתי, וכבר השתמשו בו אלפי אנשים.
             </p>
             <a
@@ -225,11 +247,12 @@ export default async function HomePage() {
               target="_blank"
               rel="noopener noreferrer"
               className="b-studio-button"
+              data-reveal="pop"
             >
               <span>בואו נדבר על הפרויקט שלכם</span>
               <ArrowLeft />
             </a>
-            <div className="b-studio-contact">
+            <div className="b-studio-contact" data-reveal="up">
               מעדיפים לכתוב ישירות?{" "}
               <a href={BUILD_CONTACT_URL} target="_blank" rel="noopener noreferrer">
                 {CONTACT_EMAIL}
