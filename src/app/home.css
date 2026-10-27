@@ -854,13 +854,18 @@
 }
 
 /* ==========================================================================
-   מעברים אלכסוניים בין הקטעים
-   כל קטע עולה על הקודם (margin-top שלילי) ונחתך בקו נטוי; הכיוון מתחלף
-   מקטע לקטע ויוצר זיגזג. border שקוף מוסיף את גובה החיתוך, והרקע של הקטע
-   ממשיך מתחתיו (background-clip ברירת מחדל = border-box).
+   מעברים אלכסוניים ורכים בין הקטעים
+   כל קטע עולה על הקודם (margin-top שלילי) והקצה העליון שלו נמוג בהדרגה
+   לאורך קו נטוי — כך הצבעים מתמזגים זה בזה במקום קו חד. הכיוון מתחלף
+   מקטע לקטע (זיגזג). border שקוף מוסיף את גובה המעבר, והרקע של הקטע ממשיך
+   מתחתיו (background-clip ברירת מחדל = border-box).
+     --slant  כמה הקו נוטה מקצה לקצה
+     --fade   רוחב המעבר הרך
    ========================================================================== */
 .boutique {
   --slant: clamp(28px, 5vw, 72px);
+  --fade: clamp(40px, 5vw, 80px);
+  --tilt: atan2(var(--slant), 100vw);
 }
 .boutique .b-steps,
 .boutique .b-features,
@@ -869,20 +874,27 @@
 .boutique .b-finalcta,
 .boutique .b-studio {
   position: relative;
-  margin-top: calc(var(--slant) * -1);
-  border-top: var(--slant) solid transparent;
+  margin-top: calc((var(--slant) + var(--fade)) * -1);
+  border-top: calc(var(--slant) + var(--fade)) solid transparent;
+  --edge: linear-gradient(
+    var(--edge-angle),
+    transparent var(--slant),
+    #000 calc(var(--slant) + var(--fade))
+  );
+  -webkit-mask-image: var(--edge);
+  mask-image: var(--edge);
 }
-/* נטוי לשמאל: הקצה הימני גבוה */
+/* נוטה לשמאל: הקצה הימני גבוה */
 .boutique .b-steps,
 .boutique .b-occasions,
 .boutique .b-finalcta {
-  clip-path: polygon(0 var(--slant), 100% 0, 100% 100%, 0 100%);
+  --edge-angle: calc(180deg - var(--tilt));
 }
-/* נטוי לימין: הקצה השמאלי גבוה */
+/* נוטה לימין: הקצה השמאלי גבוה */
 .boutique .b-features,
 .boutique .b-faq,
 .boutique .b-studio {
-  clip-path: polygon(0 0, 100% var(--slant), 100% 100%, 0 100%);
+  --edge-angle: calc(180deg + var(--tilt));
 }
 
 /* ==========================================================================
